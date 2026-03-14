@@ -1,0 +1,4 @@
+const DB_NAME = "sample_mflix";
+const LIMITE_DATA = "16kb";
+const HASH_ROUND = 12;
+export { DB_NAME, LIMITE_DATA, HASH_ROUND };

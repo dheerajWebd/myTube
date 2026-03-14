@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>use of bind</title>
+  </head>
+  <body bgcolor="black">
+    <button class="butt">clicked button</button>
+    <script>
+      class React {
+        constructor(username, library, server) {
+          this.username = username;
+          this.library = "use React";
+          this.server = "http//.locleHost/3002/";
+          document
+            .querySelector(".butt")
+            .addEventListener("click", this.heandalclick.bind(this)); // yha per hamare pass refarence to ha per ko value or key constrator ki accsess nahi kar pa rahe hai tab ham bind() method ke adar ham this ko bhejate hai
+        }
+        heandalclick() {
+          console.log("clicked button");
+          console.log(this.username); // bina bind ke es value ko nahi pa sakate hai
+        }
+      }
+      const reactnew = new React("dheeraj");
+      console.log(reactnew);
+    </script>
+  </body>
+</html>
