@@ -3,7 +3,7 @@ class ErrorFormater extends Error {
     message = "somthing went wrong",
     errors = [],
     statusCode,
-    stack = ""
+    // stack = ""
   ) {
     super(message);
     this.success = false;
@@ -11,11 +11,11 @@ class ErrorFormater extends Error {
     this.errors = errors;
     this.statusCode = statusCode;
 
-    if (stack) {
-      this.stack = stack;
-    } else {
-      Error.captureStackTrace(this, this.constructor);
-    }
+    // if (stack) {
+    //   this.stack = stack;
+    // } else {
+    //   Error.captureStackTrace(this, this.constructor);
+    // }
   }
 }
 export { ErrorFormater };

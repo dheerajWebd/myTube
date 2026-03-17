@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { HASH_ROUND } from "../constent";
+import { HASH_ROUND } from "../constent.js";
 const userSchema = new Schema(
   {
     userName: {
@@ -9,7 +9,7 @@ const userSchema = new Schema(
       required: [true, "must be required ussername"],
       trim: true,
       lowercase: true,
-      unique: [true, "this user name take by any other user"],
+      unique: true,
       index: true,
     },
     fullName: {
@@ -21,16 +21,18 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: [true, "must be required email"],
+      lowercase:true,
       trim: true,
-      unique: [true, "this email is also ragister"],
+      unique:true,
     },
     password: {
       type: String,
       required: [true, "must be required email"],
       trim: true,
       minlength: [6, "password is too sort"],
+      select:false
     },
-    avater: {
+    avatar: {
       type: String,
       trim: true,
     },
@@ -51,6 +53,7 @@ const userSchema = new Schema(
     },
     refreshToken: {
       type: String,
+      select:false
     },
     isVerified: {
       type: Boolean,
@@ -60,13 +63,14 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 // here is the encrypt or decrypt methods
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return;
+userSchema.pre("save", async function (next) { // yaha pe jab async function use karate hai to next prommise mongoDB handeal karata hai to next nahi call karana chahiya quki next undefine hojata hai lekin jab async nhi use karate hai to next ko lagana chahiya 
+  if (!this.isModified("password")) return ;
   this.password = await bcrypt.hash(this.password, HASH_ROUND);
-  next();
 }); // always don't craeate the arrow function
 
 userSchema.methods.isCompare = async function (password) {
+  console.log(password);
+  
   return await bcrypt.compare(password, this.password);
 };
 

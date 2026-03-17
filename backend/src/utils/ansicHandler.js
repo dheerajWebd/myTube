@@ -5,6 +5,8 @@ function asyncHandler(heandler) {
     try {
       await heandler(req, res, next);
     } catch (error) {
+      console.log(error);
+      
       next(error);
     }
   };

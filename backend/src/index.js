@@ -2,7 +2,7 @@ import "dotenv/config";
 import dbconoction from "./db/dbConection.js";
 import { app } from "./app.js";
 import { CommentRouts, dataRouts } from "./routes/AllRouts.js";
-import ResponseRoute from "./routes/responceRoute.js";
+// import ResponseRoute from "./routes/responceRoute.js";
 import rerponseMiddlewere from "./middlweares/rerponseMiddlewere.js";
 dbconoction();
 
@@ -10,7 +10,7 @@ app.use(rerponseMiddlewere);
 
 CommentRouts();
 dataRouts();
-ResponseRoute();
+// ResponseRoute();
 app.use((err, req, res, next) => {
   res.status(err.statusCode || 500).json([
     {
