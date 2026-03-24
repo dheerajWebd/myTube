@@ -17,6 +17,7 @@ export const register = asyncHandler(async (req, res, next) => {
       ["user is exsist you can try another email or user name "],
       409
     );
+
   const exsistedUser = await User.findOne({
     $or: [{ email }, { userName }],
   });
@@ -27,7 +28,6 @@ export const register = asyncHandler(async (req, res, next) => {
       203
     );
   const { avatar, coverImg } = req.files;
-  console.log(req.files);
 
   if (!avatar)
     throw new ErrorFormater(
@@ -42,7 +42,6 @@ export const register = asyncHandler(async (req, res, next) => {
     coverImgpath = coverImg[0]?.path;
   }
 
-  // console.log("solved", avatarPath, coverImgpath,req.files);
   if (!avatarPath)
     throw new ErrorFormater(
       "avata image path is not found plz reuplode",
@@ -50,9 +49,18 @@ export const register = asyncHandler(async (req, res, next) => {
       302
     );
 
-  const resAvatarUplode = await uplodOnCloudinary(avatarPath);
-  const rescoverImgpath = await uplodOnCloudinary(coverImgpath||"");
-  
+  const resAvatarUplode = await uplodOnCloudinary(
+    avatarPath,
+    "/avatar/",
+    "uaer_avatar"
+  );
+
+  const rescoverImgpath = await uplodOnCloudinary(
+    coverImgpath || "",
+    "/coverImgpath/",
+    "uaer_cover"
+  );
+
   if (!resAvatarUplode)
     throw new ErrorFormater(
       "avata image is not uploded somthings went wrong plz reuplode",
@@ -73,8 +81,4 @@ export const register = asyncHandler(async (req, res, next) => {
   res
     .status(201)
     .json(new successResponse(201, userCreated, "user created successfully "));
-
-  // console.log(userCreated);
-  // console.log(resAvatarUplode);
-  // console.log(req?.file);
 });

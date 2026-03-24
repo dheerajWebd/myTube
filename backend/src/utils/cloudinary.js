@@ -7,25 +7,30 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
-const uplodOnCloudinary = async localFileUrl => {
+const uplodOnCloudinary = async (localFileUrl,foldername,public_ids) => {
+  console.log(localFileUrl)
   if (!localFileUrl) return null;
+
   try {
     const responce = await cloudinary.uploader.upload(localFileUrl, {
-      public_id: "user_images",
+      public_id: public_ids,
+      folder:foldername ,
       resource_type: "auto",
     });
 
-    const optimizeUrl = cloudinary.url("user_images", {
+    const optimizeUrl = cloudinary.url(public_ids, {
       fetch_format: "auto",
       quality: "auto",
     });
     fs.unlink(localFileUrl, err => {
-      // console.log(err);
+      console.log(err);
     });
     return responce;
   } catch (error) {
     console.log(error);
-    fs.unlink(localFileUrl);
+    fs.unlink(localFileUrl , err => {
+      console.log(err);
+    });
     return null;
   }
 };

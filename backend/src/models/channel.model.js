@@ -28,11 +28,6 @@ const channelSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
-
-    isVerified: {
-      type: Boolean,
-      default: false,
-    },
     videosCount: {
       type: Number,
       default: 0,
@@ -57,6 +52,7 @@ const channelSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+      unique: true,
     },
     video: {
       type: mongoose.Schema.Types.ObjectId,

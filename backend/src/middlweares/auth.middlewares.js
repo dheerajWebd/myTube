@@ -15,7 +15,7 @@ export const authMiddileware = asyncHandler(async (req, _, next) => {
         [""],
         401
       );
-    console.log("accsesToken", accsesToken);
+    // console.log("accsesToken", accsesToken);
     const verifyUser = await jwt.verify(accsesToken, process.env.ACCSES_TOKEN);
 
     if (!verifyUser) {
@@ -29,7 +29,7 @@ export const authMiddileware = asyncHandler(async (req, _, next) => {
     const user = await User.findById(verifyUser?._id).select(
       "-refreshToken -password"
     );
-    console.log(verifyUser);
+    // `console`.log(verifyUser);
 
     if (!user || !user.isVerified) {
       throw new ErrorFormater(

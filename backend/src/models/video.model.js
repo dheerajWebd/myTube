@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import mongooseAggregatePaginate from "mongoose-Aggregate-paginate-v2"
+import mongooseAggregatePaginate from "mongoose-Aggregate-paginate-v2";
 const ScheduleSchema = mongoose.Schema({
   isSchduled: {
     type: Boolean,
@@ -8,6 +8,7 @@ const ScheduleSchema = mongoose.Schema({
   publishAt: {
     type: Date,
     required: [true, "seduled date is required"],
+    default: Date.now,
   },
 });
 
@@ -82,15 +83,17 @@ const VideoSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Shadul",
     },
-
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Channel",
     },
+      isChildren: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
-  
 
-VideoSchema.plugin(mongooseAggregatePaginate)
+VideoSchema.plugin(mongooseAggregatePaginate);
 export const Video = mongoose.model("Video", VideoSchema);

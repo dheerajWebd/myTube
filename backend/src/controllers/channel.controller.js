@@ -1,6 +1,7 @@
 import { Channel } from "../models/channel.model.js";
 import { User } from "../models/user.model.js";
 import asyncHandler from "../utils/ansicHandler.js";
+import uplodOnCloudinary from "../utils/cloudinary.js";
 import { ErrorFormater } from "../utils/ErrorFormate.js";
 import successResponse from "../utils/successResponse.js";
 
@@ -13,8 +14,6 @@ export const channelController = asyncHandler(async (req, res, next) => {
       403
     );
 
-  console.log(req.body);
-
   const { description, handle, channelName, isChildren, link } = req.body;
 
   if (!channelName || !handle)
@@ -23,15 +22,29 @@ export const channelController = asyncHandler(async (req, res, next) => {
       [""],
       403
     );
-  const isHandle = await Channel.findOne({ handle });
-  if (isHandle)
-    throw new ErrorFormater("heandle is taken bay other user "[""], 403);
+  const isHandle = await Channel.findOne({
+    $or: [{ owner: req.user?._id }, { handle }],
+  });
 
+  if (isHandle)
+    throw new ErrorFormater(
+      "heandle is taken bay other user or you have already created a channel ",
+      "",
+      403
+    );
+  const uplodeChannelCoverimg = await uplodOnCloudinary(
+    req.file?.path,
+    "/channelCoverImg/",
+    "channelcoverimage"
+  );
+
+  console.log(uplodeChannelCoverimg?.url);
   const createdChannel = await Channel.create({
     description: description || "",
     owner: isVarified._id,
     channelName,
     handle,
+    coverImg: uplodeChannelCoverimg?.url || "",
     isChildren: isChildren || false,
     link: link || [{ url: "", title: "" }],
   });

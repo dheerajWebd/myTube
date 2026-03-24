@@ -1,3 +1,4 @@
+import { Option } from "../constent.js";
 import { User } from "../models/user.model.js";
 import asyncHandler from "../utils/ansicHandler.js";
 import successResponse from "../utils/successResponse.js";
@@ -17,14 +18,7 @@ export const logOutUser = asyncHandler(async (req, res, _) => {
     }
   );
 
-  const Option = {
-    httpOnly: true,
-    secure: false,
-    sameSite: "lax",
-    path: "/",
-    domain: "localhost",
-  };
-
+  
   res
     .status(200)
     .clearCookie("accsesToken", Option)

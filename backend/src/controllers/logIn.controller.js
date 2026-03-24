@@ -1,3 +1,4 @@
+import { Option } from "../constent.js";
 import { User } from "../models/user.model.js";
 import asyncHandler from "../utils/ansicHandler.js";
 import { ErrorFormater } from "../utils/ErrorFormate.js";
@@ -26,13 +27,7 @@ export const logInUser = asyncHandler(async (req, res, next) => {
 
   const { genaretaccsesToken, genaretRefreshToken, Verified } =
     await genaretTokensForAuth(user);
-  const Option = {
-    httpOnly: true,
-    secure: false,
-    sameSite: "lax",
-    domain: "localhost",
-    path: "/"
-  };
+
   res
     .status(200)
     .cookie("accsesToken", genaretaccsesToken, Option)

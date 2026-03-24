@@ -4,6 +4,7 @@ import { LIMITE_DATA } from "./constent.js";
 import cookieParser from "cookie-parser";
 import UserRoute from "./routes/user.route.js";
 import { channelRoute } from "./routes/cannel.route.js";
+import videoRouter from "./routes/video.route.js";
 const app = express();
 
 app.use(cookieParser());
@@ -24,5 +25,6 @@ app.use(
 
 app.use("/user/api/v1", UserRoute);
 app.use("/channel/api/v1", channelRoute);
+app.use("/video/api/v1", videoRouter);
 
 export { app };
