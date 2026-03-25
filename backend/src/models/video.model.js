@@ -106,6 +106,8 @@ const VideoSchema = mongoose.Schema(
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Channel",
+      required: true,
+
     },
     isChildren: {
       type: Boolean,

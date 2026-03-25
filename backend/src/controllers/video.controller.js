@@ -9,6 +9,7 @@ export const videoControll = asyncHandler(async (req, res, next) => {
   console.log(req.params._id);
 
   const isVarified = await Channel.findById(req.params._id);
+
   if (!isVarified)
     throw new ErrorFormater(
       "unathoriztion request channel is no not find ",
@@ -18,10 +19,13 @@ export const videoControll = asyncHandler(async (req, res, next) => {
 
   const { isPublish, decription, tittle, isChildren } = req.body;
   const { video, thumbnail } = req.files;
+
   if (
-    [isPublish, decription, tittle, isChildren, video, thumbnail].some(
-      field => field === ""
-    )
+    [decription, tittle].some(field => field === "") ||
+    !video ||
+    !thumbnail ||
+    isPublish === undefined ||
+    isChildren === undefined
   ) {
     throw new ErrorFormater(
       "isPublish, decription, tittle ,isChildren,video,thumbnail this filds are required",
@@ -29,13 +33,16 @@ export const videoControll = asyncHandler(async (req, res, next) => {
       404
     );
   }
+
   const thumbnailPath = thumbnail[0].path;
   const videoPath = video[0].path;
+
   const thumbnailUplode = await uplodOnCloudinary(
     thumbnailPath,
     "/video/thumbnail/",
     "videoThumdnails"
   );
+
   const videolUplode = await uplodOnCloudinary(
     videoPath,
     "/video/userVideo",
@@ -45,12 +52,14 @@ export const videoControll = asyncHandler(async (req, res, next) => {
   const updateVideoCount = await Channel.findByIdAndUpdate(
     req.params._id,
     {
-      $set: { videosCount: isVarified.videosCount + 1 },
+      $inc: { videosCount: 1 },
     },
     { new: true }
-  ).projection({ videosCount: 1 });
+  );
+
   const postedVideo = await Video.create({
     isPublish,
+    owner:req.params._id,
     decription,
     tittle,
     isChildren,
@@ -63,13 +72,10 @@ export const videoControll = asyncHandler(async (req, res, next) => {
       url: thumbnailUplode?.url,
     },
   });
+
   res
     .status(200)
     .json(
-      new successResponse(
-        201,
-        { ...postedVideo, ...updateVideoCount },
-        "video uploded successfully "
-      )
+      new successResponse(201, { postedVideo ,updateVideoCount}, "video uploded successfully ")
     );
 });
