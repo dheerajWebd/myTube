@@ -45,8 +45,7 @@ MIT
   "description": "string",
   "file": "binary"
 }
-```
-
+``` 
 **Response:**
 ```json
 {
