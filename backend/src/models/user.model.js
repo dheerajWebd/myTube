@@ -21,24 +21,36 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: [true, "must be required email"],
-      lowercase:true,
+      lowercase: true,
       trim: true,
-      unique:true,
+      unique: true,
     },
     password: {
       type: String,
       required: [true, "must be required email"],
       trim: true,
       minlength: [6, "password is too sort"],
-      select:false
+      select: false,
     },
     avatar: {
-      type: String,
-      trim: true,
+      publicId: {
+        type: String,
+        trim: true,
+      },
+      url: {
+        type: String,
+        trim: true,
+      },
     },
     coverImg: {
-      type: String,
-      trim: true,
+      publicId: {
+        type: String,
+        trim: true,
+      },
+      url: {
+        type: String,
+        trim: true,
+      },
     },
     watchHistory: [
       {
@@ -53,7 +65,7 @@ const userSchema = new Schema(
     },
     refreshToken: {
       type: String,
-      select:false
+      select: false,
     },
     isVerified: {
       type: Boolean,
@@ -63,14 +75,15 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 // here is the encrypt or decrypt methods
-userSchema.pre("save", async function (next) { // yaha pe jab async function use karate hai to next prommise mongoDB handeal karata hai to next nahi call karana chahiya quki next undefine hojata hai lekin jab async nhi use karate hai to next ko lagana chahiya 
-  if (!this.isModified("password")) return ;
+userSchema.pre("save", async function (next) {
+  // yaha pe jab async function use karate hai to next prommise mongoDB handeal karata hai to next nahi call karana chahiya quki next undefine hojata hai lekin jab async nhi use karate hai to next ko lagana chahiya
+  if (!this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, HASH_ROUND);
 }); // always don't craeate the arrow function
 
 userSchema.methods.isCompare = async function (password) {
   console.log(password);
-  
+
   return await bcrypt.compare(password, this.password);
 };
 

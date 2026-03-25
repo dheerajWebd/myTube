@@ -54,8 +54,14 @@ export const videoControll = asyncHandler(async (req, res, next) => {
     decription,
     tittle,
     isChildren,
-    video: videolUplode?.url || "",
-    thumbnail: thumbnailUplode?.url || "",
+    video: {
+      publicId: videolUplode?.public_id,
+      url: videolUplode?.url,
+    },
+    thumbnail: {
+      publicId: thumbnailUplode?.public_id,
+      url: thumbnailUplode?.url,
+    },
   });
   res
     .status(200)

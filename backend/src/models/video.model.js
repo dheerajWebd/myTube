@@ -17,9 +17,34 @@ const Shadul = mongoose.model("Shadul", ScheduleSchema);
 const VideoSchema = mongoose.Schema(
   {
     video: {
-      type: String,
+      publicId: {
+        type: String,
+        trim: true,
       required: [true, "video is required"],
-      trim: true,
+
+      },
+      url: {
+        type: String,
+        trim: true,
+      required: [true, "video is required"],
+
+      },
+
+    },
+
+    thumbnail: {
+      publicId: {
+        type: String,
+        trim: true,
+      required: [true, "thumbnail is required"],
+
+      },
+      url: {
+        type: String,
+        trim: true,
+      required: [true, "thumbnail is required"],
+
+      },
     },
     tittle: {
       type: String,
@@ -50,11 +75,6 @@ const VideoSchema = mongoose.Schema(
         index: true,
       },
     ],
-
-    thumbnail: {
-      type: String,
-      required: true,
-    },
 
     views: {
       type: Number,
@@ -87,7 +107,7 @@ const VideoSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Channel",
     },
-      isChildren: {
+    isChildren: {
       type: Boolean,
       default: false,
     },

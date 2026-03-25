@@ -6,6 +6,10 @@ import { authMiddileware } from "../middlweares/auth.middlewares.js";
 import { logOutUser } from "../controllers/logOut.controller.js";
 import { getMe } from "../controllers/getUser.controller.js";
 import { refreshAccessToken } from "../controllers/refreshAccessToken.controller.js";
+import {
+  updatepassword,
+  updateProfile,
+} from "../controllers/updateUser.controller.js";
 const UserRoute = express.Router();
 
 UserRoute.route("/register").post(
@@ -21,6 +25,15 @@ UserRoute.route("/login").post(logInUser);
 // proteted route
 UserRoute.route("/logOut").post(authMiddileware, logOutUser);
 UserRoute.route("/refresh/token").post(refreshAccessToken);
-UserRoute.route("/getme").get(authMiddileware,getMe);
+UserRoute.route("/refresh/token").post(authMiddileware, updatepassword);
+UserRoute.route("/refresh/token").post(
+  authMiddileware,
+  upload.fields([
+    { name: "coverImage", maxCount: 1 },
+    { name: "avatar", maxCount: 1 },
+  ]),
+  updateProfile
+);
+UserRoute.route("/getme").get(authMiddileware, getMe);
 
 export default UserRoute;

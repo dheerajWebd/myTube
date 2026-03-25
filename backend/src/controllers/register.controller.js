@@ -55,9 +55,9 @@ export const register = asyncHandler(async (req, res, next) => {
     "uaer_avatar"
   );
 
-  const rescoverImgpath = await uplodOnCloudinary(
+  const resCoverImgpath = await uplodOnCloudinary(
     coverImgpath || "",
-    "/coverImgpath/",
+    "/coverImg/",
     "uaer_cover"
   );
 
@@ -70,8 +70,14 @@ export const register = asyncHandler(async (req, res, next) => {
 
   const userCreated = await User.create({
     role: role || "user",
-    coverImg: rescoverImgpath?.url || "",
-    avatar: resAvatarUplode?.url,
+    coverImg: {
+      publicId: resCoverImgpath?.publicId || "",
+      url: resCoverImgpath?.url || "",
+    },
+    avatar: {
+      publicId: resAvatarUplode?.publicId || "",
+      url: resAvatarUplode?.url || "",
+    },
     password,
     email,
     fullName,
