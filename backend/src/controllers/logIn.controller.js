@@ -23,7 +23,6 @@ export const logInUser = asyncHandler(async (req, res, next) => {
   if (!user) throw new ErrorFormater("user is not register", [""], 404);
   const c = await user.isCompare(password);
   if (!c) throw new ErrorFormater("wrong password plz tray agan ", [""], 303);
-  console.log("c campair", c);
 
   const { genaretaccsesToken, genaretRefreshToken, Verified } =
     await genaretTokensForAuth(user);

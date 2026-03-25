@@ -36,10 +36,12 @@ const userSchema = new Schema(
       publicId: {
         type: String,
         trim: true,
+        required: [true, "avatar is required"],
       },
       url: {
         type: String,
         trim: true,
+        required: [true, "avatar url is required"],
       },
     },
     coverImg: {
