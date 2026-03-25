@@ -20,3 +20,10 @@ app.use((err, req, res, next) => {
 app.listen(process.env.PORT || 5000, () => {
   console.log("server is reaning ", process.env.PORT);
 });
+// echo "# myTube" >> README.md
+// git init
+// git add README.md
+// git commit -m "first commit"
+// git branch -M main
+// git remote add origin https://github.com/dheerajWebd/myTube.git
+// git push -u origin main
