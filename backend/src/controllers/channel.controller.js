@@ -61,3 +61,92 @@ export const channelController = asyncHandler(async (req, res, next) => {
       new successResponse(201, createdChannel, "channel created successfully")
     );
 });
+
+export const editChannel = asyncHandler(async (req, res, next) => {
+  const { channelId, channelName, isChildren, link, description } = req.body;
+  if (!channelId) {
+    throw new ErrorFormater(
+      "channelId is required for edit channel details",
+      "",
+      400
+    );
+  }
+  const channel = await Channel.findById(channelId);
+  if (!channel)
+    throw new ErrorFormater(
+      "channelId is wrong plz send the correct channelId",
+      "",
+      400
+    );
+  const updatedchannel = await Channel.findByIdAndUpdate(
+    channelId,
+    {
+      $set: {
+        channelName: channelName || channel.channelName,
+        isChildren: isChildren || channel.isChildren,
+        link: link || channel.link,
+        description: description || channel.description,
+      },
+    },
+    {
+      new: true,
+      validateDeforeSave: false,
+    }
+  );
+
+  if (!updatedchannel)
+    throw new ErrorFormater(
+      "server error to save in db plz reupdate the channel deatials",
+      "",
+      500
+    );
+
+  res
+    .status(200)
+    .json(new successResponse(200, updatedchannel, "channel was updated"));
+});
+
+export const editChannelCoverImg = asyncHandler(async (req, res, next) => {
+  const coverImg = req.file.coverImg.path;
+  const { channelId } = req.body;
+  console.log(coverImg);
+  if (!coverImg || !channelId) {
+    return new ErrorFormater(
+      "cover image or channelId is required to edit the cover image "
+    );
+  }
+  const uplodeChannelCoverimg = await uplodOnCloudinary(
+    req.file?.path,
+    "/channelCoverImg/",
+    "channelcoverimage"
+  );
+  if (!uplodeChannelCoverimg || !uplodeChannelCoverimg.url) {
+    return new ErrorFormater(
+      "server error to upload on cloud reupload",
+      "",
+      400
+    );
+  }
+  const updatedchannelcoverImg = await Channel.findByIdAndUpdate(
+    channelId,
+    {
+      $set: {
+        coverImg: uplodeChannelCoverimg.url,
+      },
+    },
+    {
+      new: true,
+      validateDeforeSave: false,
+    }
+  );
+
+  if (!updatedchannelcoverImg)
+    new ErrorFormater("server error to upload on db reupload", "", 400);
+
+  res
+    .status(200)
+    .json(
+      new successResponse(200, updatedchannelcoverImg, "updated cover image")
+    );
+});
+

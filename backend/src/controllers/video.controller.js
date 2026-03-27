@@ -113,7 +113,7 @@ export const editVideos = asyncHandler(async (req, res, next) => {
     },
     {
       new: true,
-      validateBeforeSave: false,
+      validateDeforeSave: false,
     }
   );
 
@@ -157,14 +157,21 @@ export const editThumbnail = asyncHandler(async (req, res, next) => {
     );
   }
 
-  const updatedThumbnail = await Video.findByIdAndUpdate(req.body.video_id, {
-    $set: {
-      thumbnail: {
-        publicId: thumbnailUplode.public_id,
-        url: thumbnailUplode.url,
+  const updatedThumbnail = await Video.findByIdAndUpdate(
+    req.body.video_id,
+    {
+      $set: {
+        thumbnail: {
+          publicId: thumbnailUplode.public_id,
+          url: thumbnailUplode.url,
+        },
       },
     },
-  });
+    {
+      new: true,
+      validateDeforeSave: false,
+    }
+  );
   res
     .status(200)
     .json(
