@@ -2,6 +2,7 @@ import "dotenv/config";
 import dbconoction from "./db/dbConection.js";
 import { app } from "./app.js";
 import rerponseMiddlewere from "./middlweares/rerponseMiddlewere.js";
+import { emailSend } from "./utils/email.utils.js";
 dbconoction();
 
 app.use(rerponseMiddlewere);
@@ -20,6 +21,7 @@ app.use((err, req, res, next) => {
 app.listen(process.env.PORT || 5000, () => {
   console.log("server is reaning ", process.env.PORT);
 });
+await emailSend();
 // echo "# myTube" >> README.md
 // git init
 // git add README.md
