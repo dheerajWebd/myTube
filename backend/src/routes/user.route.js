@@ -9,7 +9,7 @@ import { refreshAccessToken } from "../controllers/refreshAccessToken.controller
 import {
   updatepassword,
   updateProfile,
-} from "../controllers/updateUser.controller.js";
+} from "../controllers/UserCURDopertions.controller.js";
 const UserRoute = express.Router();
 
 UserRoute.route("/register").post(

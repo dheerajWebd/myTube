@@ -71,11 +71,11 @@ export const register = asyncHandler(async (req, res, next) => {
   const userCreated = await User.create({
     role: role || "user",
     coverImg: {
-      publicId: resCoverImgpath?.publicId || "",
+      publicId: resCoverImgpath?.public_id || "",
       url: resCoverImgpath?.url || "",
     },
     avatar: {
-      publicId: resAvatarUplode?.publicId || "",
+      publicId: resAvatarUplode?.public_id || "",
       url: resAvatarUplode?.url || "",
     },
     password,

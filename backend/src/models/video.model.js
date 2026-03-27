@@ -7,7 +7,7 @@ const ScheduleSchema = mongoose.Schema({
   },
   publishAt: {
     type: Date,
-    required: [true, "seduled date is required"],
+    // required: [true, "seduled date is required"],
     default: Date.now,
   },
 });

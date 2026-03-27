@@ -65,6 +65,10 @@ const userSchema = new Schema(
       enum: ["user", "adimn"],
       default: "user",
     },
+    isActive:{
+      type:Boolean,
+      default:false,
+    },
     refreshToken: {
       type: String,
       select: false,

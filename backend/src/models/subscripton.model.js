@@ -15,5 +15,6 @@ const subscriptionSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+subscriptionSchema.index({userId:1,channelId:1},{unique:true})
 
-export const Subscription = mongoose.model("Subscription", subscriptionSchema);
+export const subscription = mongoose.model("Subscription", subscriptionSchema);
