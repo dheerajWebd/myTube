@@ -8,7 +8,7 @@ export const register = asyncHandler(async (req, res, next) => {
   const { role, password, email, fullName, userName } = req.body;
 
   if (
-    [role, password, email, fullName, userName].some(
+    [password, email, fullName, userName].some(
       filld => !filld || filld?.trim() === false
     )
   )
@@ -25,7 +25,7 @@ export const register = asyncHandler(async (req, res, next) => {
     throw new ErrorFormater(
       "user is exsist you can try another email or username ",
       ["user is exsist you can try another email or username "],
-      203
+      400
     );
   const { avatar, coverImg } = req.files;
 
@@ -33,7 +33,7 @@ export const register = asyncHandler(async (req, res, next) => {
     throw new ErrorFormater(
       "avata image is not found plz reuplode",
       ["user is exsist you can try another email or username "],
-      302
+    402
     );
 
   const avatarPath = avatar[0]?.path;
@@ -46,7 +46,7 @@ export const register = asyncHandler(async (req, res, next) => {
     throw new ErrorFormater(
       "avata image path is not found plz reuplode",
       ["user is exsist you can try another email or username "],
-      302
+      402
     );
 
   const resAvatarUplode = await uplodOnCloudinary(
@@ -82,9 +82,16 @@ export const register = asyncHandler(async (req, res, next) => {
     email,
     fullName,
     userName,
-  });
+  })
 
   res
     .status(201)
-    .json(new successResponse(201, userCreated, "user created successfully "));
+    .json(new successResponse(201, {
+      coverImg: userCreated.coverImg || "",
+      avatar: userCreated.avatar || "",
+      email: userCreated.email || "",
+      fullName: userCreated.fullName || "",
+      userName: userCreated.userName || "",
+
+    }, "user created successfully ")).send("");
 });

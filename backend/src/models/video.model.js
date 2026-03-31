@@ -75,7 +75,7 @@ const VideoSchema = mongoose.Schema(
         index: true,
       },
     ],
-
+     
     views: {
       type: Number,
       default: 0,
@@ -106,6 +106,12 @@ const VideoSchema = mongoose.Schema(
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Channel",
+      required: true,
+
+    },
+    tagProduct: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "TagProduct",
       required: true,
 
     },

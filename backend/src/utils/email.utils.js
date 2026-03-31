@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-export const emailSend = async () => {
+export const emailSend = async (from, to, subject, html) => {
   const transpoter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -10,18 +10,18 @@ export const emailSend = async () => {
   });
 
   const mailOption = {
-    from: process.env.email,
-    to: "dwivedid382@gmail.com",
-    subject: "email varification code to vearify the email",
-    text: "242567 this your varification code to varifiy your email",
+    from,
+    to,
+    subject,
+    html,
   };
 
   const sent = await transpoter.sendMail(mailOption, function (error, info) {
     if (error) {
-      console.log(error);
+      return error;
     } else {
-      console.log(info);
+      return info;
     }
   });
-  console.log(sent);
+  console.log(await sent);
 };

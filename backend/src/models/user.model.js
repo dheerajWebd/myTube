@@ -24,12 +24,20 @@ const userSchema = new Schema(
       lowercase: true,
       trim: true,
       unique: true,
+      match: [
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/,
+        "invalid email",
+      ],
     },
     password: {
       type: String,
       required: [true, "must be required email"],
       trim: true,
       minlength: [6, "password is too sort"],
+      match: [
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{10,}$/,
+        "password is tooo week",
+      ],
       select: false,
     },
     avatar: {
@@ -65,9 +73,9 @@ const userSchema = new Schema(
       enum: ["user", "adimn"],
       default: "user",
     },
-    isActive:{
-      type:Boolean,
-      default:false,
+    isActive: {
+      type: Boolean,
+      default: false,
     },
     refreshToken: {
       type: String,
@@ -116,6 +124,17 @@ userSchema.methods.RefreshToken = function () {
     process.env.REFF_TOKEN,
     {
       expiresIn: process.env.EXP_REF,
+    }
+  );
+};
+userSchema.method.verifyString = function () {
+  return jwt.sign(
+    {
+      _id: this._id,
+    },
+    process.env.VERIFY_TOKEN,
+    {
+      expiresIn: process.env.EXP_VERI,
     }
   );
 };
