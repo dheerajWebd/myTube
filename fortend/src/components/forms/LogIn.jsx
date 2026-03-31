@@ -13,7 +13,7 @@ const LogIn = () => {
       formState: { errors },
       getValues,
    } = useForm({
-      mode: "onChange",
+      mode: "onChange", 
    });
 
    const onSubmit = data => {
@@ -21,7 +21,7 @@ const LogIn = () => {
    };
    return (
       <div>
-         <div className="absolute w-[90%] top-15 text-xl z-30  ml-5">
+         <div className={`absolute  w-[90%] top-15 text-xl z-30  ml-5`}>
             <h1 className="text-xl font-bold text-white text-center mt-10 z-30 relative">
                Log in to MyTube.com
             </h1>
