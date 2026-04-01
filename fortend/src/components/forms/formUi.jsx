@@ -1,4 +1,5 @@
 import { useState, useForm, Register, LogIn } from "@/import.js";
+import ForgetPassword from "./forgetPassword.jsx";
 
 const RegisterForm = () => {
    const [staps, setStaps] = useState(0);
@@ -6,7 +7,16 @@ const RegisterForm = () => {
    const {
       register,
       handleSubmit,
-      formState: { errors },
+      formState: {
+         errors,
+         isValid,
+         disabled,
+         isDirty,
+         isReady,
+         isValidating,
+         dirtyFields,
+         validatingFields,
+      },
       reset,
       getValues,
       trigger,
@@ -49,14 +59,29 @@ const RegisterForm = () => {
          setType("sumbit");
       }
    };
-
+   console.log(
+      "isValid",
+      isValid,
+      "disabled",
+      disabled,
+      "isDirty",
+      isDirty,
+      "isReady",
+      isReady,
+      "isValidating",
+      isValidating,
+      "dirtyFields",
+      dirtyFields,
+      "validatingFields",
+      validatingFields
+   );
    return (
       <>
          <div className="h-screen w-full flex justify-center relative z-20 bg-[#261403] ">
             <div className="w-screen  h-[150vh] relative z-20 bg-[#261403] overflow-hidden">
                <div className="absolute text-white  overflow-hidden -top-40 -right-19 z-20 rounded-[100%] w-[150%] h-60 bg-[#4F3422]"></div>
             </div>
-            <Register
+            {/* <Register
                handleClik={handleClik}
                handleSubmit={handleSubmit}
                register={register}
@@ -65,8 +90,10 @@ const RegisterForm = () => {
                type={type}
                getValues={getValues}
                staps={staps}
-            />
-            <LogIn />
+               isValid={isValid}
+            /> */}
+            {/* <LogIn />  */}
+            <ForgetPassword />
          </div>
       </>
    );

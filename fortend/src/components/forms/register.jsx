@@ -15,10 +15,10 @@ const Register = ({
    getValues,
    handleClik,
    type,
+   isValid,
    staps,
 }) => {
-   
-  const onSubmit = data => {
+   const onSubmit = data => {
       console.log(data);
       reset();
    };
@@ -58,6 +58,7 @@ const Register = ({
                aria-live="assertive"
                aria-invalid={!!errors.root}
                type={type}
+               disabled={!isValid}
                onClick={handleClik}
                className={
                   "p-5 cursor-pointer text-white w-11/12 mt-3 bg-[#926247]"

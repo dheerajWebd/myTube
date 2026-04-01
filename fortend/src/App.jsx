@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./index.css";
 
-import { register } from "./context/slice/registerSlice.js";
-import { Button } from "@/components/ui/button.jsx";
-import { createUser } from "./context/registerThunk/registerThunk.js";
-import { Input } from "@/components/ui/input.jsx";
+// import { register } from "./context/slice/registerSlice.js";
+// import { Button } from "@/components/ui/button.jsx";
+// import { createUser } from "./context/registerThunk/registerThunk.js";
+// import { Input } from "@/components/ui/input.jsx";
 import RegisterForm from "./components/forms/formUi.jsx";
 
 const App = () => {

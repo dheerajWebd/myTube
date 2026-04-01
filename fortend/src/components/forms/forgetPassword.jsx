@@ -1,19 +1,10 @@
-import {
-   ArrowRight,
-   Button,
-   Input,
-   InputPassword,
-   Label,
-   RegisterSocilMidiea,
-   useForm,
-} from "@/import.js";
+import { ArrowRight, Button, Input, Label, useForm } from "@/import.js";
 
-const LogIn = () => {
+const ForgetPassword = () => {
    const {
       register,
       handleSubmit,
       formState: { errors, isValid },
-      getValues,
       reset,
    } = useForm({
       mode: "onChange",
@@ -24,7 +15,7 @@ const LogIn = () => {
       reset();
    };
    return (
-      <div className={`absolute w-[90%] top-15 text-xl z-30  ml-5`}>
+      <div className={`absolute  w-[90%] top-15 text-xl z-30  ml-5`}>
          <h1 className="text-xl font-bold text-white text-center mt-10 z-30 relative">
             Log in to MyTube.com
          </h1>
@@ -38,10 +29,10 @@ const LogIn = () => {
             </Label>
 
             <Input
-               placeholder={"enter yor email / username "}
                id="userName"
                className={"text-white mt-2 p-5 mb-5"}
                type={"text"}
+               placeholder={"enter your Email / Username"}
                {...register("userName", {
                   required: "user name or email are required",
                   minLength: {
@@ -74,7 +65,7 @@ const LogIn = () => {
                         !/[ ]/.test(value) || "empty space is not allow",
                   },
                })}
-               aria-invalid={errors.userName}
+               aria-invalid={!!errors.userName}
             />
             {errors?.userName && (
                <p
@@ -85,17 +76,48 @@ const LogIn = () => {
                   {errors?.userName?.message}
                </p>
             )}
-            <InputPassword
-               register={register}
-               errors={errors}
-               getValues={getValues}
+
+            <Label
+               htmlFor="EmailOTP"
+               className={"text-sm -ml-1 mt-5 mb-1 text-[#F0F1EE]"}
+            >
+               Email OTP
+            </Label>
+
+            <Input
+               id="EmailOTP"
+               placeholder="enter your email OTP "
+               className={"text-white mt-2 p-5 mb-5"}
+               type={"text"}
+               {...register("EmailOTP", {
+                  required: "EmailOTP are required",
+                  minLength: {
+                     value: 4,
+                     message: "minimum lenght is 3",
+                  },
+                  maxLength: {
+                     value: 4,
+                     message: "maximum lenght is 4",
+                  },
+               })}
+               aria-invalid={!!errors.EmailOTP}
             />
+            {errors?.EmailOTP && (
+               <p
+                  role="alert"
+                  aria-live="assertive"
+                  className="text-red-500 text-xs"
+               >
+                  {errors?.EmailOTP?.message}
+               </p>
+            )}
+
             <Button
                role="alert"
                aria-live="assertive"
                aria-invalid={!!errors.root}
-               disabled={!isValid}
                type={"sumbit"}
+               disabled={!isValid}
                className={
                   "p-5 cursor-pointer text-white w-11/12 mt-3 bg-[#926247]"
                }
@@ -104,9 +126,8 @@ const LogIn = () => {
                sumbit <ArrowRight />
             </Button>
          </form>
-         <RegisterSocilMidiea />
       </div>
    );
 };
 
-export default LogIn;
+export default ForgetPassword;
