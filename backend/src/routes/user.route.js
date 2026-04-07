@@ -12,10 +12,8 @@ import {
 } from "../controllers/UserCURDopertions.controller.js";
 const UserRoute = express.Router();
 
-UserRoute.route("/register")
-.post(
-  upload
-  .fields([
+UserRoute.route("/register").post(
+  upload.fields([
     { name: "coverImg", maxCount: 1 },
     { name: "avatar", maxCount: 1 },
   ]),

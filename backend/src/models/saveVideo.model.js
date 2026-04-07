@@ -11,7 +11,7 @@ const SaveVideoSchema = new mongoose.Schema(
     discription: {
       type: String,
       trim: true,
-      maxleanght: 500,
+      maxleanght: 200,
     },
     vedioId: [
       {

@@ -5,18 +5,17 @@ const mataDataSchema = new mongoose.Schema({
     type: Number,
   },
   aspectRatio: {
-    type: String
+    type: String,
   },
   videoType: {
     type: String,
-    enum: ["sort", "long"]
+    enum: ["sort", "long"],
   },
   hight: {
-    type: Number
+    type: Number,
   },
-  width: Number
-
-})
+  width: Number,
+});
 
 mataDataSchema.methods.checkType = function (aspectRatio, duration) {
   if (aspectRatio === "1920X1080" && duration <= 2000) {
@@ -24,5 +23,5 @@ mataDataSchema.methods.checkType = function (aspectRatio, duration) {
   } else {
     this.videoType = "long";
   }
-}
-export const metaData = mongoose.model("metaData", mataDataSchema)
+};
+export const metaData = mongoose.model("metaData", mataDataSchema);

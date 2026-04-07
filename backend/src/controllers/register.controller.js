@@ -84,7 +84,7 @@ export const register = asyncHandler(async (req, res, next) => {
     email,
     fullName,
     userName,
-  })
+  });
 
   const { genaretaccsesToken, genaretRefreshToken, Verified } =
     await genaretTokensForAuth(userCreated);
@@ -94,17 +94,22 @@ export const register = asyncHandler(async (req, res, next) => {
     .cookie("accsesToken", genaretaccsesToken, Option)
     .cookie("refreshToken", genaretRefreshToken, Option)
     .cookie("Verified", Verified, Option)
-    .json(new successResponse(201, {
-      coverImg: userCreated.coverImg || "",
-      avatar: userCreated.avatar || "",
-      email: userCreated.email || "",
-      fullName: userCreated.fullName || "",
-      userName: userCreated.userName || "",
-      loged_in_deatials: {
-        accsesToken: genaretaccsesToken,
-        RefreshToken: genaretRefreshToken,
-        Verified,
-      }
-
-    }, "user created successfully or auto loged in "));
+    .json(
+      new successResponse(
+        201,
+        {
+          coverImg: userCreated.coverImg || "",
+          avatar: userCreated.avatar || "",
+          email: userCreated.email || "",
+          fullName: userCreated.fullName || "",
+          userName: userCreated.userName || "",
+          loged_in_deatials: {
+            accsesToken: genaretaccsesToken,
+            RefreshToken: genaretRefreshToken,
+            Verified,
+          },
+        },
+        "user created successfully or auto loged in "
+      )
+    );
 });

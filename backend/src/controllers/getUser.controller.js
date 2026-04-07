@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 import { Channel } from "../models/channel.model.js";
 import { Video } from "../models/video.model.js";
 
-export const channelProfile = async (user) => {
+export const channelProfile = async user => {
   const channelProfile = await Channel.aggregate([
     {
-      $match: { _id: new mongoose.Types.ObjectId("69cfe01560b7d3b77f8cb9e0") }
+      $match: { _id: new mongoose.Types.ObjectId("69cfe01560b7d3b77f8cb9e0") },
     },
     {
       $lookup: {
@@ -13,43 +13,44 @@ export const channelProfile = async (user) => {
         foreignField: "_id",
         localField: "owner",
 
-        as: "user"
-      }
-
+        as: "user",
+      },
     },
     {
-      $unwind: "$user"
+      $unwind: "$user",
     },
     {
       $lookup: {
         from: "videos",
-        let: { channelID: new mongoose.Types.ObjectId("69cfe01560b7d3b77f8cb9e0") },
+        let: {
+          channelID: new mongoose.Types.ObjectId("69cfe01560b7d3b77f8cb9e0"),
+        },
         pipeline: [
           {
             $match: {
               $expr: {
-                $eq: ["$owner", "$$channelID"]
-              }
+                $eq: ["$owner", "$$channelID"],
+              },
             },
           },
 
           {
             $sort: {
               createdAt: -1,
-              _id: -1
-            }
+              _id: -1,
+            },
           },
           {
-            $limit: (5)
+            $limit: 5,
           },
           {
             $project: {
               "thumbnail.publicId": 0,
               "video.publicId": 0,
-            }
+            },
           },
         ],
-        as: "total_vedios"
+        as: "total_vedios",
       },
     },
     {
@@ -67,53 +68,50 @@ export const channelProfile = async (user) => {
         // "user.": 0,
 
         owner: 0,
-        "__v": 0,
-        // "total_vedios.": 0, 
-      }
-
-
+        __v: 0,
+        // "total_vedios.": 0,
+      },
     },
-  ])
+  ]);
   // const data2 = await Channel.findOne({ owner: "69cfdfb560b7d3b77f8cb9d7" })
   console.log(JSON.stringify(channelProfile[0], null, 2));
-  return channelProfile
-}
+  return channelProfile;
+};
 
 export const filterVideos = async (user, sortedBy, channelID) => {
   const sortedVideo = await Video.aggregate([
     {
-
       $match: {
         $and: [
           {
-            _id: { $gt: new mongoose.Types.ObjectId("69d3278407bd3fec606577d8") },
-            createdAt: { $gt: new Date("2026-04-03T15:43:17.575Z") }
-
+            _id: {
+              $gt: new mongoose.Types.ObjectId("69d3278407bd3fec606577d8"),
+            },
+            createdAt: { $gt: new Date("2026-04-03T15:43:17.575Z") },
           },
           {
-            createdAt: { $gt: new Date("2026-04-03T15:43:17.575Z") }
-
-          }
-        ]
-      }
+            createdAt: { $gt: new Date("2026-04-03T15:43:17.575Z") },
+          },
+        ],
+      },
     },
     {
       $lookup: {
         from: "channels",
         localField: "owner",
         foreignField: "_id",
-        as: "owner_deatil"
-      }
+        as: "owner_deatil",
+      },
     },
     {
-      $limit: (5)
+      $limit: 5,
     },
     {
       $sort: {
-        "_id": -1,
-        "createdAt": -1
-      }
+        _id: -1,
+        createdAt: -1,
+      },
     },
-  ])
+  ]);
   return sortedVideo;
-}
+};

@@ -149,4 +149,3 @@ export const editChannelCoverImg = asyncHandler(async (req, res, next) => {
       new successResponse(200, updatedchannelcoverImg, "updated cover image")
     );
 });
-

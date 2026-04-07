@@ -1,12 +1,12 @@
-// context import 
-import base_API from "@/AxiosConfig.js"
-import { createAsyncThunk } from "@reduxjs/toolkit"
+// context import
+import base_API from "@/AxiosConfig.js";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 // context slice import
 import { createSlice } from "@reduxjs/toolkit";
 import { createUser } from "./context/registerThunk/registerThunk.js";
 
-// context store  
+// context store
 import { configureStore } from "@reduxjs/toolkit";
 import { register } from "./context/slice/registerSlice.js";
 
@@ -22,11 +22,11 @@ import Register from "@/components/forms/register.jsx";
 import LogIn from "@/components/forms/LogIn.jsx";
 import { useDispatch, useSelector } from "react-redux";
 
-// input import 
+// input import
 import { Label } from "@/components/ui/label.jsx";
 import { Input } from "@/components/ui/input.jsx";
 
-// filename import is registerSocilMidea.jsx 
+// filename import is registerSocilMidea.jsx
 
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { RiGoogleLine } from "react-icons/ri";
@@ -34,48 +34,43 @@ import { FcAddImage } from "react-icons/fc";
 
 import LoginThunk from "@/context/registerThunk/LoginThunk.js";
 
-//  all exports 
+//  all exports
 export {
-  // context  exports
-  base_API,
-  createAsyncThunk,
+   // context  exports
+   base_API,
+   createAsyncThunk,
 
-  // context slice export
-  createUser,
-  createSlice,
+   // context slice export
+   createUser,
+   createSlice,
 
-  // context store export
-  register,
-  configureStore,
+   // context store export
+   register,
+   configureStore,
 
-  // registerUser.jsx exports
-  useForm,
-  Button,
-  ArrowRight,
-  RegisterSocilMidiea,
-  InputEmail,
-  InputPassword,
-  FcAddImage,
-  useState,
-  Step1,
-  Step2,
-  LogIn,
-  Register,
-  useDispatch,
-  useSelector,
+   // registerUser.jsx exports
+   useForm,
+   Button,
+   ArrowRight,
+   RegisterSocilMidiea,
+   InputEmail,
+   InputPassword,
+   FcAddImage,
+   useState,
+   Step1,
+   Step2,
+   LogIn,
+   Register,
+   useDispatch,
+   useSelector,
 
+   // input.jsx  exports
+   Input,
+   Label,
+   LoginThunk,
 
-  // input.jsx  exports
-  Input,
-  Label,
-
-
-  LoginThunk,
-
-  // registerSocilMidea.jsx  exports and All icons
-  FaFacebook,
-  FaInstagram,
-  RiGoogleLine
-
-
-}
+   // registerSocilMidea.jsx  exports and All icons
+   FaFacebook,
+   FaInstagram,
+   RiGoogleLine,
+};

@@ -6,28 +6,24 @@ import { filterVideos } from "./controllers/getUser.controller.js";
 dbconoction();
 
 app.use((err, _, res, next) => {
-  res.status(err.statusCode || 500).json(
-    {
-      success: false,
-      message: err.message,
-      errors: err.message || [],
-      statusCode: err.statusCode || 500
-    },
-  );
+  res.status(err.statusCode || 500).json({
+    success: false,
+    message: err.message,
+    errors: err.message || [],
+    statusCode: err.statusCode || 500,
+  });
   next(err);
 });
 app.listen(process.env.PORT || 4000, () => {
-  console.log("server  is listen in 5000 port")
-})
-
-
+  console.log("server  is listen in 5000 port");
+});
 
 // channelProfile()
 app.get("/l", async (req, res) => {
-  const r = await filterVideos()
+  const r = await filterVideos();
 
-  res.json(r)
-})
+  res.json(r);
+});
 // echo "# myTube" >> README.md
 // git init
 // git add README.md

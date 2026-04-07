@@ -2,7 +2,7 @@ class ErrorFormater extends Error {
   constructor(
     message = "somthing went wrong",
     errors = [],
-    statusCode,
+    statusCode
     // stack = ""
   ) {
     super(message);

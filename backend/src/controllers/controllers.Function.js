@@ -8,7 +8,7 @@ export const genaretTokensForAuth = async user => {
     user.refreshToken = genaretRefreshToken;
     user.isVerified = true;
 
-      await user.save({ validateBeforeSave: false });
+    await user.save({ validateBeforeSave: false });
 
     return {
       genaretaccsesToken,
@@ -24,4 +24,3 @@ export const genaretTokensForAuth = async user => {
     );
   }
 };
-

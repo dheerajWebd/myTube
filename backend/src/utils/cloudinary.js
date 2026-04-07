@@ -8,7 +8,7 @@ cloudinary.config({
 });
 
 const uplodOnCloudinary = async (localFileUrl, folderName, publicId) => {
-  console.log(localFileUrl)
+  console.log(localFileUrl);
   if (!localFileUrl) return null;
   try {
     const responce = await cloudinary.uploader.upload(localFileUrl, {
@@ -22,9 +22,7 @@ const uplodOnCloudinary = async (localFileUrl, folderName, publicId) => {
     });
 
     return responce;
-
   } catch (error) {
-
     console.log(error);
     fs.unlink(localFileUrl, err => {
       console.log(err);

@@ -85,5 +85,4 @@ export const deleteAccount = asyncHandler(async (req, res, next) => {
       400
     );
   const user = await User.findById(req.user._id).select("+password");
-   
 });

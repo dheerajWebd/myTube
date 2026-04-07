@@ -4,7 +4,7 @@ import asyncHandler from "../utils/ansicHandler.js";
 import successResponse from "../utils/successResponse.js";
 
 export const logOutUser = asyncHandler(async (req, res, _) => {
-  const updatedUser= await User.findByIdAndUpdate(
+  const updatedUser = await User.findByIdAndUpdate(
     req.user?._id,
 
     {
@@ -18,7 +18,7 @@ export const logOutUser = asyncHandler(async (req, res, _) => {
     }
   );
 
-  
+
   res
     .status(200)
     .clearCookie("accsesToken", Option)

@@ -39,7 +39,6 @@ const userSchema = new Schema(
         "password is tooo week",
       ],
       select: false,
-      
     },
     avatar: {
       publicId: {
