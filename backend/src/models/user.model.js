@@ -35,10 +35,11 @@ const userSchema = new Schema(
       trim: true,
       minlength: [6, "password is too sort"],
       match: [
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{10,}$/,
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/,
         "password is tooo week",
       ],
       select: false,
+      
     },
     avatar: {
       publicId: {

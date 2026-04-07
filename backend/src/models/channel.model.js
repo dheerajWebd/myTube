@@ -54,10 +54,6 @@ const channelSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    video: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Video",
-    },
 
     link: {
       type: [

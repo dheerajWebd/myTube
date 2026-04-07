@@ -116,14 +116,14 @@ const ForgetPassword = () => {
                role="alert"
                aria-live="assertive"
                aria-invalid={!!errors.root}
-               type={"sumbit"}
+               type={"submit"}
                disabled={!isValid}
                className={
                   "p-5 cursor-pointer text-white w-11/12 mt-3 bg-[#926247]"
                }
                variant="destructive"
             >
-               sumbit <ArrowRight />
+               submit <ArrowRight />
             </Button>
          </form>
       </div>

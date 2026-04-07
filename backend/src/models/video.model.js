@@ -112,7 +112,7 @@ const VideoSchema = mongoose.Schema(
     tagProduct: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "TagProduct",
-      required: true,
+      // required: true,
 
     },
     isChildren: {

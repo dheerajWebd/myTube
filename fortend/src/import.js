@@ -20,6 +20,8 @@ import { useState } from "react";
 import { Step1, Step2 } from "@/components/forms/formSteps.jsx";
 import Register from "@/components/forms/register.jsx";
 import LogIn from "@/components/forms/LogIn.jsx";
+import { useDispatch, useSelector } from "react-redux";
+
 // input import 
 import { Label } from "@/components/ui/label.jsx";
 import { Input } from "@/components/ui/input.jsx";
@@ -30,6 +32,7 @@ import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { RiGoogleLine } from "react-icons/ri";
 import { FcAddImage } from "react-icons/fc";
 
+import LoginThunk from "@/context/registerThunk/LoginThunk.js";
 
 //  all exports 
 export {
@@ -54,14 +57,25 @@ export {
   InputPassword,
   FcAddImage,
   useState,
-  Step1, Step2, LogIn, Register,
+  Step1,
+  Step2,
+  LogIn,
+  Register,
+  useDispatch,
+  useSelector,
+
 
   // input.jsx  exports
   Input,
   Label,
 
-  // registerSocilMidea.jsx  exports
+
+  LoginThunk,
+
+  // registerSocilMidea.jsx  exports and All icons
   FaFacebook,
   FaInstagram,
   RiGoogleLine
+
+
 }

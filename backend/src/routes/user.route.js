@@ -4,7 +4,7 @@ import { register } from "../controllers/register.controller.js";
 import { logInUser } from "../controllers/logIn.controller.js";
 import { authMiddileware } from "../middlweares/auth.middlewares.js";
 import { logOutUser } from "../controllers/logOut.controller.js";
-import { getMe } from "../controllers/getUser.controller.js";
+import { channelProfile } from "../controllers/getUser.controller.js";
 import { refreshAccessToken } from "../controllers/refreshAccessToken.controller.js";
 import {
   updatepassword,
@@ -12,8 +12,10 @@ import {
 } from "../controllers/UserCURDopertions.controller.js";
 const UserRoute = express.Router();
 
-UserRoute.route("/register").post(
-  upload.fields([
+UserRoute.route("/register")
+.post(
+  upload
+  .fields([
     { name: "coverImg", maxCount: 1 },
     { name: "avatar", maxCount: 1 },
   ]),
@@ -34,6 +36,6 @@ UserRoute.route("/change/profile").post(
   ]),
   updateProfile
 );
-UserRoute.route("/getme").get(authMiddileware, getMe);
+UserRoute.route("/channelProfile").get(authMiddileware, channelProfile);
 
 export default UserRoute;

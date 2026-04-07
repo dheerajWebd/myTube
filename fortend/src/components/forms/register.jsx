@@ -6,7 +6,11 @@ import {
    InputPassword,
    Step1,
    Step2,
+   createUser,
+   useDispatch,
+   useSelector,
 } from "@/import.js";
+
 const Register = ({
    reset,
    handleSubmit,
@@ -17,11 +21,27 @@ const Register = ({
    type,
    isValid,
    staps,
+   setStaps,
 }) => {
-   const onSubmit = data => {
+   const dispatch = useDispatch();
+
+   const onSubmit = async data => {
+      const formData = new FormData();
       console.log(data);
+      const { email, password, avatar, userName, fullName } = data;
+
+      console.log(avatar[0]);
+
+      formData.append("userName", userName);
+      formData.append("avatar", avatar[0]);
+      formData.append("password", password);
+      formData.append("email", email);
+      formData.append("fullName", fullName);
+      dispatch(createUser(formData));
+      setStaps(0);
       reset();
    };
+
    return (
       <div className="absolute w-[90%] top-15 text-xl z-30  ml-5">
          <h1 className="text-xl font-bold text-white text-center mt-10 z-30 relative">

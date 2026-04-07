@@ -1,28 +1,33 @@
+import { app } from "./app.js";
 import "dotenv/config";
 import dbconoction from "./db/dbConection.js";
-import { app } from "./app.js";
-import rerponseMiddlewere from "./middlweares/rerponseMiddlewere.js";
-import { emailSend } from "./utils/email.utils.js";
-import { varificationEmail } from "./utils/tamplatesEmail/varification.email.js";
+import { filterVideos } from "./controllers/getUser.controller.js";
+
 dbconoction();
 
-app.use(rerponseMiddlewere);
-
-app.use((err, req, res, next) => {
-  res.status(err.statusCode || 500).json([
+app.use((err, _, res, next) => {
+  res.status(err.statusCode || 500).json(
     {
       success: false,
       message: err.message,
       errors: err.message || [],
+      statusCode: err.statusCode || 500
     },
-  ]);
-  next();
+  );
+  next(err);
 });
+app.listen(process.env.PORT || 4000, () => {
+  console.log("server  is listen in 5000 port")
+})
 
-app.listen(process.env.PORT || 5000, () => {
-  console.log("server is reaning ", process.env.PORT);
-});
 
+
+// channelProfile()
+app.get("/l", async (req, res) => {
+  const r = await filterVideos()
+
+  res.json(r)
+})
 // echo "# myTube" >> README.md
 // git init
 // git add README.md
@@ -30,3 +35,4 @@ app.listen(process.env.PORT || 5000, () => {
 // git branch -M main
 // git remote add origin https://github.com/dheerajWebd/myTube.git
 // git push -u origin main
+//

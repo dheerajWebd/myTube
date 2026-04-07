@@ -59,29 +59,30 @@ const RegisterForm = () => {
          setType("sumbit");
       }
    };
-   console.log(
-      "isValid",
-      isValid,
-      "disabled",
-      disabled,
-      "isDirty",
-      isDirty,
-      "isReady",
-      isReady,
-      "isValidating",
-      isValidating,
-      "dirtyFields",
-      dirtyFields,
-      "validatingFields",
-      validatingFields
-   );
+   // console.log(
+   //    "isValid",
+   //    isValid,
+   //    "disabled",
+   //    disabled,
+   //    "isDirty",
+   //    isDirty,
+   //    "isReady",
+   //    isReady,
+   //    "isValidating",
+   //    isValidating,
+   //    "dirtyFields",
+   //    dirtyFields,
+   //    "validatingFields",
+   //    validatingFields
+   // );
    return (
       <>
          <div className="h-screen w-full flex justify-center relative z-20 bg-[#261403] ">
             <div className="w-screen  h-[150vh] relative z-20 bg-[#261403] overflow-hidden">
                <div className="absolute text-white  overflow-hidden -top-40 -right-19 z-20 rounded-[100%] w-[150%] h-60 bg-[#4F3422]"></div>
             </div>
-            {/* <Register
+
+            <Register
                handleClik={handleClik}
                handleSubmit={handleSubmit}
                register={register}
@@ -91,9 +92,10 @@ const RegisterForm = () => {
                getValues={getValues}
                staps={staps}
                isValid={isValid}
-            /> */}
+               setStaps={setStaps}
+            />
             {/* <LogIn />  */}
-            <ForgetPassword />
+            {/* <ForgetPassword /> */}
          </div>
       </>
    );

@@ -24,3 +24,4 @@ export const genaretTokensForAuth = async user => {
     );
   }
 };
+

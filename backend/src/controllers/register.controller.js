@@ -1,8 +1,10 @@
+import { Option } from "../constent.js";
 import { User } from "../models/user.model.js";
 import asyncHandler from "../utils/ansicHandler.js";
 import uplodOnCloudinary from "../utils/cloudinary.js";
 import { ErrorFormater } from "../utils/ErrorFormate.js";
 import successResponse from "../utils/successResponse.js";
+import { genaretTokensForAuth } from "./controllers.Function.js";
 
 export const register = asyncHandler(async (req, res, next) => {
   const { role, password, email, fullName, userName } = req.body;
@@ -33,7 +35,7 @@ export const register = asyncHandler(async (req, res, next) => {
     throw new ErrorFormater(
       "avata image is not found plz reuplode",
       ["user is exsist you can try another email or username "],
-    402
+      402
     );
 
   const avatarPath = avatar[0]?.path;
@@ -84,14 +86,25 @@ export const register = asyncHandler(async (req, res, next) => {
     userName,
   })
 
+  const { genaretaccsesToken, genaretRefreshToken, Verified } =
+    await genaretTokensForAuth(userCreated);
+
   res
     .status(201)
+    .cookie("accsesToken", genaretaccsesToken, Option)
+    .cookie("refreshToken", genaretRefreshToken, Option)
+    .cookie("Verified", Verified, Option)
     .json(new successResponse(201, {
       coverImg: userCreated.coverImg || "",
       avatar: userCreated.avatar || "",
       email: userCreated.email || "",
       fullName: userCreated.fullName || "",
       userName: userCreated.userName || "",
+      loged_in_deatials: {
+        accsesToken: genaretaccsesToken,
+        RefreshToken: genaretRefreshToken,
+        Verified,
+      }
 
-    }, "user created successfully ")).send("");
+    }, "user created successfully or auto loged in "));
 });

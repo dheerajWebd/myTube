@@ -5,7 +5,9 @@ import {
    InputPassword,
    Label,
    RegisterSocilMidiea,
+   useDispatch,
    useForm,
+   LoginThunk,
 } from "@/import.js";
 
 const LogIn = () => {
@@ -19,8 +21,12 @@ const LogIn = () => {
       mode: "onChange",
    });
 
+   const dispatch = useDispatch();
+
    const onSubmit = data => {
       console.log(data);
+
+      dispatch(LoginThunk(data));
       reset();
    };
    return (
@@ -32,7 +38,7 @@ const LogIn = () => {
          <form onSubmit={handleSubmit(onSubmit)}>
             <Label
                htmlFor="userName"
-               className={"text-sm -ml-1 mt-5 mb-1 text-[#F0F1EE]"}
+               className={"text-sm -ml-1 mt-5  text-[#F0F1EE]"}
             >
                userName/email
             </Label>
@@ -40,7 +46,7 @@ const LogIn = () => {
             <Input
                placeholder={"enter yor email / username "}
                id="userName"
-               className={"text-white mt-2 p-5 mb-5"}
+               className={"text-white mt-2 p-5 "}
                type={"text"}
                {...register("userName", {
                   required: "user name or email are required",

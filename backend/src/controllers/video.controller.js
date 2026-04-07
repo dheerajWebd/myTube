@@ -47,14 +47,6 @@ export const videoControll = asyncHandler(async (req, res, next) => {
     "videos"
   );
 
-  const updateVideoCount = await Channel.findByIdAndUpdate(
-    req.params._id,
-    {
-      $inc: { videosCount: 1 },
-    },
-    { new: true }
-  );
-
   const postedVideo = await Video.create({
     isPublish,
     owner: req.params._id,
@@ -70,6 +62,15 @@ export const videoControll = asyncHandler(async (req, res, next) => {
       url: thumbnailUplode?.url,
     },
   });
+
+  const updateVideoCount = await Channel.findByIdAndUpdate(
+    req.params._id,
+    {
+      $inc: { videosCount: 1 },
+    },
+    { new: true }
+  );
+
 
   res
     .status(200)
