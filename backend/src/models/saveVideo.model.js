@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const SaveVideoSchema = new mongoose.Schema(
   {
+    owner: {
+      type: mongoose.Types.ObjectId,
+      ref: "Channel",
+      require: true,
+    },
     title: {
       type: String,
       required: true,
@@ -13,7 +18,7 @@ const SaveVideoSchema = new mongoose.Schema(
       trim: true,
       maxleanght: 200,
     },
-    vedioId: [
+    videoId: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Video",

@@ -2,6 +2,7 @@ import { app } from "./app.js";
 import "dotenv/config";
 import dbconoction from "./db/dbConection.js";
 import { filterVideos } from "./controllers/getUser.controller.js";
+import { CommentController } from "./controllers/comment.controller.js";
 
 dbconoction();
 
@@ -24,6 +25,9 @@ app.get("/l", async (req, res) => {
 
   res.json(r);
 });
+
+CommentController();
+
 // echo "# myTube" >> README.md
 // git init
 // git add README.md

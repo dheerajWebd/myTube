@@ -1,35 +1,56 @@
 import mongoose from "mongoose";
 
+const Option = {
+  discriminatorKey: "type",
+  collection: "likes",
+  timestamps: true,
+};
+
 const likeSchema = new mongoose.Schema(
   {
-    vedioId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Video",
-      required: true,
+    user: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
     },
-    like: {
-      type: Number,
-      default: 0,
+    reaction: {
+      type: String,
+      enum: ["like", "dislike"],
     },
-    disLike: {
-      type: Number,
-      default: 0,
-    },
-
-    likeBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comments",
-      required: true,
-    },
-
-    likeHistory: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Video",
-      },
-    ],
   },
-  { timestamps: true }
+  Option
 );
 
 export const Like = mongoose.model("Like", likeSchema);
+
+export const video = Like.discriminator(
+  "video",
+  new mongoose.Schema({
+    videoId: {
+      type: mongoose.Types.ObjectId,
+      ref: "Video",
+      required: true,
+    },
+  })
+);
+
+export const post = Like.discriminator(
+  "post",
+  new mongoose.Schema({
+    postId: {
+      type: mongoose.Types.ObjectId,
+      ref: "post",
+      required: true,
+    },
+  })
+);
+
+export const comment = Like.discriminator(
+  "comment",
+  new mongoose.Schema({
+    commenttId: {
+      type: mongoose.Types.ObjectId,
+      ref: "Comment",
+      required: true,
+    },
+  })
+);

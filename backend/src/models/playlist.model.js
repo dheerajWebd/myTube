@@ -2,6 +2,15 @@ import mongoose from "mongoose";
 
 const playlistSchema = new mongoose.Schema(
   {
+    owner: {
+      type: mongoose.Types.ObjectId,
+      ref: "Channel",
+      require: true,
+    },
+    ispublic: {
+      type: Boolean,
+      default: true,
+    },
     title: {
       type: String,
       required: true,
@@ -13,7 +22,7 @@ const playlistSchema = new mongoose.Schema(
       trim: true,
       maxleanght: 500,
     },
-    vedioId: [
+    videoId: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Video",

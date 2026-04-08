@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const commentSchema = new mongoose.Schema(
   {
-    vedioId: {
+    videoId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Video",
       required: true,
@@ -16,11 +16,16 @@ const commentSchema = new mongoose.Schema(
       trim: true,
       required: true,
     },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Channel",
+      required: true,
+    },
     like: {
       type: Number,
       default: 0,
     },
-    perentId: {
+    parentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comments",
       default: null,

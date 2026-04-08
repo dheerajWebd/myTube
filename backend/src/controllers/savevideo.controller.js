@@ -1,18 +1,18 @@
 import asyncHandler from "../utils/ansicHandler.js";
 import { ErrorFormater } from "../utils/ErrorFormate.js";
 import { Channel } from "../models/channel.model.js";
-import { Playlist } from "../models/playlist.model.js";
 import successResponse from "../utils/successResponse.js";
+import { SaveVideo } from "../models/saveVideo.model.js";
 
-export const PlaylistController = asyncHandler(async (req, res, next) => {
+export const saveVideoController = asyncHandler(async (req, res, next) => {
   const user = req?.user;
   if (!user)
     throw new ErrorFormater("unathorised requested plz login", "", 404);
-  const { tittle, discription,ispublic,  vedioId, channelId } = req.body;
+  const { tittle, discription, videoId, channelId } = req.body;
 
-  if (!tittle || !vedioId || !channelId)
+  if (!tittle || !videoId || !channelId)
     throw new ErrorFormater(
-      "this fild are required tittle, vedioId, channelId",
+      "this fild are required tittle, videoId, channelId",
       "",
       402
     );
@@ -21,23 +21,19 @@ export const PlaylistController = asyncHandler(async (req, res, next) => {
 
   if (!channel) throw new ErrorFormater("channel is not found ", "", 404);
 
-  const PlaylistCreated = await Playlist.create({
+  const saveVideoCreated = await SaveVideo.create({
     owner: channelId,
     tittle,
     discription: discription || "",
-    vedioId: [vedioId],
+    videoId: [videoId],
   });
 
-  if (!PlaylistCreated)
-    throw new ErrorFormater("server error while created playlisted ", "", 500);
+  if (!saveVideoCreated)
+    throw new ErrorFormater("server error while saveing the vedio ", "", 500);
 
   res
     .status(200)
     .json(
-      new successResponse(
-        200,
-        PlaylistCreated,
-        "palylist is created successfully "
-      )
+      new successResponse(200, saveVideoCreated, "video saved successfully ")
     );
 });
