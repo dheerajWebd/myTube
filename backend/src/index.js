@@ -3,6 +3,8 @@ import "dotenv/config";
 import dbconoction from "./db/dbConection.js";
 import { filterVideos } from "./controllers/getUser.controller.js";
 import { CommentController } from "./controllers/comment.controller.js";
+import { likeControll } from "./controllers/likeVideo.controller.js";
+import { User } from "./models/user.model.js";
 
 dbconoction();
 
@@ -20,14 +22,16 @@ app.listen(process.env.PORT || 4000, () => {
 });
 
 // channelProfile()
-app.get("/l", async (req, res) => {
-  const r = await filterVideos();
+// app.get("/l", async (req, res) => {
+//   const r = await filterVideos();
 
-  res.json(r);
-});
+//   res.json(r);
+// });
 
-CommentController();
-
+// const log = await User.find({
+//   userName: "dheerajDwivedi087rgergregefgge",
+// // });
+// console.log(log);
 // echo "# myTube" >> README.md
 // git init
 // git add README.md

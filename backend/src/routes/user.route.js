@@ -10,6 +10,7 @@ import {
   updatepassword,
   updateProfile,
 } from "../controllers/UserCURDopertions.controller.js";
+import { likeControll } from "../controllers/likeVideo.controller.js";
 const UserRoute = express.Router();
 
 UserRoute.route("/register").post(
@@ -35,5 +36,6 @@ UserRoute.route("/change/profile").post(
   updateProfile
 );
 UserRoute.route("/channelProfile").get(authMiddileware, channelProfile);
+UserRoute.route("/like").post(authMiddileware, likeControll);
 
 export default UserRoute;

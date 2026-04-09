@@ -8,12 +8,14 @@ const Option = {
 
 const likeSchema = new mongoose.Schema(
   {
-    user: {
+    userId: {
       type: mongoose.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     reaction: {
       type: String,
+      required: true,
       enum: ["like", "dislike"],
     },
   },
@@ -22,7 +24,7 @@ const likeSchema = new mongoose.Schema(
 
 export const Like = mongoose.model("Like", likeSchema);
 
-export const video = Like.discriminator(
+export const videoReaction = Like.discriminator(
   "video",
   new mongoose.Schema({
     videoId: {
@@ -32,8 +34,13 @@ export const video = Like.discriminator(
     },
   })
 );
+likeSchema.index(
+  { user: 1, videoId: 1 },
+  { unique: true, partialFilterExpression: { type: "Video" } }
+);
 
-export const post = Like.discriminator(
+// partialFilterExpression this rule apply only on given type
+export const postReaction = Like.discriminator(
   "post",
   new mongoose.Schema({
     postId: {
@@ -43,14 +50,21 @@ export const post = Like.discriminator(
     },
   })
 );
-
-export const comment = Like.discriminator(
+likeSchema.index(
+  { user: 1, postId: 1 },
+  { unique: true, partialFilterExpression: { type: "post" } }
+);
+export const commentReaction = Like.discriminator(
   "comment",
   new mongoose.Schema({
-    commenttId: {
+    commentId: {
       type: mongoose.Types.ObjectId,
       ref: "Comment",
       required: true,
     },
   })
+);
+likeSchema.index(
+  { user: 1, commentId: 1 },
+  { unique: true, partialFilterExpression: { type: "comment" } }
 );
