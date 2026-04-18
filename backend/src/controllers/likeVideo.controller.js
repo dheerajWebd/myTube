@@ -6,89 +6,71 @@ import { Comment } from "../models/comment.model.js";
 import successResponse from "../utils/successResponse.js";
 
 export const likeControll = asyncHandler(async (req, res, next) => {
-  let create;
   const userId = req.user;
 
-  if (!userId) throw new ErrorFormater("unathorized request", "", 401);
+  if (!userId) throw new ErrorFormater("unauthorized request", "", 401);
 
   const { reaction, whichlikeId, id } = req.body;
+
   if (!reaction?.trim() || !whichlikeId || !id)
     throw new ErrorFormater(
-      "reaction or Whichlike or id, fild are required. Where react like or dislike and whichlike video ,post comment",
+      "reaction, whichlikeId and id are required fields ",
       "",
-      401
+      400
     );
+
+  let model, reactedId, reacted, responce;
 
   if (whichlikeId?.trim()?.toLowerCase() === "video") {
     const isvideo = await Video.findById(id);
-    if (!isvideo) throw new ErrorFormater("video is not present ", "", 404);
+    if (!isvideo) throw new ErrorFormater("video not found", "", 404);
+    model = videoReaction;
+    reactedId = id;
+    reacted = whichlikeId + "Id";
+  }
 
-    if (reaction?.trim()?.toLowerCase() === "like") {
-      const isvideoReaction = await videoReaction.findOne({
+  if (reaction?.trim().toLowerCase() === "like") {
+    const deletedReaction = await model.findOneAndDelete({
+      userId: userId._id,
+      [reacted]: reactedId,
+    });
+    if (deletedReaction)
+      responce = new successResponse(200, {}, "deleted like successfull");
+
+    if (deletedReaction?.reaction === "dislike" || !deletedReaction) {
+      const create = await model.create({
         userId: userId._id,
-        videoId: id,
+        reaction,
+        [reacted]: reactedId,
       });
-
-      if (isvideoReaction)
-        throw new ErrorFormater("videoReaction is present", "", 403);
-
-      create = await videoReaction.create({
-        userId: userId._id,
-        reaction: "like",
-        videoId: id,
-      });
-    } else if (reaction?.trim()?.toLowerCase() === "dislike") {
-      const isvideoReaction = await videoReaction.findOne({
-        videoId: id,
-        userId: userId._id,
-        reaction: "like",
-      });
-
-      if (isvideoReaction)
-        throw new ErrorFormater("videoreaction is present ", "", 403);
-
-      create = await videoReaction.create({
-        userId: userId._id,
-        reaction: "dislike",
-        videoId: id,
-      });
-    }
-  } else if (whichlikeId?.trim()?.toLowerCase() === "comment") {
-    const iscomment = await Comment.findById(id);
-    if (!iscomment) throw new ErrorFormater("comment is not present ", "", 404);
-
-    if (reaction?.trim()?.toLowerCase() === "like") {
-      const iscommentReaction = await commentReaction.findOne({
-        userId: userId._id,
-        commentId: id,
-      });
-
-      if (iscommentReaction)
-        throw new ErrorFormater("commentreaction is present", "", 403);
-
-      create = await commentReaction.create({
-        userId: userId._id,
-        reaction: "like",
-        commentId: id,
-      });
-    } else if (reaction?.trim()?.toLowerCase() === "dislike") {
-      const iscommentReaction = await commentReaction.findOne({
-        commentId: id,
-        userId: userId._id,
-      });
-
-      if (iscommentReaction)
-        throw new ErrorFormater("commentreaction is present ", "", 403);
-
-      create = await commentReaction.create({
-        userId: userId._id,
-        reaction: "dislike",
-        commentId: id,
-      });
+      responce = new successResponse(
+        200,
+        create,
+        "create or update like successfull"
+      );
     }
   }
 
-  console.log(create);
+  if (reaction?.trim().toLowerCase() === "dislike") {
+    const deletedReaction = await model.findOneAndDelete({
+      userId: userId._id,
+      [reacted]: reactedId,
+    });
+    if (deletedReaction)
+      responce = new successResponse(200, {}, "deleted like successfull");
 
-  res.json(new successResponse(200, create, "create successfull"));
+    if (deletedReaction?.reaction === "like" || !deletedReaction) {
+      const create = await model.create({
+        userId: userId._id,
+        reaction,
+        [reacted]: reactedId,
+      });
+      responce = new successResponse(
+        200,
+        create,
+        "create or update dislike successfull"
+      );
+    }
+  }
+  res.json(responce);
 });
