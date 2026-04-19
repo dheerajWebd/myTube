@@ -37,3 +37,100 @@ export const saveVideoController = asyncHandler(async (req, res, next) => {
       new successResponse(200, saveVideoCreated, "video saved successfully ")
     );
 });
+export const addsaveVideoController = asyncHandler(async (req, res, next) => {
+  const user = req?.user;
+  if (!user)
+    throw new ErrorFormater("unathorised requested plz login", "", 404);
+  const { videoId, sevedvideoId } = req.body;
+
+  if (!sevedvideoId || !videoId)
+    throw new ErrorFormater(
+      "this fild are required videoId, sevedvideoId",
+      "",
+      402
+    );
+
+  const saveVedio = await SaveVideo.findById(sevedvideoId);
+
+  if (!saveVedio) throw new ErrorFormater("saveVedio is not found ", "", 404);
+
+  saveVedio?.videoId.push(videoId);
+
+  const updatedsaveVedio = await saveVedio.save({
+    validateDeforeSave: false,
+  });
+
+  if (!updatedsaveVedio)
+    throw new ErrorFormater("server error while created saveVedioed ", "", 500);
+
+  res
+    .status(200)
+    .json(
+      new successResponse(
+        200,
+        updatedsaveVedio,
+        "palylist is updated successfully "
+      )
+    );
+});
+
+export const editsaveVideoController = asyncHandler(async (req, res, next) => {
+  const user = req?.user;
+  if (!user)
+    throw new ErrorFormater("unathorised requested plz login", "", 404);
+  const { title, discription, ispublic, saveVedioId } = req.body;
+
+  if (!title || !saveVedioId)
+    throw new ErrorFormater(
+      "this fild are required title, saveVedioId",
+      "",
+      402
+    );
+
+  const savevideo = await savevideo.findByIdandUpdate(
+    saveVedioId,
+    {
+      $set: {
+        title,
+        discription: discription || "",
+        ispublic: ispublic || true,
+      },
+    },
+    {
+      new: true,
+      validateDeforeSave: false,
+    }
+  );
+
+  if (!savevideo) throw new ErrorFormater("savevideo is not found ", "", 404);
+
+  res
+    .status(200)
+    .json(new successResponse(200, savevideo, "video save successfully "));
+});
+
+export const deletesavevideoController = asyncHandler(
+  async (req, res, next) => {
+    const user = req?.user;
+    if (!user)
+      throw new ErrorFormater("unathorised requested plz login", "", 404);
+    const { saveVedioId } = req.body;
+
+    if (!saveVedioId)
+      throw new ErrorFormater("this fild are required saveVedioId", "", 402);
+
+    const saveVedio = await saveVedio.findByIdandDelete(saveVedioId);
+
+    if (!saveVedio) throw new ErrorFormater("playlist is not found ", "", 404);
+
+    res
+      .status(200)
+      .json(
+        new successResponse(
+          200,
+          saveVedio,
+          "saved palylist is deleted successfully "
+        )
+      );
+  }
+);

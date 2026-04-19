@@ -51,3 +51,106 @@ export const CommentController = asyncHandler(async (req, res, next) => {
       new successResponse(200, CommentCreated, "comment saved successfully ")
     );
 });
+
+export const editcommentControll = asyncHandler(async (req, res, next) => {
+  const user = req?.user;
+
+  if (!user)
+    throw new ErrorFormater("unathorised requested plz login", "", 401);
+  const { commentText, CommentId } = req.body;
+
+  if (!commentText || !CommentId)
+    throw new ErrorFormater(
+      "this fild are required commentText, commentId",
+      "",
+      400
+    );
+
+  const isCommentId = mongoose.Types.ObjectId.isValid(CommentId);
+
+  if (!isCommentId)
+    throw new ErrorFormater(
+      "VideoId CommentId or plz enter valid ids ",
+      "",
+      400
+    );
+
+  const updatedComment = await Comment.findByIdAndUpdate(
+    channelId,
+    {
+      $set: {
+        commentText,
+      },
+    },
+    {
+      new: true,
+      validateDeforeSave: false,
+    }
+  );
+
+  if (!updatedComment)
+    throw new ErrorFormater("Invalid CommentId provided", "", 400);
+
+  res
+    .status(200)
+    .json(
+      new successResponse(200, updatedComment, "comment edited successfully ")
+    );
+});
+
+export const heartByOwnercommentControll = asyncHandler(
+  async (req, res, next) => {
+    const user = req?.user;
+
+    if (!user)
+      throw new ErrorFormater("unathorised requested plz login", "", 401);
+    const { hertByOwner, channelId } = req.body;
+
+    if (!hertByOwner || !channelId)
+      throw new ErrorFormater("this fild are required hertByOwner", "", 400);
+
+    const hertedComment = await Comment.findByIdAndUpdate(
+      channelId,
+      {
+        $set: {
+          hertByOwner,
+        },
+      },
+      {
+        new: true,
+        validateDeforeSave: false,
+      }
+    );
+
+    if (!hertedComment)
+      throw new ErrorFormater("Invalid CommentId provided", "", 400);
+
+    res
+      .status(200)
+      .json(
+        new successResponse(200, hertedComment, "comment edited successfully ")
+      );
+  }
+);
+
+export const deletedcommentControll = asyncHandler(async (req, res, next) => {
+  const user = req?.user;
+
+  if (!user)
+    throw new ErrorFormater("unathorised requested plz login", "", 401);
+  const { channelId } = req.body;
+
+  if (!channelId)
+    throw new ErrorFormater("this fild are required hertByOwner", "", 400);
+
+  const deletedComment = await Comment.findByIdAndDelete(channelId);
+
+  if (!deletedComment)
+    throw new ErrorFormater("Invalid CommentId provided", "", 400);
+
+  res
+    .status(200)
+    .json(
+      new successResponse(200, deletedComment, "comment edited successfully ")
+    );
+});

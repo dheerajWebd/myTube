@@ -41,3 +41,99 @@ export const PlaylistController = asyncHandler(async (req, res, next) => {
       )
     );
 });
+
+export const addVideoPlaylistController = asyncHandler(
+  async (req, res, next) => {
+    const user = req?.user;
+    if (!user)
+      throw new ErrorFormater("unathorised requested plz login", "", 404);
+    const { videoId, PlaylistId } = req.body;
+
+    if (!PlaylistId || !videoId)
+      throw new ErrorFormater(
+        "this fild are required title, videoId, PlaylistId",
+        "",
+        402
+      );
+
+    const playlist = await Playlist.findById(PlaylistId);
+
+    if (!playlist) throw new ErrorFormater("playlist is not found ", "", 404);
+
+    playlist?.videoId.push(videoId);
+    const updatedplaylist = await playlist.save({ validateDeforeSave: false });
+    if (!updatedplaylist)
+      throw new ErrorFormater(
+        "server error while created playlisted ",
+        "",
+        500
+      );
+
+    res
+      .status(200)
+      .json(
+        new successResponse(
+          200,
+          updatedplaylist,
+          "palylist is updated successfully "
+        )
+      );
+  }
+);
+
+export const editPlaylistController = asyncHandler(async (req, res, next) => {
+  const user = req?.user;
+  if (!user)
+    throw new ErrorFormater("unathorised requested plz login", "", 404);
+  const { title, discription, ispublic, playlistId } = req.body;
+
+  if (!title || !playlistId)
+    throw new ErrorFormater(
+      "this fild are required title, playlistId",
+      "",
+      402
+    );
+
+  const playlist = await playlist.findByIdandUpdate(
+    playlistId,
+    {
+      $set: {
+        title,
+        discription: discription || "",
+        ispublic: ispublic || true,
+      },
+    },
+    {
+      new: true,
+      validateDeforeSave: false,
+    }
+  );
+
+  if (!playlist) throw new ErrorFormater("playlist is not found ", "", 404);
+
+  res
+    .status(200)
+    .json(
+      new successResponse(200, playlist, "palylist is updated successfully ")
+    );
+});
+
+export const deletePlaylistController = asyncHandler(async (req, res, next) => {
+  const user = req?.user;
+  if (!user)
+    throw new ErrorFormater("unathorised requested plz login", "", 404);
+  const { playlistId } = req.body;
+
+  if (!playlistId)
+    throw new ErrorFormater("this fild are required playlistId", "", 402);
+
+  const playlist = await playlist.findByIdandDelete(playlistId);
+
+  if (!playlist) throw new ErrorFormater("playlist is not found ", "", 404);
+
+  res
+    .status(200)
+    .json(
+      new successResponse(200, playlist, "palylist is deleted successfully ")
+    );
+});
