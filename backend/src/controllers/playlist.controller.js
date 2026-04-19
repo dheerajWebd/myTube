@@ -8,11 +8,11 @@ export const PlaylistController = asyncHandler(async (req, res, next) => {
   const user = req?.user;
   if (!user)
     throw new ErrorFormater("unathorised requested plz login", "", 404);
-  const { tittle, discription,ispublic,  vedioId, channelId } = req.body;
+  const { title, discription,ispublic,  videoId, channelId } = req.body;
 
-  if (!tittle || !vedioId || !channelId)
+  if (!title || !videoId || !channelId)
     throw new ErrorFormater(
-      "this fild are required tittle, vedioId, channelId",
+      "this fild are required title, videoId, channelId",
       "",
       402
     );
@@ -23,9 +23,9 @@ export const PlaylistController = asyncHandler(async (req, res, next) => {
 
   const PlaylistCreated = await Playlist.create({
     owner: channelId,
-    tittle,
+    title,
     discription: discription || "",
-    vedioId: [vedioId],
+    videoId: [videoId],
   });
 
   if (!PlaylistCreated)

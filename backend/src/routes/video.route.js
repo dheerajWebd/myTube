@@ -9,6 +9,7 @@ import {
 import { upload } from "../middlweares/multer.middlewares.js";
 import { CommentController } from "../controllers/comment.controller.js";
 import { saveVideoController } from "../controllers/savevideo.controller.js";
+import { PlaylistController } from "../controllers/playlist.controller.js";
 
 const videoRouter = express.Router();
 videoRouter.use(authMiddileware);
@@ -28,5 +29,6 @@ videoRouter
   .put(upload.single("thumbnail"), editThumbnail);
 videoRouter.route("/video/comment").post(CommentController);
 videoRouter.route("/video/save_video").post(saveVideoController);
+videoRouter.route("/video/playlists").post(PlaylistController);
 
 export default videoRouter;

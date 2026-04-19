@@ -23,7 +23,7 @@ const SaveVideoSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Video",
         required: true,
-        unique: true,
+        unique: [true, "this video is already saved"],
       },
     ],
   },

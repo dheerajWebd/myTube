@@ -186,10 +186,17 @@ export const editThumbnail = asyncHandler(async (req, res, next) => {
 });
 
 export const deleteVideo = asyncHandler(async (req, res, next) => {
-  const deletedVideo = await Video.findOneAndDelete({
-    _id: req.params.video_id,
-  });
-  if (!deleteVideo) {
+  console.log(req.params);
+
+  const deletedVideo = await Video.findByIdAndDelete(req.params._id);
+  await Channel.findByIdAndUpdate(
+    req.params._id,
+    {
+      $inc: { videosCount: 1 },
+    },
+    { new: true }
+  );
+  if (!deletedVideo) {
     throw new ErrorFormater(
       "does not find the video to send the video id so plz send correct id ",
       "",

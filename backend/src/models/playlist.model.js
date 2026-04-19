@@ -27,6 +27,7 @@ const playlistSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Video",
         required: true,
+        unique:[true, "this video is already added in playlist"],
       },
     ],
   },
