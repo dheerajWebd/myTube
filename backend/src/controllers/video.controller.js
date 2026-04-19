@@ -91,11 +91,11 @@ export const editVideos = asyncHandler(async (req, res, next) => {
       400
     );
 
-  const Video = await Video.findOne({
+  const isVideo = await Video.findOne({
     _id: video_id,
   });
 
-  if (!Video)
+  if (!isVideo)
     throw new ErrorFormater(
       "video_id is wrong plz send correct video_id ",
       "",
@@ -130,7 +130,9 @@ export const editVideos = asyncHandler(async (req, res, next) => {
 });
 
 export const editThumbnail = asyncHandler(async (req, res, next) => {
-  if (!req.file.thumbnail.path) {
+  console.log(req.file);
+
+  if (!req?.file?.path) {
     return new ErrorFormater(
       "file is not find plz send the image file ",
       "",
@@ -145,7 +147,7 @@ export const editThumbnail = asyncHandler(async (req, res, next) => {
     );
   }
   const thumbnailUplode = await uplodOnCloudinary(
-    req.body.video_id,
+    req.file.path,
     "/video/thumbnail/",
     "videoThumdnails"
   );
@@ -200,7 +202,7 @@ export const deleteVideo = asyncHandler(async (req, res, next) => {
       new successResponse(
         200,
         {},
-        "deleted video successfully enjoy the services or typo in spallings and sorry"
+        "deleted video successfully enjoy the services or any typos in spallings any where  to so sorry"
       )
     );
 });

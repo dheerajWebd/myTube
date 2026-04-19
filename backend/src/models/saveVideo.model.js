@@ -23,6 +23,7 @@ const SaveVideoSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Video",
         required: true,
+        unique: true,
       },
     ],
   },

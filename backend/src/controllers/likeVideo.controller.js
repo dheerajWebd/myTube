@@ -1,4 +1,9 @@
-import { commentReaction, Like, videoReaction } from "../models/like.model.js";
+import {
+  commentReaction,
+  Like,
+  postReaction,
+  videoReaction,
+} from "../models/like.model.js";
 import asyncHandler from "../utils/ansicHandler.js";
 import { ErrorFormater } from "../utils/ErrorFormate.js";
 import { Video } from "../models/video.model.js";
@@ -19,14 +24,24 @@ export const likeControll = asyncHandler(async (req, res, next) => {
       400
     );
 
-  let model, reactedId, reacted, responce;
-
+  let model,
+    reactedId = id,
+    reacted = whichlikeId + "Id",
+    responce;
   if (whichlikeId?.trim()?.toLowerCase() === "video") {
     const isvideo = await Video.findById(id);
     if (!isvideo) throw new ErrorFormater("video not found", "", 404);
     model = videoReaction;
-    reactedId = id;
-    reacted = whichlikeId + "Id";
+  }
+  if (whichlikeId?.trim()?.toLowerCase() === "comment") {
+    const isComment = await Comment.findById(id);
+    if (!isComment) throw new ErrorFormater("Comment not found", "", 404);
+    model = commentReaction;
+  }
+  if (whichlikeId?.trim()?.toLowerCase() === "post") {
+    const isPost = await Post.findById(id);
+    if (!isPost) throw new ErrorFormater("Post not found", "", 404);
+    model = postReaction;
   }
 
   if (reaction?.trim().toLowerCase() === "like") {

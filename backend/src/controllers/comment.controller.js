@@ -2,7 +2,7 @@ import asyncHandler from "../utils/ansicHandler.js";
 import { ErrorFormater } from "../utils/ErrorFormate.js";
 import successResponse from "../utils/successResponse.js";
 import { Channel } from "../models/channel.model.js";
-import { Comment } from "../models/comment.model.js";
+import { Comment, videoComment } from "../models/comment.model.js";
 import mongoose from "mongoose";
 
 export const CommentController = asyncHandler(async (req, res, next) => {
@@ -16,28 +16,30 @@ export const CommentController = asyncHandler(async (req, res, next) => {
     throw new ErrorFormater(
       "this fild are required commentText, videoId",
       "",
-      402
+      400
     );
 
   const isVideoId = mongoose.Types.ObjectId.isValid(videoId);
   const isChannelId = mongoose.Types.ObjectId.isValid(channelId);
-  const isparentId = mongoose.Types.ObjectId.isValid(parentId);
+  const isparentId = parentId
+    ? mongoose.Types.ObjectId.isValid(parentId)
+    : true;
 
   if (!isVideoId || !isChannelId || !isparentId)
     throw new ErrorFormater(
       "VideoId ChannelId parentId or plz enter valid ids ",
       "",
-      402
+      400
     );
 
   const channel = await Channel.findById(channelId);
 
   if (!channel) throw new ErrorFormater("Invalid IDs provided", "", 400);
 
-  const CommentCreated = await Comment.create({
+  const CommentCreated = await videoComment.create({
     owner: channelId,
     commentText, // feature upgrade remove al tag or attributed in text
-    videoId: [videoId],
+    videoId: videoId,
     parentId: parentId || null,
   });
 

@@ -8,11 +8,11 @@ export const saveVideoController = asyncHandler(async (req, res, next) => {
   const user = req?.user;
   if (!user)
     throw new ErrorFormater("unathorised requested plz login", "", 404);
-  const { tittle, discription, videoId, channelId } = req.body;
+  const { title, discription, videoId, channelId } = req.body;
 
-  if (!tittle || !videoId || !channelId)
+  if (!title || !videoId || !channelId)
     throw new ErrorFormater(
-      "this fild are required tittle, videoId, channelId",
+      "this fild are required title, videoId, channelId",
       "",
       402
     );
@@ -23,7 +23,7 @@ export const saveVideoController = asyncHandler(async (req, res, next) => {
 
   const saveVideoCreated = await SaveVideo.create({
     owner: channelId,
-    tittle,
+    title,
     discription: discription || "",
     videoId: [videoId],
   });

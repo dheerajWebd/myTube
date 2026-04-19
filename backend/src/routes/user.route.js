@@ -26,8 +26,8 @@ UserRoute.route("/login").post(logInUser);
 // proteted route
 UserRoute.route("/logOut").post(authMiddileware, logOutUser);
 UserRoute.route("/refresh/token").post(refreshAccessToken);
-UserRoute.route("/change/password").post(authMiddileware, updatepassword);
-UserRoute.route("/change/profile").post(
+UserRoute.route("/change/password").put(authMiddileware, updatepassword);
+UserRoute.route("/change/profile").put(
   authMiddileware,
   upload.fields([
     { name: "coverImg", maxCount: 1 },

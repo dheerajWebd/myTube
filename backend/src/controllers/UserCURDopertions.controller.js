@@ -50,6 +50,7 @@ export const updateProfile = asyncHandler(async (req, res, next) => {
         "/avatar/",
         "uaer_avatar"
       );
+
       updateData.avatar = {
         publicId: avatarUrl?.public_id || user.avatar.public_id,
         url: avatarUrl?.url || user.avatar.url,

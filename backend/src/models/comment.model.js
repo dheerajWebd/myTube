@@ -2,11 +2,6 @@ import mongoose from "mongoose";
 
 const commentSchema = new mongoose.Schema(
   {
-    videoId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Video",
-      required: true,
-    },
     hertByOwner: {
       type: Boolean,
       default: false,
@@ -31,7 +26,34 @@ const commentSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { timestamps: true }
+  {
+    discriminatorKey: "type",
+    collation: "comments",
+    timestamps: true,
+  }
 );
 
 export const Comment = mongoose.model("Comment", commentSchema);
+
+export const videoComment = Comment.discriminator(
+  "videoComment",
+  new mongoose.Schema({
+    videoId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Video",
+      required: true,
+      index: true,
+    },
+  })
+);
+export const postComment = Comment.discriminator(
+  "postComment",
+  new mongoose.Schema({
+    postId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+      required: true,
+      index: true,
+    },
+  })
+);
