@@ -8,7 +8,7 @@ export const PlaylistController = asyncHandler(async (req, res, next) => {
   const user = req?.user;
   if (!user)
     throw new ErrorFormater("unathorised requested plz login", "", 404);
-  const { title, discription,ispublic,  videoId, channelId } = req.body;
+  const { title, discription, ispublic, videoId, channelId } = req.body;
 
   if (!title || !videoId || !channelId)
     throw new ErrorFormater(
