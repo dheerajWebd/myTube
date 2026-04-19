@@ -1,8 +1,8 @@
 import express from "express";
-import { upload } from "../middlweares/multer.middlewares.js";
+import { upload } from "../middlewares/multer.middlewares.js";
 import { register } from "../controllers/register.controller.js";
 import { logInUser } from "../controllers/logIn.controller.js";
-import { authMiddileware } from "../middlweares/auth.middlewares.js";
+import { authMiddileware } from "../middlewares/auth.middlewares.js";
 import { logOutUser } from "../controllers/logOut.controller.js";
 import { channelProfile } from "../controllers/getUser.controller.js";
 import { refreshAccessToken } from "../controllers/refreshAccessToken.controller.js";

@@ -1,12 +1,12 @@
 import express from "express";
-import { authMiddileware } from "../middlweares/auth.middlewares.js";
+import { authMiddileware } from "../middlewares/auth.middlewares.js";
 import {
   deleteVideo,
   editThumbnail,
   editVideos,
   videoControll,
 } from "../controllers/video.controller.js";
-import { upload } from "../middlweares/multer.middlewares.js";
+import { upload } from "../middlewares/multer.middlewares.js";
 import { CommentController } from "../controllers/comment.controller.js";
 import { saveVideoController } from "../controllers/savevideo.controller.js";
 import { PlaylistController } from "../controllers/playlist.controller.js";
