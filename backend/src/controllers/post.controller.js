@@ -94,6 +94,13 @@ export const getpostController = asyncHandler(async (req, res, next) => {
   if (!channelId)
     throw new ErrorFormater("this fild are required channelId", "", 400);
 
+  if (
+    !mongoose.Types.ObjectId.isValid(channelId) ||
+    !mongoose.Types.ObjectId.isValid(postId)
+  ) {
+    throw new ErrorFormater("Invalid ID provided", "", 400);
+  }
+
   const post = await Post.aggregate([
     { $match: { _id: new mongoose.Types.ObjectId(postId) } },
 
@@ -119,11 +126,10 @@ export const getpostController = asyncHandler(async (req, res, next) => {
     //     as: "linkInfo"
     //   }
     // },
-    // CommentController
+
     {
       $lookup: {
         from: "comments",
-        // let: { postId: "$_id" },
         pipeline: [
           {
             $match: {
