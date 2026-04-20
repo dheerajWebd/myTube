@@ -6,6 +6,7 @@ import UserRoute from "./routes/user.route.js";
 import { channelRoute } from "./routes/cannel.route.js";
 import videoRouter from "./routes/video.route.js";
 import subscriptionRouter from "./routes/subscriptions.route.js";
+import postRouter from "./routes/post.route.js";
 const app = express();
 
 app.use(cookieParser());
@@ -29,5 +30,6 @@ app.use("/user/api/v1", UserRoute);
 app.use("/channel/api/v1", channelRoute);
 app.use("/video/api/v1", videoRouter);
 app.use("/subscribe/api/v1", subscriptionRouter);
+app.use("/post/api/v1", postRouter);
 
 export { app };

@@ -52,7 +52,7 @@ export const CommentController = asyncHandler(async (req, res, next) => {
     );
 });
 
-export const editcommentControll = asyncHandler(async (req, res, next) => {
+export const editcommentController = asyncHandler(async (req, res, next) => {
   const user = req?.user;
 
   if (!user)
@@ -98,7 +98,7 @@ export const editcommentControll = asyncHandler(async (req, res, next) => {
     );
 });
 
-export const heartByOwnercommentControll = asyncHandler(
+export const heartByOwnercommentController = asyncHandler(
   async (req, res, next) => {
     const user = req?.user;
 
@@ -133,7 +133,7 @@ export const heartByOwnercommentControll = asyncHandler(
   }
 );
 
-export const deletedcommentControll = asyncHandler(async (req, res, next) => {
+export const deletedcommentController = asyncHandler(async (req, res, next) => {
   const user = req?.user;
 
   if (!user)
