@@ -11,6 +11,7 @@ import {
   updateProfile,
 } from "../controllers/UserCURDopertions.controller.js";
 import { likeControll } from "../controllers/likeVideo.controller.js";
+import { chatGPTController } from "../api/chatgpt.api.js";
 const UserRoute = express.Router();
 
 UserRoute.route("/register").post(
@@ -37,5 +38,6 @@ UserRoute.route("/change/profile").put(
 );
 UserRoute.route("/channelProfile").get(authMiddileware, channelProfile);
 UserRoute.route("/like").post(authMiddileware, likeControll);
+UserRoute.route("/chatgpt").get(chatGPTController);
 
 export default UserRoute;

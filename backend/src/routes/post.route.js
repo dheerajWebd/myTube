@@ -7,6 +7,7 @@ import {
   getpostController,
   postController,
 } from "../controllers/post.controller.js";
+import { chatGPTController } from "../api/chatgpt.api.js";
 
 const postRouter = express.Router();
 postRouter.use(authMiddileware);
@@ -18,6 +19,7 @@ postRouter
   .get(getpostController);
 
 postRouter.route("/postcomment").post(postCommentController);
+postRouter.route("/chatgpt").get(chatGPTController);
 // .put(editcommentController)
 // .delete(deletedcommentController);
 

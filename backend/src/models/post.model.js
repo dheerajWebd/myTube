@@ -19,8 +19,15 @@ const postSchema = new mongoose.Schema(
       required: true,
     },
     links: {
-      type: mongoose.Types.ObjectId,
-      ref: "links",
+      name: {
+        type: String,
+        trim: true,
+        maxlength: 100,
+      },
+      url: {
+        type: String,
+        trim: true,
+      },
     },
     owner: {
       type: mongoose.Types.ObjectId,

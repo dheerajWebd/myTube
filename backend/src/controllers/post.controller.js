@@ -11,7 +11,8 @@ export const postController = asyncHandler(async (req, res, next) => {
   if (!user)
     throw new ErrorFormater("unathorised requested plz login", "", 401);
   const { postData, title, description, links, channelId } = req.body;
-
+  if (links && typeof links !== "object" && !(links?.name || links?.url))
+    throw new ErrorFormater("links must be an object", "", 400);
   if (!title || !description || !channelId)
     throw new ErrorFormater(
       "this fild are required title and description channelId",
@@ -46,12 +47,17 @@ export const editpostController = asyncHandler(async (req, res, next) => {
     throw new ErrorFormater("unathorised requested plz login", "", 401);
   const { postData, title, description, links, postId } = req.body;
 
+  if (links && typeof links !== "object" && !(links?.name || links?.url))
+
+    throw new ErrorFormater("links must be an object", "", 400);
+
   if (!title || !description)
     throw new ErrorFormater(
       "this fild are required title and description",
       "",
       400
     );
+    
   const updatedPost = await Post.findByIdAndUpdate(
     postId,
     {
@@ -118,14 +124,14 @@ export const getpostController = asyncHandler(async (req, res, next) => {
         preserveNullAndEmptyArrays: true,
       },
     },
-    // {
-    //   $lookup: {
-    //     from: "links",
-    //     localField: "links",
-    //     foreignField: "_id",
-    //     as: "linkInfo"
-    //   }
-    // },
+    {
+      $lookup: {
+        from: "links",
+        localField: "links",
+        foreignField: "_id",
+        as: "linkInfo",
+      },
+    },
 
     {
       $lookup: {
