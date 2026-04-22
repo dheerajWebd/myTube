@@ -37,13 +37,13 @@ export const videoControll = asyncHandler(async (req, res, next) => {
 
   const thumbnailUplode = await uplodOnCloudinary(
     thumbnailPath,
-    "/video/thumbnail/",
+    `/video/thumbnail/${Date.now()}`,
     "videoThumdnails"
   );
 
   const videolUplode = await uplodOnCloudinary(
     videoPath,
-    "/video/userVideo",
+   `/video/userVideo/${Date.now()}`,
     "videos"
   );
 
