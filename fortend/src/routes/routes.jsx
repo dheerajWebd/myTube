@@ -15,7 +15,7 @@ const Baseroutes = () => {
                element={<RegisterForm Component={Register} />}
             />
             <Route path="/login" element={<RegisterForm LogIn={LogIn} />} />
-            <Route path="/forgetPassword" element={<ForgetPassword />} />
+            <Route path="/forgetPassword" element={<RegisterForm ForgetPassword={ForgetPassword} />} />
             {/* <Route path="/home" element={<Home />} /> */}
          </Routes>
       </BrowserRouter>

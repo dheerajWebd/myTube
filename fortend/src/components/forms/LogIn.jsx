@@ -9,6 +9,7 @@ import {
    useForm,
    LoginThunk,
 } from "@/import.js";
+import { Link } from "react-router-dom";
 
 const LogIn = () => {
    const {
@@ -24,7 +25,6 @@ const LogIn = () => {
    const dispatch = useDispatch();
 
    const onSubmit = data => {
-
       dispatch(LoginThunk(data));
       reset();
    };
@@ -95,6 +95,13 @@ const LogIn = () => {
                errors={errors}
                getValues={getValues}
             />
+            <Link
+
+               to="/forgetPassword"
+               className="text-sm text-[#F0F1EE] mt-3 underline"
+            >
+               forgetPassword
+            </Link>
             <Button
                role="alert"
                aria-live="assertive"

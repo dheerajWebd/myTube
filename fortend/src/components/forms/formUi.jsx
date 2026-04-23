@@ -62,9 +62,13 @@ const RegisterForm = ({ Component, LogIn, ForgetPassword }) => {
 
    return (
       <>
-         <div className="h-screen w-full flex justify-center relative z-20 bg-[#261403] ">
-            <div className="w-screen  h-[150vh] relative z-20 bg-[#261403] overflow-hidden">
-               <div className="absolute text-white  overflow-hidden -top-40 -right-19 z-20 rounded-[100%] w-[150%] h-60 bg-[#4F3422]"></div>
+         <div className="h-screen w-full flex justify-center relative z-20 bg-[#411f00] ">
+            <div
+               className={`w-screen  h-[150vh] relative z-20 bg-[#260d03] overflow-hidden ${LogIn && "bg-[#391515]"}`}
+            >
+               <div
+                  className={`absolute text-white  overflow-hidden -top-40 -right-19 z-20 rounded-[100%] w-[150%] h-60 bg-[#ae4703] `}
+               ></div>
             </div>
 
             {Component && (
@@ -81,7 +85,6 @@ const RegisterForm = ({ Component, LogIn, ForgetPassword }) => {
                   setStaps={setStaps}
                />
             )}
-
             {LogIn && <LogIn />}
             {ForgetPassword && <ForgetPassword />}
          </div>
