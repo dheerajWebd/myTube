@@ -4,6 +4,10 @@ import { Channel } from "../models/channel.model.js";
 import successResponse from "../utils/successResponse.js";
 import { SaveVideo } from "../models/saveVideo.model.js";
 
+/**
+ * @description save video
+ */
+
 export const saveVideoController = asyncHandler(async (req, res, next) => {
   const user = req?.user;
   if (!user)
@@ -37,6 +41,11 @@ export const saveVideoController = asyncHandler(async (req, res, next) => {
       new successResponse(200, saveVideoCreated, "video saved successfully ")
     );
 });
+
+/**
+ * @description add video to saveVedio
+ */
+
 export const addsaveVideoController = asyncHandler(async (req, res, next) => {
   const user = req?.user;
   if (!user)
@@ -74,6 +83,10 @@ export const addsaveVideoController = asyncHandler(async (req, res, next) => {
     );
 });
 
+/**
+ * @description edit saveVedio
+ */
+
 export const editsaveVideoController = asyncHandler(async (req, res, next) => {
   const user = req?.user;
   if (!user)
@@ -109,6 +122,10 @@ export const editsaveVideoController = asyncHandler(async (req, res, next) => {
     .json(new successResponse(200, savevideo, "video save successfully "));
 });
 
+/**
+ * @description delete save total list
+ */
+
 export const deletesavevideoController = asyncHandler(
   async (req, res, next) => {
     const user = req?.user;
@@ -119,7 +136,7 @@ export const deletesavevideoController = asyncHandler(
     if (!saveVedioId)
       throw new ErrorFormater("this fild are required saveVedioId", "", 402);
 
-    const saveVedio = await saveVedio.findByIdandDelete(saveVedioId);
+    const saveVedio = await saveVedio.findAndDelete({ saveVedioId });
 
     if (!saveVedio) throw new ErrorFormater("playlist is not found ", "", 404);
 
@@ -130,6 +147,61 @@ export const deletesavevideoController = asyncHandler(
           200,
           saveVedio,
           "saved palylist is deleted successfully "
+        )
+      );
+  }
+);
+/**
+ * @description remove one video in save list
+ */
+export const removeOneVideoInSaveListController = asyncHandler(
+  async (req, res, next) => {
+    const user = req?.user;
+
+    if (!user)
+      throw new ErrorFormater("unathorised requested plz login", "", 404);
+    const { videoId, saveVedioId, channelId } = req.body;
+
+    if (!videoId || !saveVedioId)
+      throw new ErrorFormater(
+        "this fild are required videoId, saveVedioId",
+        "",
+        402
+      );
+
+    const isChannel = await Channel.findById(channelId);
+
+    if (!isChannel || isChannel?.owner != user._id)
+      throw new ErrorFormater(
+        "channel is not found or unathorised request",
+        "",
+        404
+      );
+
+    const saveVedio = await saveVedio.findById(saveVedioId);
+
+    if (!saveVedio) throw new ErrorFormater("saveVedio is not found ", "", 404);
+
+    saveVedio?.videoId.pull(videoId);
+   
+    const updatedsaveVedio = await saveVedio.save({
+      validateDeforeSave: false,
+    });
+
+    if (!updatedsaveVedio)
+      throw new ErrorFormater(
+        "server error while remove video in save list ",
+        "",
+        500
+      );
+
+    res
+      .status(200)
+      .json(
+        new successResponse(
+          200,
+          updatedsaveVedio,
+          "palylist is updated successfully "
         )
       );
   }

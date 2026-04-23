@@ -45,26 +45,29 @@ export const editpostController = asyncHandler(async (req, res, next) => {
 
   if (!user)
     throw new ErrorFormater("unathorised requested plz login", "", 401);
-  const { postData, title, description, links, postId } = req.body;
+  const { postData, title, description, links, postId, channelId } = req.body;
 
   if (links && typeof links !== "object" && !(links?.name || links?.url))
-
     throw new ErrorFormater("links must be an object", "", 400);
 
-  if (!title || !description)
+  if (!title || !description || !channelId || !postId)
     throw new ErrorFormater(
       "this fild are required title and description",
       "",
       400
     );
-    
+
   const updatedPost = await Post.findByIdAndUpdate(
-    postId,
     {
-      postData: postData || undefined,
-      title,
-      description,
-      links: links || undefined,
+      $and: [{ _id: postId }, { owner: channelId }],
+    },
+    {
+      $set: {
+        postData: postData || undefined,
+        title,
+        description,
+        links: links || undefined,
+      },
     },
     { new: true, validateDeforeSave: false }
   );
@@ -80,14 +83,16 @@ export const deletepostController = asyncHandler(async (req, res, next) => {
 
   if (!user)
     throw new ErrorFormater("unathorised requested plz login", "", 401);
-  const { postId } = req.body;
+  const { postId, channelId } = req.body;
 
-  if (!postId)
+  if ((!postId, !channelId))
     throw new ErrorFormater("this fild are required postId", "", 400);
 
-  const deletedPost = await Post.findByIdAndDelete(postId);
+  const deletedPost = await Post.findByIdAndDelete({
+    $and: [{ _id: postId }, { owner: channelId }],
+  });
 
-  if (!deletedPost) throw new ErrorFormater("Invalid postId provided", "", 400);
+  if (!deletedPost) throw new ErrorFormater("Invalid postId provided or unathorised request", "", 404);
   res
     .status(200)
     .json(new successResponse(200, deletedPost, "post deleted successfully"));

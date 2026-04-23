@@ -71,15 +71,16 @@ export const editChannel = asyncHandler(async (req, res, next) => {
       400
     );
   }
-  const channel = await Channel.findById(channelId);
+  const channel = await Channel.findById({
+    $and: [{ _id: channelId }, { owner: req.user._id }],
+  });
   if (!channel)
     throw new ErrorFormater(
-      "channelId is wrong plz send the correct channelId",
+      "channelId is wrong plz send the correct channelId ",
       "",
-      400
+      404
     );
-  const updatedchannel = await Channel.findByIdAndUpdate(
-    channelId,
+  const updatedchannel = await Channel.save(
     {
       $set: {
         channelName: channelName || channel.channelName,
@@ -127,7 +128,7 @@ export const editChannelCoverImg = asyncHandler(async (req, res, next) => {
       400
     );
   }
-  const updatedchannelcoverImg = await Channel.findByIdAndUpdate(
+ await updatedchannelcoverImg.save(
     channelId,
     {
       $set: {

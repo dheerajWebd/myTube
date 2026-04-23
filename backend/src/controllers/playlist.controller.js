@@ -47,7 +47,7 @@ export const addVideoPlaylistController = asyncHandler(
     const user = req?.user;
     if (!user)
       throw new ErrorFormater("unathorised requested plz login", "", 404);
-    const { videoId, PlaylistId } = req.body;
+    const { videoId, PlaylistId, channelId } = req.body;
 
     if (!PlaylistId || !videoId)
       throw new ErrorFormater(
@@ -56,7 +56,10 @@ export const addVideoPlaylistController = asyncHandler(
         402
       );
 
-    const playlist = await Playlist.findById(PlaylistId);
+    const playlist = await Playlist.find({
+      $and: [{ _id: PlaylistId }, { owner: channelId }],
+    });
+    console.log(playlist);
 
     if (!playlist) throw new ErrorFormater("playlist is not found ", "", 404);
 
@@ -95,8 +98,8 @@ export const editPlaylistController = asyncHandler(async (req, res, next) => {
     );
 
   const playlist = await playlist.findByIdandUpdate(
-    playlistId,
     {
+      $and: [{ _id: playlistId }, { owner: channelId }],
       $set: {
         title,
         discription: discription || "",
@@ -122,14 +125,27 @@ export const deletePlaylistController = asyncHandler(async (req, res, next) => {
   const user = req?.user;
   if (!user)
     throw new ErrorFormater("unathorised requested plz login", "", 404);
-  const { playlistId } = req.body;
+  const { playlistId, channelId } = req.body;
 
-  if (!playlistId)
-    throw new ErrorFormater("this fild are required playlistId", "", 402);
+  if (!playlistId || !channelId)
+    throw new ErrorFormater(
+      "this fild are required playlistId, channelId",
+      "",
+      402
+    );
 
-  const playlist = await playlist.findByIdandDelete(playlistId);
+  const playlist = await playlist.findByIdandDelete({
+    $and: [{ _id: playlistId }, { owner: channelId }],
+  });
 
-  if (!playlist) throw new ErrorFormater("playlist is not found ", "", 404);
+  console.log(playlist);
+
+  if (!playlist)
+    throw new ErrorFormater(
+      "playlist is not found or unathorised request",
+      "",
+      404
+    );
 
   res
     .status(200)
@@ -137,3 +153,48 @@ export const deletePlaylistController = asyncHandler(async (req, res, next) => {
       new successResponse(200, playlist, "palylist is deleted successfully ")
     );
 });
+
+export const removeOneVideoInPlaylistController = asyncHandler(
+  async (req, res, next) => {
+    const user = req?.user;
+
+    if (!user)
+      throw new ErrorFormater("unathorised requested plz login", "", 404);
+    const { videoId, playlistId } = req.body;
+
+    if (!videoId || !playlistId)
+      throw new ErrorFormater(
+        "this fild are required videoId, playlistId",
+        "",
+        402
+      );
+
+    const playlist = await playlist.findById(playlistId);
+
+    if (!playlist || playlist?.owner != user._id)
+      throw new ErrorFormater(
+        "playlist is not found or unathorised request",
+        "",
+        404
+      );
+
+    playlist?.videoId.pull(videoId);
+    const updatedplaylist = await playlist.save({ validateDeforeSave: false });
+    if (!updatedplaylist)
+      throw new ErrorFormater(
+        "server error while created playlisted ",
+        "",
+        500
+      );
+
+    res
+      .status(200)
+      .json(
+        new successResponse(
+          200,
+          updatedplaylist,
+          "palylist is updated successfully "
+        )
+      );
+  }
+);

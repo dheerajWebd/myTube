@@ -154,3 +154,23 @@ export const deletedcommentController = asyncHandler(async (req, res, next) => {
       new successResponse(200, deletedComment, "comment edited successfully ")
     );
 });
+
+export const getcommentController = asyncHandler(async (req, res, next) => {
+  
+  const { channelId } = req.body;
+
+  if (!channelId)
+    throw new ErrorFormater("this fild are required hertByOwner", "", 400);
+
+  const findComment = await Comment.findById(channelId);
+
+  if (!findComment)
+    
+    throw new ErrorFormater("Invalid CommentId provided", "", 400);
+
+  res
+    .status(200)
+    .json(
+      new successResponse(200, findComment, "comment edited successfully ")
+    );
+});

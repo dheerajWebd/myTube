@@ -43,7 +43,7 @@ export const videoControll = asyncHandler(async (req, res, next) => {
 
   const videolUplode = await uplodOnCloudinary(
     videoPath,
-   `/video/userVideo/${Date.now()}`,
+    `/video/userVideo/${Date.now()}`,
     "videos"
   );
 
@@ -83,7 +83,7 @@ export const videoControll = asyncHandler(async (req, res, next) => {
 });
 
 export const editVideos = asyncHandler(async (req, res, next) => {
-  const { tittle, tag, decription, video_id } = req.body;
+  const { tittle, tag, decription, video_id, channelId } = req.body;
   if (!tittle || !tag || !decription)
     throw new ErrorFormater(
       "required tittle tag or discription for edit",
@@ -92,7 +92,7 @@ export const editVideos = asyncHandler(async (req, res, next) => {
     );
 
   const isVideo = await Video.findOne({
-    _id: video_id,
+    $and: [{ _id: video_id }, { owner: channelId }],
   });
 
   if (!isVideo)
@@ -102,8 +102,7 @@ export const editVideos = asyncHandler(async (req, res, next) => {
       400
     );
 
-  const updatedvideo = await Video.findByIdAndUpdate(
-    video_id,
+  const updatedvideo = await isVideo.save(
     {
       $set: {
         tittle,
@@ -130,20 +129,22 @@ export const editVideos = asyncHandler(async (req, res, next) => {
 });
 
 export const editThumbnail = asyncHandler(async (req, res, next) => {
-  console.log(req.file);
-
-  if (!req?.file?.path) {
+  if (!req?.file?.path || !req?.body?.video_id || !req?.body?.channelId) {
     return new ErrorFormater(
-      "file is not find plz send the image file ",
+      "file is not find plz send the image file and video_id in body and channelId in body ",
       "",
       400
     );
   }
-  if (!req.body.video_id) {
+  const updatedThumbnail = await Video.findone({
+    $and: [{ _id: req.body.video_id }, { owner: req.body.channelId }],
+  });
+
+  if (!updatedThumbnail) {
     return new ErrorFormater(
-      "plz send the video_id to edit thumbnail",
+      "does not find the video to send the video id so plz send correct id ",
       "",
-      400
+      404
     );
   }
   const thumbnailUplode = await uplodOnCloudinary(
@@ -159,7 +160,7 @@ export const editThumbnail = asyncHandler(async (req, res, next) => {
     );
   }
 
-  const updatedThumbnail = await Video.findByIdAndUpdate(
+  await updatedThumbnail.save(
     req.body.video_id,
     {
       $set: {
@@ -186,9 +187,10 @@ export const editThumbnail = asyncHandler(async (req, res, next) => {
 });
 
 export const deleteVideo = asyncHandler(async (req, res, next) => {
-  console.log(req.params);
+  const deletedVideo = await Video.findByIdAndDelete({
+    $and: [{ _id: req.params._id }, { owner: req.params.ChannelId }],
+  });
 
-  const deletedVideo = await Video.findByIdAndDelete(req.params._id);
   await Channel.findByIdAndUpdate(
     req.params._id,
     {

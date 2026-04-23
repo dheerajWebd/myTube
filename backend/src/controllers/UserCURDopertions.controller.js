@@ -19,7 +19,8 @@ export const updatepassword = asyncHandler(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
   res
     .status(200)
-    .json(new successResponse(200, "password update successfully", {}));
+    .send("password updated successfully")
+    .redirect("/user/profile");
 });
 
 export const updateProfile = asyncHandler(async (req, res, next) => {
@@ -27,6 +28,7 @@ export const updateProfile = asyncHandler(async (req, res, next) => {
     const { fullName } = req.body;
     const { coverImg, avatar } = req.files;
     const user = await User.findById(req.user._id);
+
     const updateData = {};
     let uplodeCoverImg, uplodeAvatar;
 
@@ -69,7 +71,8 @@ export const updateProfile = asyncHandler(async (req, res, next) => {
       .status(200)
       .json(
         new successResponse(200, updatedUser, "profile update successfully")
-      );
+      )
+      .redirect("/user/profile");
   } catch (error) {
     throw new ErrorFormater("failed to update profile", [error.message], 500);
     console.log(error);

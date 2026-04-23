@@ -42,3 +42,4 @@ export const subsacriptionController = asyncHandler(async (req, res, next) => {
     message: "subscribed successfully",
   });
 });
+

@@ -86,6 +86,10 @@ export const register = asyncHandler(async (req, res, next) => {
     userName,
   });
 
+  /**
+   * @description genaret accses and refresh token for user directly after register login
+   */
+
   const { genaretaccsesToken, genaretRefreshToken, Verified } =
     await genaretTokensForAuth(userCreated);
 
