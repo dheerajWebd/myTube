@@ -24,7 +24,6 @@ const LogIn = () => {
    const dispatch = useDispatch();
 
    const onSubmit = data => {
-      console.log(data);
 
       dispatch(LoginThunk(data));
       reset();
@@ -110,7 +109,7 @@ const LogIn = () => {
                sumbit <ArrowRight />
             </Button>
          </form>
-         <RegisterSocilMidiea />
+         <RegisterSocilMidiea to_link="/register" text={"register"} />
       </div>
    );
 };

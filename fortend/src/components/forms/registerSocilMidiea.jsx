@@ -1,5 +1,6 @@
 import { FaFacebook, FaInstagram, RiGoogleLine } from "@/import.js";
-const RegisterSocilMidiea = () => {
+import { Link } from "react-router-dom";
+const RegisterSocilMidiea = ({ to_link, text }) => {
    return (
       <>
          <div className="text-white mt-8 w-full flex justify-evenly ">
@@ -18,12 +19,18 @@ const RegisterSocilMidiea = () => {
                Don't have an account ?
                <button
                   className=" 
+                     animation
                      cursor-pointer
                      underline ml-1
                       text-[#ff6f00] "
                >
-                  <a href=""> Log In</a>
-                  {/*     add the link of log in oage after create the page    */}
+                  <Link
+                     to={{
+                        pathname: to_link,
+                     }}
+                  >
+                     {text}
+                  </Link>
                </button>
             </p>
          </div>

@@ -207,3 +207,23 @@ body {
       @apply font-sans;
    }
 }
+
+
+/* our custom css */
+
+.animation{
+  animation: bgmove 0.5s ease-in-out; 
+
+}
+
+@keyframes bgmove {
+   0% {
+      background-position: 0% 50%;
+   }
+   50% {
+      background-position: 100% 50%;
+   }
+   100% {
+      background-position: 0% 50%;
+   }
+}

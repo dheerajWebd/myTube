@@ -26,20 +26,22 @@ const Register = ({
    const dispatch = useDispatch();
 
    const onSubmit = async data => {
-      const formData = new FormData();
-      console.log(data);
-      const { email, password, avatar, userName, fullName } = data;
+      try {
+         const formData = new FormData();
+         console.log(data);
+         const { email, password, avatar, userName, fullName } = data;
 
-      console.log(avatar[0]);
+         console.log(avatar[0]);
 
-      formData.append("userName", userName);
-      formData.append("avatar", avatar[0]);
-      formData.append("password", password);
-      formData.append("email", email);
-      formData.append("fullName", fullName);
-      dispatch(createUser(formData));
-      setStaps(0);
-      reset();
+         formData.append("userName", userName);
+         formData.append("avatar", avatar[0]);
+         formData.append("password", password);
+         formData.append("email", email);
+         formData.append("fullName", fullName);
+         dispatch(createUser(formData));
+         setStaps(0);
+         reset();
+      } catch (error) {}
    };
 
    return (
@@ -89,7 +91,7 @@ const Register = ({
                {type == "sumbit" ? "sumbit" : ""} <ArrowRight />
             </Button>
          </form>
-         {staps === 0 && <RegisterSocilMidiea />}
+         {staps === 0 && <RegisterSocilMidiea to_link="/login" text="Login" />}
       </div>
    );
 };

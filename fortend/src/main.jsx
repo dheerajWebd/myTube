@@ -4,9 +4,10 @@ import "./index.css";
 import App from "./App.jsx";
 import { Provider } from "react-redux";
 import store from "./context/store.js";
+import Baseroutes from "./routes/routes";
 
 createRoot(document.getElementById("root")).render(
    <Provider store={store}>
-      <App />
+      <Baseroutes />
    </Provider>
 );
