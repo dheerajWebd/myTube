@@ -23,5 +23,4 @@ export const emailSend = async (from, to, subject, html) => {
       return info;
     }
   });
-  console.log(await sent);
 };

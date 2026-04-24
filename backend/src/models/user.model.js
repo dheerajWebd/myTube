@@ -1,7 +1,25 @@
 import mongoose, { Schema } from "mongoose";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import bcrypt, { hash } from "bcrypt";
 import { HASH_ROUND } from "../constent.js";
+const tempTokenSchema = new Schema({
+  hashOtp: {
+    type: String,
+    required: true,
+  },
+  token: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    expires: 1000 * 60 * 5,
+  },
+});
+
+export const TempToken = mongoose.model("TempToken", tempTokenSchema);
+
 const userSchema = new Schema(
   {
     userName: {
@@ -80,6 +98,10 @@ const userSchema = new Schema(
     refreshToken: {
       type: String,
       select: false,
+    },
+    tempToken: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "TempToken",
     },
     isVerified: {
       type: Boolean,

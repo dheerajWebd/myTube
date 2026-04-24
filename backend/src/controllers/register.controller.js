@@ -1,10 +1,17 @@
+import { use } from "react";
 import { Option } from "../constent.js";
-import { User } from "../models/user.model.js";
+import { TempToken, User } from "../models/user.model.js";
 import asyncHandler from "../utils/ansicHandler.js";
 import uplodOnCloudinary from "../utils/cloudinary.js";
+import { emailSend } from "../utils/email.utils.js";
 import { ErrorFormater } from "../utils/ErrorFormate.js";
 import successResponse from "../utils/successResponse.js";
-import { genaretTokensForAuth } from "./controllers.Function.js";
+import { varificationEmail } from "../utils/tamplatesEmail/varification.email.js";
+import {
+  genaretTokensForAuth,
+  otpGenreter,
+  verifyTockenGenreter,
+} from "./controllers.Function.js";
 
 export const register = asyncHandler(async (req, res, next) => {
   const { role, password, email, fullName, userName } = req.body;
@@ -117,3 +124,58 @@ export const register = asyncHandler(async (req, res, next) => {
       )
     );
 });
+
+export const varificationEmailAndSendToken = asyncHandler(
+  async (req, res, next) => {
+    const user = req.user;
+    if (!user)
+      throw new ErrorFormater("unathorised requested plz login", "", 401);
+
+    const otpdata = await otpGenreter();
+    const token = await verifyTockenGenreter();
+
+    const send = emailSend(
+      "dwivedidheeraj087@gmail.com",
+      "dwivedid382@gmail.com",
+      "Confirm Your Email Address",
+      varificationEmail("dwivedi", otpdata.otp, token)
+    );
+
+    if (!send) throw new ErrorFormater("server error to send email", "", 500);
+
+    const tempToken = await TempToken.create({
+      token: token,
+      hashOtp: otp.hash,
+    });
+    let useremail = user.email;
+
+    let splitemail = useremail.split("@");
+
+    const sequeremail =
+      splitemail[0].substring(0, 4) + "*****@" + splitemail[1];
+    console.log(sequeremail);
+
+    const userUpdated = await User.save(
+      {
+        $set: {
+          tempToken: tempToken._id,
+        },
+      },
+      {
+        new: true,
+        validateDeforeSave: false,
+      }
+    );
+    res.status(200).json(
+      new successResponse(
+        200,
+        {
+          useremail,
+          sequeremail,
+          userid: user._id,
+        },
+        "check your to send varification code on email for varification "
+      )
+    );
+  }
+);
