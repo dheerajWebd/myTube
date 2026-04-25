@@ -48,4 +48,5 @@ UserRoute.route("/email/verify/").get(
   authMiddileware,
   varificationemailWithOtp
 );
+
 export default UserRoute;

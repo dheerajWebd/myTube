@@ -11,14 +11,14 @@ export const authMiddileware = asyncHandler(async (req, _, next) => {
       req.query.at?.replace("Bearer ", "") ||
       req.body.at?.replace("Bearer ", "");
 
-      if (!accsesToken)
-        throw new ErrorFormater(
-      "anauthorization request accses tocken is not available  mc",
-      [""],
-      401
-    );
+    if (!accsesToken)
+      throw new ErrorFormater(
+        "anauthorization request accses tocken is not available  mc",
+        [""],
+        401
+      );
     const verifyUser = await jwt.verify(accsesToken, process.env.ACCSES_TOKEN);
-    
+
     if (!verifyUser) {
       throw new ErrorFormater(
         "anauthorization request accses tocken is not match   mc",
@@ -26,12 +26,15 @@ export const authMiddileware = asyncHandler(async (req, _, next) => {
         401
       );
     }
-    
-    const user = await User.findById(verifyUser?._id).select(
+    const deatileUser = await User.findById(verifyUser?._id).select(
       "-refreshToken -password"
     );
-    // `console`.log(verifyUser);
-    
+    const user = {
+      ...deatileUser._doc,
+      accsesToken,
+    };
+     
+
     if (!user || !user.isVerified) {
       throw new ErrorFormater(
         "anauthorization request accses tocken is not match ye kay bak raha be user to hai hi nahi mc",
@@ -40,8 +43,6 @@ export const authMiddileware = asyncHandler(async (req, _, next) => {
       );
     }
     req.user = user;
-    
-    console.log(accsesToken);
     next();
   } catch (error) {
     throw new ErrorFormater(error?.message || "invalide accses", [""], 401);

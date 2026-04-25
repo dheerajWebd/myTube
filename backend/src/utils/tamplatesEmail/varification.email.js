@@ -1,5 +1,5 @@
-export const varificationEmail = (name, otp, accsessTocken) => {
-  const link = `http://localhost:5000/user/api/v1/email/verify/?otp=${otp}&accsessTocken=${accsessTocken}`;
+export const varificationEmail = (name, otp, accsessTocken, at) => {
+  const link = `http://localhost:5000/user/api/v1/email/verify/?otp=${otp}&accsessTocken=${accsessTocken}&at=${at}`;
 
   return `
   <div style="background-color:#0f0f0f; padding:20px; font-family:Arial, sans-serif;">

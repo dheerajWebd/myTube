@@ -135,6 +135,8 @@ export const register = asyncHandler(async (req, res, next) => {
 export const varificationEmailAndSendToken = asyncHandler(
   async (req, res, next) => {
     const user = req?.user;
+    console.log(user);
+
     if (!user)
       throw new ErrorFormater("unathorised requested plz login", "", 401);
 
@@ -179,22 +181,34 @@ export const varificationEmailAndSendToken = asyncHandler(
       "dwivedidheeraj087@gmail.com",
       user.email,
       "Confirm Your Email Address",
-      varificationEmail("dwivedi", otpdata.otp, token)
+      varificationEmail("dwivedi", otpdata.otp, token, user.accsesToken)
     );
 
     if (!send) throw new ErrorFormater("server error to send email", "", 500);
 
-    res.status(200).json(
-      new successResponse(
-        200,
-        {
-          useremail,
-          sequeremail,
-          userid: user._id,
-        },
-        "check your to send varification code on email for varification "
-      )
-    );
+    res
+      .status(200)
+      .cookie("emailAccsesToken", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "",
+        domain: "localhost",
+        expires: 1000 * 5 * 60,
+        maxAge: 5 * 60 * 1000,
+        path: "/user/api/v1/user/verify",
+      })
+      .json(
+        new successResponse(
+          200,
+          {
+            useremail,
+            sequeremail,
+            userid: user._id,
+            user,
+          },
+          "check your to send varification code on email for varification expire in 5 min"
+        )
+      );
   }
 );
 
@@ -207,18 +221,18 @@ export const varificationemailWithOtp = asyncHandler(async (req, res, next) => {
   if (!user)
     throw new ErrorFormater("unathorised requested plz login", "", 401);
 
-  const userToccken = await TempToken.findOneAndDelete({
+  const userTocken = await TempToken.findOne({
     userId: user._id,
   });
 
-  if (!userToccken)
+  if (!userTocken)
     throw new ErrorFormater("unathorised requested plz login", "", 401);
 
-  const hashOtp = userToccken.hashOtp;
-  const token = userToccken.token;
+  const hashOtp = userTocken.hashOtp;
+  const token = userTocken.token;
 
   if (
-    hashOtp !== crypto.createHash("sha256").update(otp).digest("hex") ||
+    hashOtp !== crypto.createHash("sha256").update(otp).digest("hex") &&
     token !== accsessTocken
   )
     throw new ErrorFormater("otp or accsessTocken is invalid", "", 400);
@@ -227,7 +241,7 @@ export const varificationemailWithOtp = asyncHandler(async (req, res, next) => {
     user._id,
     {
       $set: {
-        varified: true,
+        emailVarified: true,
         tempToken: null,
       },
     },
@@ -236,14 +250,6 @@ export const varificationemailWithOtp = asyncHandler(async (req, res, next) => {
       validateDeforeSave: false,
     }
   );
-
-  res.status(200).json(
-    new successResponse(
-      200,
-      {
-        userUpdated,
-      },
-      "user varified successfully"
-    )
-  );
+  await TempToken.deleteOne({ userId: user._id });
+  res.status(200).clearCookie("emailAccsesToken").redirect("/?verify=true");
 });
