@@ -3,20 +3,26 @@ import jwt from "jsonwebtoken";
 import bcrypt, { hash } from "bcrypt";
 import { HASH_ROUND } from "../constent.js";
 const tempTokenSchema = new Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+    unique: true,
+  },
   hashOtp: {
     type: String,
     required: true,
-    unique:true
+    unique: true,
   },
   token: {
     type: String,
     required: true,
-    unique:true
+    unique: true,
   },
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: 1000 * 60 * 5,
+    // expires:"5m",
   },
 });
 
@@ -104,6 +110,7 @@ const userSchema = new Schema(
     tempToken: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "TempToken",
+      default: null,
     },
     isVerified: {
       type: Boolean,
@@ -151,7 +158,7 @@ userSchema.methods.RefreshToken = function () {
     }
   );
 };
-userSchema.method.verifyString = function () {
+userSchema.methods.verifyString = function () {
   return jwt.sign(
     {
       _id: this._id,

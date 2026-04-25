@@ -3,6 +3,7 @@ import { upload } from "../middlewares/multer.middlewares.js";
 import {
   register,
   varificationEmailAndSendToken,
+  varificationemailWithOtp,
 } from "../controllers/register.controller.js";
 import { logInUser } from "../controllers/logIn.controller.js";
 import { authMiddileware } from "../middlewares/auth.middlewares.js";
@@ -43,8 +44,8 @@ UserRoute.route("/channelProfile").get(authMiddileware, channelProfile);
 UserRoute.route("/like").post(authMiddileware, likeControll);
 UserRoute.route("/chatgpt").get(chatGPTController);
 UserRoute.route("/verifiy").put(authMiddileware, varificationEmailAndSendToken);
-UserRoute.route("/email/verify/").get((req, res) => {
-  console.log(req.query.accsessTocken);
-  res.status(200).json({ message: "email varified" });
-});
+UserRoute.route("/email/verify/").get(
+  authMiddileware,
+  varificationemailWithOtp
+);
 export default UserRoute;

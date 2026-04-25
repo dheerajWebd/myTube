@@ -9,7 +9,7 @@ const collection = "users";
 use(database);
 
 // Create a new collection.
-db.createCollection(collection);
+db.temptokens.getIndexes();
 
 // The prototype form to create a collection:
 /* db.createCollection( <name>,

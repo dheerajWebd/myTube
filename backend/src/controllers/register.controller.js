@@ -6,12 +6,13 @@ import { emailSend } from "../utils/email.utils.js";
 import { ErrorFormater } from "../utils/ErrorFormate.js";
 import successResponse from "../utils/successResponse.js";
 import { varificationEmail } from "../utils/tamplatesEmail/varification.email.js";
+import { welcomeEmail } from "../utils/tamplatesEmail/wellcom.email.js";
 import {
   genaretTokensForAuth,
   otpGenreter,
   verifyTockenGenreter,
 } from "./controllers.Function.js";
-
+import crypto from "crypto";
 export const register = asyncHandler(async (req, res, next) => {
   const { role, password, email, fullName, userName } = req.body;
 
@@ -99,6 +100,13 @@ export const register = asyncHandler(async (req, res, next) => {
   const { genaretaccsesToken, genaretRefreshToken, Verified } =
     await genaretTokensForAuth(userCreated);
 
+  emailSend(
+    "dwivedidheeraj087@gmail.com",
+    userCreated.email,
+    "Confirm Your Email Address",
+    welcomeEmail(userCreated.fullName)
+  );
+
   res
     .status(201)
     .cookie("accsesToken", genaretaccsesToken, Option)
@@ -130,22 +138,21 @@ export const varificationEmailAndSendToken = asyncHandler(
     if (!user)
       throw new ErrorFormater("unathorised requested plz login", "", 401);
 
-    const otpdata = await otpGenreter();
+    const userToccken = await TempToken.findOneAndDelete({
+      userId: user._id,
+    });
+    const otpdata = otpGenreter();
     const token = await verifyTockenGenreter();
 
-    const send = emailSend(
-      "dwivedidheeraj087@gmail.com",
-      user.email,
-      "Confirm Your Email Address",
-      varificationEmail("dwivedi", otpdata.otp, token)
-    );
-
-    if (!send) throw new ErrorFormater("server error to send email", "", 500);
-
     const tempToken = await TempToken.create({
+      _id: user._id,
       token: token,
       hashOtp: otpdata.hash,
+      userId: user._id,
     });
+
+    console.log(tempToken);
+
     let useremail = user.email;
 
     let splitemail = useremail.split("@");
@@ -154,7 +161,8 @@ export const varificationEmailAndSendToken = asyncHandler(
       splitemail[0].substring(0, 4) + "*****@" + splitemail[1];
     console.log(sequeremail);
 
-    const userUpdated = await user.save(
+    const userUpdated = await User.findByIdAndUpdate(
+      user._id,
       {
         $set: {
           tempToken: tempToken._id,
@@ -165,6 +173,17 @@ export const varificationEmailAndSendToken = asyncHandler(
         validateDeforeSave: false,
       }
     );
+
+    console.log(userUpdated);
+    const send = emailSend(
+      "dwivedidheeraj087@gmail.com",
+      user.email,
+      "Confirm Your Email Address",
+      varificationEmail("dwivedi", otpdata.otp, token)
+    );
+
+    if (!send) throw new ErrorFormater("server error to send email", "", 500);
+
     res.status(200).json(
       new successResponse(
         200,
@@ -178,3 +197,53 @@ export const varificationEmailAndSendToken = asyncHandler(
     );
   }
 );
+
+export const varificationemailWithOtp = asyncHandler(async (req, res, next) => {
+  const { otp, accsessTocken } = req.query;
+  if (!otp || !accsessTocken)
+    throw new ErrorFormater("otp and accsessTocken are required", "", 400);
+
+  const user = req?.user;
+  if (!user)
+    throw new ErrorFormater("unathorised requested plz login", "", 401);
+
+  const userToccken = await TempToken.findOneAndDelete({
+    userId: user._id,
+  });
+
+  if (!userToccken)
+    throw new ErrorFormater("unathorised requested plz login", "", 401);
+
+  const hashOtp = userToccken.hashOtp;
+  const token = userToccken.token;
+
+  if (
+    hashOtp !== crypto.createHash("sha256").update(otp).digest("hex") ||
+    token !== accsessTocken
+  )
+    throw new ErrorFormater("otp or accsessTocken is invalid", "", 400);
+
+  const userUpdated = await User.findByIdAndUpdate(
+    user._id,
+    {
+      $set: {
+        varified: true,
+        tempToken: null,
+      },
+    },
+    {
+      new: true,
+      validateDeforeSave: false,
+    }
+  );
+
+  res.status(200).json(
+    new successResponse(
+      200,
+      {
+        userUpdated,
+      },
+      "user varified successfully"
+    )
+  );
+});

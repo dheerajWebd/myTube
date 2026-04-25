@@ -10,22 +10,35 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
   try {
     const tocken = req.cookies?.refreshToken;
 
+    if (!tocken) {
+      throw new ErrorFormater("Refresh token missing", [], 401);
+    }
     const verifyUser = await jwt.verify(tocken, process.env.REFF_TOKEN);
 
     if (!verifyUser) {
       throw new ErrorFormater(
-        "anauthorization request accses tocken is not match plz log in again mc",
+        "anauthorization request accses tocken is not match plz or user log in again mc",
+        [""],
+        401
+      );
+    }
+    const user = await User.findById(verifyUser._id).select("+refreshToken");
+
+    if (!user) {
+      throw new ErrorFormater(
+        "anauthorization request accses tocken is not match or user is not found plz log in again ",
         [""],
         401
       );
     }
 
-    if (verifyUser.refreshToken !== tocken) {
+    console.log(user);
+
+    if (user.refreshToken !== tocken) {
       console.log("mismatch \n", tocken);
       throw new ErrorFormater("mismatch the tocken ", [], 500);
     }
 
-    const user = await User.findById(verifyUser._id);
     const tockens = await genaretTokensForAuth(user);
 
     if (!tockens)
