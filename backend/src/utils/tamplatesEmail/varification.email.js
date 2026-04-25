@@ -1,5 +1,5 @@
 export const varificationEmail = (name, token, accsessTocken) => {
-  const link = `http://localhost:5000/email/verify/?token=${token}&accsessTocken=${accsessTocken}`;
+  const link = `http://localhost:5000/user/api/v1/email/verify/?token=${token}&accsessTocken=${accsessTocken}`;
 
   return `
   <div style="background-color:#0f0f0f; padding:20px; font-family:Arial, sans-serif;">
@@ -36,10 +36,13 @@ export const varificationEmail = (name, token, accsessTocken) => {
       <!-- Button -->
       <tr>
         <td style="padding:25px;">
-          <button
+        <a style="text-decoration:none; color:white;" href="${link}">
+          <button 
             style="background:#1877f2; color:white; padding:10px 20px; text-decoration:none; border-radius:5px; display:inline-block; font-size:14px;">
+           
             Verify Email
-          </button>
+            </button>
+            </a>
         </td>
       </tr>
 

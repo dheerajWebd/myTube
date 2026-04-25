@@ -6,10 +6,12 @@ const tempTokenSchema = new Schema({
   hashOtp: {
     type: String,
     required: true,
+    unique:true
   },
   token: {
     type: String,
     required: true,
+    unique:true
   },
   createdAt: {
     type: Date,

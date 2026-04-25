@@ -20,7 +20,7 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
       );
     }
 
-    if (!verifyUser.refreshToken === tocken) {
+    if (verifyUser.refreshToken !== tocken) {
       console.log("mismatch \n", tocken);
       throw new ErrorFormater("mismatch the tocken ", [], 500);
     }

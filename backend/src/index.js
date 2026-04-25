@@ -5,7 +5,6 @@ import { filterVideos } from "./controllers/getUser.controller.js";
 import { CommentController } from "./controllers/comment.controller.js";
 import { likeControll } from "./controllers/likeVideo.controller.js";
 import { User } from "./models/user.model.js";
-import { varificationEmailAndSendToken } from "./controllers/register.controller.js";
 
 dbconoction();
 
@@ -22,7 +21,6 @@ app.listen(process.env.PORT || 4000, () => {
   console.log("server  is listen in 5000 port");
 });
 
-varificationEmailAndSendToken();
 // channelProfile()
 // app.get("/l", async (req, res) => {
 //   const r = await filterVideos();

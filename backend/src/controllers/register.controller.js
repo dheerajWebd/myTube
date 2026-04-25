@@ -1,4 +1,3 @@
-import { use } from "react";
 import { Option } from "../constent.js";
 import { TempToken, User } from "../models/user.model.js";
 import asyncHandler from "../utils/ansicHandler.js";
@@ -127,7 +126,7 @@ export const register = asyncHandler(async (req, res, next) => {
 
 export const varificationEmailAndSendToken = asyncHandler(
   async (req, res, next) => {
-    const user = req.user;
+    const user = req?.user;
     if (!user)
       throw new ErrorFormater("unathorised requested plz login", "", 401);
 
@@ -136,7 +135,7 @@ export const varificationEmailAndSendToken = asyncHandler(
 
     const send = emailSend(
       "dwivedidheeraj087@gmail.com",
-      "dwivedid382@gmail.com",
+      user.email,
       "Confirm Your Email Address",
       varificationEmail("dwivedi", otpdata.otp, token)
     );
@@ -145,7 +144,7 @@ export const varificationEmailAndSendToken = asyncHandler(
 
     const tempToken = await TempToken.create({
       token: token,
-      hashOtp: otp.hash,
+      hashOtp: otpdata.hash,
     });
     let useremail = user.email;
 
@@ -155,7 +154,7 @@ export const varificationEmailAndSendToken = asyncHandler(
       splitemail[0].substring(0, 4) + "*****@" + splitemail[1];
     console.log(sequeremail);
 
-    const userUpdated = await User.save(
+    const userUpdated = await user.save(
       {
         $set: {
           tempToken: tempToken._id,
