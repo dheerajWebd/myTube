@@ -8,13 +8,9 @@ export default defineConfig({
       port: 3000,
    },
    base: "/myTube",
-   define: {
-      "process.env": process.env,
-   },
    resolve: {
       alias: {
          "@": path.resolve(__dirname, "./src"),
       },
    },
 });
- 

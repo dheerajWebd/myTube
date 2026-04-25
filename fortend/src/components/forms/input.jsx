@@ -38,7 +38,17 @@ const InputEmail = ({ register, errors }) => {
    );
 };
 
-const InputPassword = ({ register, errors, getValues }) => {
+const InputPassword = ({
+   register,
+   errors,
+   getValues,
+   text = {
+      label: "Password",
+      placeholder: "Enter Password",
+      leble2: "Confirm Password",
+      placeholder2: "Enter Confirm Password",
+   },
+}) => {
    const [showPassword, setShowPassword] = useState(false);
    const [showConfirmPassword, showSetConfirmPassword] = useState(false);
 
@@ -48,7 +58,7 @@ const InputPassword = ({ register, errors, getValues }) => {
             htmlFor="password"
             className={"text-sm -ml-1 mt-5 text-[#F0F1EE]"}
          >
-            password
+            {text.label}
          </Label>
 
          <div className="w-full items-center mt-8 mb-7  flex relative">
@@ -56,7 +66,7 @@ const InputPassword = ({ register, errors, getValues }) => {
                className={"text-white p-5 absolute"}
                id={"password"}
                type={showPassword ? "text" : "password"}
-               placeholder={"enter your password"}
+               placeholder={text.placeholder}
                {...register("password", {
                   required: "password is required",
                   validate: {
@@ -108,7 +118,7 @@ const InputPassword = ({ register, errors, getValues }) => {
             htmlFor="conform_password"
             className={"text-sm -ml-1 mt-5 text-[#F0F1EE]"}
          >
-            conform_password
+            {text.leble2}
          </Label>
 
          <div className="w-full items-center mt-8 mb-7 flex relative">
@@ -116,7 +126,7 @@ const InputPassword = ({ register, errors, getValues }) => {
                className={"text-white p-5 absolute"}
                id={"conform_password"}
                type={showConfirmPassword ? "text" : "password"}
-               placeholder={"enter your conform_password"}
+               placeholder={text.placeholder2}
                {...register("conform_password", {
                   required: "conform_password is required",
                   validate: {
@@ -175,7 +185,5 @@ const InputPassword = ({ register, errors, getValues }) => {
       </div>
    );
 };
-
-
 
 export { InputPassword, InputEmail };

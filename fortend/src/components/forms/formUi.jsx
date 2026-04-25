@@ -1,7 +1,6 @@
 import { useState, useForm } from "@/import.js";
-import ForgetPassword from "./forgetPassword.jsx";
 
-const RegisterForm = ({ Component, LogIn, ForgetPassword }) => {
+const RegisterForm = ({ Register, LogIn, ForgetPassword }) => {
    const [staps, setStaps] = useState(0);
    const [type, setType] = useState("button");
    const {
@@ -71,8 +70,8 @@ const RegisterForm = ({ Component, LogIn, ForgetPassword }) => {
                ></div>
             </div>
 
-            {Component && (
-               <Component
+            {Register && (
+               <Register
                   handleClik={handleClik}
                   handleSubmit={handleSubmit}
                   register={register}

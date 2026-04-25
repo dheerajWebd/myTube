@@ -8,22 +8,33 @@ import {
 } from "@/import.js";
 
 import { Controller } from "react-hook-form";
-import { StapsForForgetPassword_1, StepForgetPassword_2 } from "./formSteps";
+import {
+   StapsForForgetPassword_1,
+   StapsForNewPassword,
+   StepForgetPassword_2,
+} from "./formSteps";
+import { Link, useNavigate } from "react-router-dom";
 
 const ForgetPassword = () => {
    const [steps, setSteps] = useState(0);
    const {
       register,
       handleSubmit,
+      getValues,
       control,
       formState: { errors, isValid },
       reset,
    } = useForm({
       mode: "onChange",
    });
-
+   const navigator = useNavigate();
    const onSubmit = data => {
       console.log(data);
+
+      if (steps == 2) {
+         setSteps(0);
+         navigator("/home");
+      }
       reset();
    };
    return (
@@ -31,7 +42,6 @@ const ForgetPassword = () => {
          <h1 className="text-xl font-bold text-white text-center mt-10 z-30 relative">
             Log in to MyTube.com
          </h1>
-
          <form onSubmit={handleSubmit(onSubmit)}>
             <StapsForForgetPassword_1
                step={steps}
@@ -48,6 +58,14 @@ const ForgetPassword = () => {
                setStep={setSteps}
                Controller={Controller}
                isValid={isValid}
+            />
+            <StapsForNewPassword
+               register={register}
+               errors={errors}
+               setStep={setSteps}
+               isValid={isValid}
+               step={steps}
+               getValues={getValues}
             />
          </form>
       </div>

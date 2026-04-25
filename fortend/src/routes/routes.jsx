@@ -1,6 +1,7 @@
 import App from "@/App";
 import ForgetPassword from "@/components/forms/forgetPassword";
 import RegisterForm from "@/components/forms/formUi";
+import HomePage from "@/components/HomePage";
 import { LogIn, Register } from "@/import";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -12,11 +13,11 @@ const Baseroutes = () => {
             <Route path="/" element={<App />} />
             <Route
                path="/register"
-               element={<RegisterForm Component={Register} />}
+               element={<RegisterForm Register={Register} />}
             />
             <Route path="/login" element={<RegisterForm LogIn={LogIn} />} />
             <Route path="/forgetPassword" element={<RegisterForm ForgetPassword={ForgetPassword} />} />
-            {/* <Route path="/home" element={<Home />} /> */}
+            <Route path="/home" element={<HomePage />} />
          </Routes>
       </BrowserRouter>
    );

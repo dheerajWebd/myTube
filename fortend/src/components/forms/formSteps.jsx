@@ -1,4 +1,11 @@
-import { FcAddImage, ArrowRight, Button, Input, Label } from "@/import.js";
+import {
+   FcAddImage,
+   ArrowRight,
+   Button,
+   Input,
+   Label,
+   InputPassword,
+} from "@/import.js";
 import { RefreshCwIcon } from "lucide-react";
 import {
    InputOTP,
@@ -136,13 +143,6 @@ const Step2 = ({ register, errors }) => {
  *
  */
 
-/* 
-
-  
-            {}
-
-*/
-
 const StapsForForgetPassword_1 = ({
    step,
    setStep,
@@ -237,6 +237,7 @@ const StepForgetPassword_2 = ({
    errors,
    Controller,
    isValid,
+   setStep,
 }) => {
    return (
       steps === 1 && (
@@ -297,8 +298,15 @@ const StepForgetPassword_2 = ({
                   role="alert"
                   aria-live="assertive"
                   aria-invalid={!!errors.root}
-                  type={"submit"}
+                  type="submit"
                   disabled={!isValid}
+                  onClick={() => {
+                     if (isValid) {
+                        setStep(2);
+                     } else {
+                        return;
+                     }
+                  }}
                   className={
                      "p-5 cursor-pointer text-white  w-[clamp(200px,40%,25rem)] mt-3 bg-[#926247]"
                   }
@@ -312,4 +320,49 @@ const StepForgetPassword_2 = ({
    );
 };
 
-export { Step1, Step2, StapsForForgetPassword_1, StepForgetPassword_2 };
+const StapsForNewPassword = ({
+   register,
+   errors,
+   getValues,
+   isValid,
+   setStep,
+   step,
+}) => {
+   console.log(step);
+   return (
+      step == 2 && (
+         <>
+            <InputPassword
+               text={{
+                  label: "New Password",
+                  placeholder: "Enter New Password",
+                  leble2: "Confirm Password",
+                  placeholder2: "Enter Confirm Password",
+               }}
+               register={register}
+               errors={errors}
+               getValues={getValues}
+            />
+
+            <Button
+               className=" flex justify-center items-center m-auto mb-5 mt- p-5 cursor-pointer text-white w-11/12 bg-[#926247]"
+               type="submit"
+               variant="ghost"
+               size="default"
+               disabled={!isValid}
+            >
+               Change Password
+               <ArrowRight className="mr-2 h-4 w-4" />
+            </Button>
+         </>
+      )
+   );
+};
+
+export {
+   Step1,
+   Step2,
+   StapsForForgetPassword_1,
+   StepForgetPassword_2,
+   StapsForNewPassword,
+};
