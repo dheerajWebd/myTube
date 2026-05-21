@@ -143,6 +143,7 @@ export const varificationEmailAndSendToken = asyncHandler(
     const userToccken = await TempToken.findOneAndDelete({
       userId: user._id,
     });
+     
     const otpdata = otpGenreter();
     const token = await verifyTockenGenreter();
 
@@ -153,7 +154,6 @@ export const varificationEmailAndSendToken = asyncHandler(
       userId: user._id,
     });
 
-    console.log(tempToken);
 
     let useremail = user.email;
 
@@ -176,7 +176,6 @@ export const varificationEmailAndSendToken = asyncHandler(
       }
     );
 
-    console.log(userUpdated);
     const send = emailSend(
       "dwivedidheeraj087@gmail.com",
       user.email,

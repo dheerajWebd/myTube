@@ -16,6 +16,7 @@ import {
 } from "../controllers/UserCURDopertions.controller.js";
 import { likeControll } from "../controllers/likeVideo.controller.js";
 import { chatGPTController } from "../api/chatgpt.api.js";
+import { User } from "../models/user.model.js";
 const UserRoute = express.Router();
 
 UserRoute.route("/register").post(
@@ -43,7 +44,31 @@ UserRoute.route("/change/profile").put(
 UserRoute.route("/channelProfile").get(authMiddileware, channelProfile);
 UserRoute.route("/like").post(authMiddileware, likeControll);
 UserRoute.route("/chatgpt").get(chatGPTController);
-UserRoute.route("/verifiy").put(authMiddileware, varificationEmailAndSendToken);
+UserRoute.route("/verifiy").put(
+  async (req, res, next) => {
+    try {
+      const { email, userName } = req.body;
+      const forgetRout = await User.findOne({
+        $or: [{ email }, { userName }],
+      });
+      if (!forgetRout) {
+        next();
+      }
+      req.forgetRout = forgetRout;
+      next();
+    } catch (error) {
+      next();
+    }
+  },
+  async (req, res, next) => {
+    if (req.forgetRout) {
+      console.log(req.forgetRout);
+      next();
+    }
+    return authMiddileware;
+  },
+  varificationEmailAndSendToken
+);
 UserRoute.route("/email/verify/").get(
   authMiddileware,
   varificationemailWithOtp

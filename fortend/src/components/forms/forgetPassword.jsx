@@ -1,19 +1,33 @@
-import {
-   ArrowRight,
-   Button,
-   Input,
-   Label,
-   useForm,
-   useState,
-} from "@/import.js";
+import { lazy, Suspense, useState } from "react";
+// import {
+//    useForm,
+//    useState,
+// } from "@/import.js";
 
-import { Controller } from "react-hook-form";
-import {
-   StapsForForgetPassword_1,
-   StapsForNewPassword,
-   StepForgetPassword_2,
-} from "./formSteps";
-import { Link, useNavigate } from "react-router-dom";
+import { Controller, useForm } from "react-hook-form";
+// import {
+//    StapsForForgetPassword_1,
+//    StapsForNewPassword,
+//    StepForgetPassword_2,
+// } from "./formSteps";
+
+const StapsForNewPassword = lazy(() =>
+   import("./formSteps").then(module => ({
+      default: module.StapsForNewPassword,
+   }))
+);
+const StapsForForgetPassword_1 = lazy(() =>
+   import("./formSteps").then(module => ({
+      default: module.StapsForForgetPassword_1,
+   }))
+);
+const StepForgetPassword_2 = lazy(() =>
+   import("./formSteps").then(module => ({
+      default: module.StepForgetPassword_2,
+   }))
+);
+import { useNavigate } from "react-router-dom";
+import SuspenseLoading from "../loader/SuspenseLoading";
 
 const ForgetPassword = () => {
    const [steps, setSteps] = useState(0);
@@ -43,30 +57,37 @@ const ForgetPassword = () => {
             Log in to MyTube.com
          </h1>
          <form onSubmit={handleSubmit(onSubmit)}>
-            <StapsForForgetPassword_1
-               step={steps}
-               setStep={setSteps}
-               register={register}
-               errors={errors}
-               isValid={isValid}
-            />
+            <SuspenseLoading>
+               <StapsForForgetPassword_1
+                  step={steps}
+                  setStep={setSteps}
+                  register={register}
+                  errors={errors}
+                  isValid={isValid}
+               />
+            </SuspenseLoading>
 
-            <StepForgetPassword_2
-               steps={steps}
-               control={control}
-               errors={errors}
-               setStep={setSteps}
-               Controller={Controller}
-               isValid={isValid}
-            />
-            <StapsForNewPassword
-               register={register}
-               errors={errors}
-               setStep={setSteps}
-               isValid={isValid}
-               step={steps}
-               getValues={getValues}
-            />
+            <SuspenseLoading>
+               <StepForgetPassword_2
+                  steps={steps}
+                  control={control}
+                  errors={errors}
+                  setStep={setSteps}
+                  Controller={Controller}
+                  isValid={isValid}
+               />
+            </SuspenseLoading>
+
+            <SuspenseLoading>
+               <StapsForNewPassword
+                  register={register}
+                  errors={errors}
+                  setStep={setSteps}
+                  isValid={isValid}
+                  step={steps}
+                  getValues={getValues}
+               />
+            </SuspenseLoading>
          </form>
       </div>
    );

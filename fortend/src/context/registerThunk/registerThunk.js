@@ -1,5 +1,7 @@
-import { base_API, createAsyncThunk } from "@/import.js"
+// import { base_API, createAsyncThunk } from "@/import.js"
 
+import base_API from "@/AxiosConfig"
+import { createAsyncThunk } from "@reduxjs/toolkit"
 
 
 export const createUser = createAsyncThunk("register/user", async (payload, thunkApi) => {

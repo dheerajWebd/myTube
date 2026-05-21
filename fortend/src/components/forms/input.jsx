@@ -1,5 +1,9 @@
-import { Input, Label, useState } from "@/import.js";
+// import { Input, Label, useState };
 import { Eye, EyeClosed } from "lucide-react";
+import { Label } from "@/components/ui/label.jsx";
+import { Input } from "@/components/ui/input.jsx";
+
+import { useState } from "react";
 
 const InputEmail = ({ register, errors }) => {
    return (
@@ -8,7 +12,7 @@ const InputEmail = ({ register, errors }) => {
             Email Address
          </Label>
          <Input
-            className={"text-white mt-2 p-5"}
+            className={"text-white mt-2 p-5 cursor-pointer"}
             id={"email"}
             type={"email"}
             placeholder={"enter your email"}
@@ -63,8 +67,9 @@ const InputPassword = ({
 
          <div className="w-full items-center mt-8 mb-7  flex relative">
             <Input
-               className={"text-white p-5 absolute"}
+               className={"text-white p-5  absolute cursor-pointer"}
                id={"password"}
+
                type={showPassword ? "text" : "password"}
                placeholder={text.placeholder}
                {...register("password", {
@@ -98,9 +103,9 @@ const InputPassword = ({
                }}
             >
                {showPassword ? (
-                  <Eye className="text-white absolute right-3 -top-3 text-right " />
+                  <Eye className="text-white  cursor-pointer absolute right-3 -top-3 text-right " />
                ) : (
-                  <EyeClosed className="text-white absolute right-3 -top-3 text-right " />
+                  <EyeClosed className="text-white cursor-pointer absolute right-3 -top-3 text-right " />
                )}
             </button>
          </div>
@@ -123,7 +128,7 @@ const InputPassword = ({
 
          <div className="w-full items-center mt-8 mb-7 flex relative">
             <Input
-               className={"text-white p-5 absolute"}
+               className={"text-white p-5 absolute cursor-pointer"}
                id={"conform_password"}
                type={showConfirmPassword ? "text" : "password"}
                placeholder={text.placeholder2}
@@ -166,9 +171,9 @@ const InputPassword = ({
                }}
             >
                {showConfirmPassword ? (
-                  <Eye className="text-white absolute right-3 -top-3 text-right " />
+                  <Eye className="text-white cursor-pointer absolute right-3 -top-3 text-right " />
                ) : (
-                  <EyeClosed className="text-white absolute right-3 -top-3 text-right " />
+                  <EyeClosed className="text-white cursor-pointer absolute right-3 -top-3 text-right " />
                )}
             </button>
          </div>

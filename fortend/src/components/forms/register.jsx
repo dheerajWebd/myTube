@@ -1,15 +1,34 @@
-import {
-   InputEmail,
-   Button,
-   ArrowRight,
-   RegisterSocilMidiea,
-   InputPassword,
-   Step1,
-   Step2,
-   createUser,
-   useDispatch,
-   useSelector,
-} from "@/import.js";
+import { lazy, Suspense } from "react";
+// import {
+//    InputEmail,
+//    Button,
+//    ArrowRight,
+//    RegisterSocilMidiea,
+//    InputPassword,
+//    Step1,
+//    Step2,
+//    createUser,
+//    useDispatch,
+//    useSelector,
+// } from "@/import.js";
+import { useDispatch } from "react-redux";
+import { InputEmail, InputPassword } from "./input";
+import { Button } from "@/components/ui/button.jsx";
+import RegisterSocilMidiea from "./registerSocilMidiea";
+import { ArrowRight } from "lucide-react";
+import { createUser } from "@/context/registerThunk/registerThunk";
+import SuspenseLoading from "../loader/SuspenseLoading";
+// import { Step1, Step2 } from "./formSteps";
+const Step1 = lazy(() =>
+   import("./formSteps").then(module => ({
+      default: module.Step1,
+   }))
+); // this method of named export
+const Step2 = lazy(() =>
+   import("./formSteps").then(module => ({
+      default: module.Step2,
+   }))
+);
 
 const Register = ({
    reset,
@@ -63,9 +82,17 @@ const Register = ({
                   <div className="w-full flex items-center justify-center"></div>
                </div>
             )}
-            {staps == 1 && <Step1 register={register} errors={errors} />}
+            {staps == 1 && (
+               <SuspenseLoading>
+                  <Step1 register={register} errors={errors} />
+               </SuspenseLoading>
+            )}
 
-            {staps == 2 && <Step2 register={register} errors={errors} />}
+            {staps == 2 && (
+               <SuspenseLoading>
+                  <Step2 register={register} errors={errors} />
+               </SuspenseLoading>
+            )}
 
             <p
                id="root_error"

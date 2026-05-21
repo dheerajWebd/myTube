@@ -1,16 +1,17 @@
-//  create a home page fro myTube video website like a youtube home page
-
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useRef } from "react";
+import Navbar from "./Navbar/Navbar";
+import BottomNav from "./Navbar/BottomNav";
 
 const HomePage = () => {
+
+
    return (
-      <main className="size-full bg-accent">
-         <nav className="flex justify-center gap-4 ">
-            <Link to="/register">register</Link>
-            <Link to="/login">login</Link>
-            <Link to="/forgetPassword">forgetPassword</Link>
-         </nav>
+      <main className="w-full  bg-accent">
+         <Navbar />
+
+         <div className="h-2000"></div>
+
+         <BottomNav />
       </main>
    );
 };

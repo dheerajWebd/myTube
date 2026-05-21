@@ -1,4 +1,9 @@
-import { createSlice, createUser, LoginThunk } from "@/import.js"
+// import { createSlice, createUser, LoginThunk } from "@/import.js"
+
+import { createSlice } from "@reduxjs/toolkit";
+import { createUser } from "../registerThunk/registerThunk";
+import LoginThunk from "../registerThunk/LoginThunk";
+
 
 
 

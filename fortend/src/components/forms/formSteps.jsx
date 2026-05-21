@@ -1,12 +1,17 @@
-import {
-   FcAddImage,
-   ArrowRight,
-   Button,
-   Input,
-   Label,
-   InputPassword,
-} from "@/import.js";
-import { RefreshCwIcon } from "lucide-react";
+// import {
+//    FcAddImage,
+//    ArrowRight,
+//    Butto,
+//    Input,
+//    Label,
+//    InputPassword,
+// } from "@/import.js";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { InputPassword } from "@/components/forms/input.jsx";
+
+import { ArrowRight, RefreshCwIcon } from "lucide-react";
 import {
    InputOTP,
    InputOTPGroup,
@@ -14,6 +19,8 @@ import {
    InputOTPSlot,
 } from "../ui/input-otp";
 import { Controller } from "react-hook-form";
+import { FcAddImage } from "react-icons/fc";
+
 /**
  * @description this is steps for register users
  *
@@ -33,7 +40,7 @@ const Step1 = ({ register, errors }) => {
             aria-required="true"
             aria-label="userName"
             aria-invalid={!!errors.userName}
-            className={"text-white mt-2 p-5"}
+            className={"text-white mt-2 p-5 cursor-pointer"}
             {...register("userName", {
                required: {
                   value: true,
@@ -74,7 +81,7 @@ const Step1 = ({ register, errors }) => {
             aria-required="true"
             aria-invalid={!!errors.fullName}
             aria-label="fullName"
-            className={"text-white mt-2 p-5 mb-5"}
+            className={"text-white mt-2 p-5 mb-5 cursor-pointer"}
             {...register("fullName", {
                required: "Full name is required",
                minLength: {
@@ -114,7 +121,7 @@ const Step2 = ({ register, errors }) => {
                aria-invalid={!!errors.avatar}
                aria-label="avatar"
                className={
-                  "w-[90%] h-50  text-center z-2 border-none  outline-none absolute top-0  text-transparent bg-transparent"
+                  "w-[90%] h-50  text-center z-2 border-none cursor-pointer outline-none absolute top-0  text-transparent bg-transparent"
                }
                {...register("avatar", {
                   required: "avatar is required",
@@ -162,7 +169,7 @@ const StapsForForgetPassword_1 = ({
 
             <Input
                id="userName"
-               className={"text-white mt-2 p-5 mb-5"}
+               className={"text-white mt-2 p-5 mb-5 cursor-pointer"}
                type={"text"}
                placeholder={"enter your Email / Username"}
                {...register("userName", {

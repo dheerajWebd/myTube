@@ -1,4 +1,6 @@
-import { FaFacebook, FaInstagram, RiGoogleLine } from "@/import.js";
+// import { FaFacebook, FaInstagram, RiGoogleLine } from "@/import.js";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { RiGoogleLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 const RegisterSocilMidiea = ({ to_link, text }) => {
    return (

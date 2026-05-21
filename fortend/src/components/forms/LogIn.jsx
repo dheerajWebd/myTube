@@ -1,15 +1,24 @@
-import {
-   ArrowRight,
-   Button,
-   Input,
-   InputPassword,
-   Label,
-   RegisterSocilMidiea,
-   useDispatch,
-   useForm,
-   LoginThunk,
-} from "@/import.js";
+// import {
+//    ArrowRight,
+//    Button,
+//    Input,
+//    InputPassword,
+//    Label,
+//    RegisterSocilMidiea,
+//    useDispatch,
+//    useForm,
+//    LoginThunk,
+// } from "@/import.js";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { Label } from "@/components/ui/label.jsx";
+import { Input } from "@/components/ui/input.jsx";
+import { InputPassword } from "./input";
+import { Button } from "@/components/ui/button.jsx";
+import RegisterSocilMidiea from "./registerSocilMidiea";
+import LoginThunk from "@/context/registerThunk/LoginThunk";
+import { ArrowRight } from "lucide-react";
 
 const LogIn = () => {
    const {
@@ -45,7 +54,7 @@ const LogIn = () => {
             <Input
                placeholder={"enter yor email / username "}
                id="userName"
-               className={"text-white mt-2 p-5 "}
+               className={"text-white mt-2 p-5 cursor-pointer "}
                type={"text"}
                {...register("userName", {
                   required: "user name or email are required",

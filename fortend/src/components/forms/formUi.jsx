@@ -1,4 +1,5 @@
-import { useState, useForm } from "@/import.js";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const RegisterForm = ({ Register, LogIn, ForgetPassword }) => {
    const [staps, setStaps] = useState(0);
@@ -61,32 +62,34 @@ const RegisterForm = ({ Register, LogIn, ForgetPassword }) => {
 
    return (
       <>
-         <div className="h-screen w-full flex justify-center relative z-20 bg-[#411f00] ">
-            <div
-               className={`w-screen  h-[150vh] relative z-20 bg-[#260d03] overflow-hidden ${LogIn && "bg-[#391515]"}`}
-            >
+         <div className="w-full bg-[#875d3b] md:bg-[url('./bg.webp')] bg-repeat-round bg-blend-color-burn">
+            <div className=" w-full flex justify-center relative z-20 md:w-[70%] lg:w-[60%] xl:w-[50%] m-auto rounded-sm  md:pt-2 md:pb-2 ">
                <div
-                  className={`absolute text-white  overflow-hidden -top-40 -right-19 z-20 rounded-[100%] w-[150%] h-60 bg-[#ae4703] `}
-               ></div>
-            </div>
+                  className={`w-screen md:border h-[120vh] relative z-20 bg-[#260d03] overflow-hidden ${LogIn && "bg-[#391515]"} rounded-sm shadow-[7px_7px_30px_black,-7px_-7px_30px_black]`}
+               >
+                  <div
+                     className={`absolute text-white overflow-hidden -top-40 -right-19 z-20 rounded-[100%] w-[150%] h-60 bg-[#ae4703] sm:-right-37 `}
+                  ></div>
+               </div>
 
-            {Register && (
-               <Register
-                  handleClik={handleClik}
-                  handleSubmit={handleSubmit}
-                  register={register}
-                  reset={reset}
-                  errors={errors}
-                  type={type}
-                  getValues={getValues}
-                  staps={staps}
-                  isValid={isValid}
-                  setStaps={setStaps}
-               />
-            )}
-            {LogIn && <LogIn />}
-            {ForgetPassword && <ForgetPassword />}
-         </div>
+               {Register && (
+                  <Register
+                     handleClik={handleClik}
+                     handleSubmit={handleSubmit}
+                     register={register}
+                     reset={reset}
+                     errors={errors}
+                     type={type}
+                     getValues={getValues}
+                     staps={staps}
+                     isValid={isValid}
+                     setStaps={setStaps}
+                  />
+               )}
+               {LogIn && <LogIn />}
+               {ForgetPassword && <ForgetPassword />}
+            </div>
+         </div>{" "}
       </>
    );
 };
