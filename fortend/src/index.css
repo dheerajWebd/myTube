@@ -16,6 +16,7 @@
    transition:
       top 0.4s,
       bottom 0.5s;
+     
 }
 html,
 body {
@@ -207,6 +208,10 @@ body {
 
 .animation {
    animation: bgmove 0.5s ease-in-out;
+}
+
+.texet{
+    -webkit-text-stroke: 0.7px #000000;
 }
 
 @keyframes bgmove {

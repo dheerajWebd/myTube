@@ -4,15 +4,16 @@ import RegisterForm from "./components/forms/formUi.jsx";
 
 import { lazy } from "react";
 import SuspenseLoading from "./components/loader/SuspenseLoading";
+import FrontLayout from "./routes/layout/layout";
 
-const HomePage = lazy(()=>import("@/components/HomePage"))
+const HomePage = lazy(() => import("@/components/HomePage"));
 
 const App = () => {
    return (
       <>
-        <SuspenseLoading>
-          <HomePage />
-        </SuspenseLoading>
+         <SuspenseLoading>
+            <HomePage />
+         </SuspenseLoading>
       </>
    );
 };

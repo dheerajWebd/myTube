@@ -7,6 +7,7 @@ import { GiNightSky } from "react-icons/gi";
 import { WiDaySunny } from "react-icons/wi";
 import { useDispatch, useSelector } from "react-redux";
 import { setTheme, theme } from "@/context/slice/themSlice";
+import SortCutSerch from "../SortCutSerch";
 
 const Navbar = () => {
    const dispatch = useDispatch();
@@ -44,156 +45,8 @@ const Navbar = () => {
                <Search />
             </Link>
          </div>
+         <SortCutSerch />
 
-         <div className="ml-1 w-[98%] h-10 flex bg-scroll  no-scrollbar scroll-none scroll-smooth overflow-x-auto ">
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn`}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-            <Link to={""}>
-               <Button
-                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
-               >
-                  All
-               </Button>
-            </Link>
-         </div>
       </nav>
    );
 };

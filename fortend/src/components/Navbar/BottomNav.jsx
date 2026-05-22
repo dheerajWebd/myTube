@@ -14,7 +14,10 @@ const BottomNav = () => {
          ref={ref2}
          className="slide w-full sticky z-10 bottom-0 bg-primary-foreground border-t-muted-foreground left-0 h-13 dark:darkLayout shadow-black/10   flex-center justify-evenly "
       >
-         <Link className="flex font-medium  font-serif cursor-pointer text-xl mt-1  flex-col justify-center items-center ">
+         <Link
+            to={"/"}
+            className="flex font-medium  font-serif cursor-pointer text-xl mt-1  flex-col justify-center items-center "
+         >
             <Home />
             <span className="text-xs ">Home</span>
          </Link>
@@ -30,7 +33,10 @@ const BottomNav = () => {
             <MdSubscriptions />
             <span className="text-xs  ">Subscription</span>
          </Link>
-         <Link to={"/you"} className="flex font-medium  font-serif cursor-pointer text-6xl  flex-col justify-center items-center ">
+         <Link
+            to={"/you"}
+            className="flex font-medium  font-serif cursor-pointer text-6xl  flex-col justify-center items-center "
+         >
             <Sun />
             <span className="text-xs  ">you</span>
          </Link>
