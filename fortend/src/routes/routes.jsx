@@ -9,6 +9,9 @@ import SuspenseLoading from "@/components/loader/SuspenseLoading";
 // import { LogIn, Register } from "@/import";
 // import Register from "@/components/forms/register";
 const HomePage = lazy(() => import("@/components/HomePage"));
+
+const YouPage = lazy(() => import("@/components/YouPage"));
+
 const RegisterForm = lazy(() => import("@/components/forms/formUi"));
 const ForgetPassword = lazy(() => import("@/components/forms/forgetPassword"));
 const LogIn = lazy(() => import("@/components/forms/LogIn"));
@@ -23,6 +26,14 @@ const Baseroutes = () => {
                element={
                   <SuspenseLoading>
                      <RegisterForm Register={Register} />
+                  </SuspenseLoading>
+               }
+            />
+            <Route
+               path="/you"
+               element={
+                  <SuspenseLoading>
+                     <YouPage />
                   </SuspenseLoading>
                }
             />

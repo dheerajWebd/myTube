@@ -5,13 +5,12 @@
 /* * {
   outline: 1px solid red;
 } */
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark *));
 @layer theme, base, components, utilities;
 * {
-   transition:
-      background-color 0.3s,
-      color 0.3s;
    box-sizing: border-box;
+   transition: background-color 0.3s;
+   color-scheme: dark light;
 }
 .slide {
    transition:
@@ -23,67 +22,6 @@ body {
    width: 100%;
    min-width: 0;
    max-width: 100%;
-}
-/* 🌞 Light Theme (default) */
-@theme {
-   --background: oklch(1 0 0);
-   --foreground: oklch(0.2 0 0);
-
-   --primary: oklch(0.65 0.15 250); /* blue */
-   --primary-foreground: oklch(1 0 0);
-
-   --secondary: oklch(0.9 0.05 250);
-   --secondary-foreground: oklch(0.2 0 0);
-
-   --muted: oklch(0.95 0 0);
-   --muted-foreground: oklch(0.4 0 0);
-}
-
-/* 🌙 Dark Mode */
-.dark {
-   --background: oklch(0.145 0 0);
-   --foreground: oklch(0.985 0 0);
-
-   --primary: oklch(0.922 0 0);
-   --primary-foreground: oklch(0.205 0 0);
-
-   --secondary: oklch(0.269 0 0);
-   --secondary-foreground: oklch(0.985 0 0);
-
-   --muted: oklch(0.269 0 0);
-   --muted-foreground: oklch(0.708 0 0);
-   --card: oklch(0.205 0 0);
-   --card-foreground: oklch(0.985 0 0);
-   --popover: oklch(0.205 0 0);
-   --popover-foreground: oklch(0.985 0 0);
-   --accent: oklch(0.269 0 0);
-   --accent-foreground: oklch(0.985 0 0);
-   --destructive: oklch(0.704 0.191 22.216);
-   --border: oklch(1 0 0 / 10%);
-   --input: oklch(1 0 0 / 15%);
-   --ring: oklch(0.556 0 0);
-   --chart-1: oklch(0.87 0 0);
-   --chart-2: oklch(0.556 0 0);
-   --chart-3: oklch(0.439 0 0);
-   --chart-4: oklch(0.371 0 0);
-   --chart-5: oklch(0.269 0 0);
-   --sidebar: oklch(0.205 0 0);
-   --sidebar-foreground: oklch(0.985 0 0);
-   --sidebar-primary: oklch(0.488 0.243 264.376);
-   --sidebar-primary-foreground: oklch(0.985 0 0);
-   --sidebar-accent: oklch(0.269 0 0);
-   --sidebar-accent-foreground: oklch(0.985 0 0);
-   --sidebar-border: oklch(1 0 0 / 10%);
-   --sidebar-ring: oklch(0.556 0 0);
-}
-
-/* 🎨 Extra Themes */
-.theme-green {
-   --primary: oklch(0.7 0.15 140);
-}
-
-.theme-red {
-   --primary: oklch(0.65 0.18 30);
 }
 
 :root {
@@ -99,12 +37,16 @@ body {
    text-rendering: optimizeLegibility;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
+   --linear2: repeating-linear-gradient(
+      95deg,
+      rgb(226, 226, 226),
+      rgb(156, 156, 162)
+   );
+
    --background: oklch(1 0 0);
    --foreground: oklch(0.145 0 0);
    --card: oklch(1 0 0);
    --card-foreground: oklch(0.145 0 0);
-   --popover: oklch(1 0 0);
-   --popover-foreground: oklch(0.145 0 0);
    --primary: oklch(0.205 0 0);
    --primary-foreground: oklch(0.985 0 0);
    --secondary: oklch(0.97 0 0);
@@ -133,32 +75,8 @@ body {
    --sidebar-ring: oklch(0.708 0 0);
 }
 
-@keyframes bgmove {
-   0% {
-      background-position: 0% 50%;
-   }
-   50% {
-      background-position: 100% 50%;
-   }
-   100% {
-      background-position: 0% 50%;
-   }
-}
-
-@media (prefers-color-scheme: light) {
-   :root {
-      color: #213547;
-      background-color: #ffffff;
-   }
-   a:hover {
-      color: #747bff;
-   }
-   button {
-      background-color: #f9f9f9;
-   }
-}
-
 @theme inline {
+   --background-image-linear2: var(--linear2);
    --font-heading: var(--font-sans);
    --font-sans: "Geist Variable", sans-serif;
    --color-sidebar-ring: var(--sidebar-ring);
@@ -201,6 +119,78 @@ body {
    --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* 🌞 Light Theme (default) */
+
+/* 🌙 Dark Mode */
+.dark {
+   --background: oklch(0.145 0 0);
+   --foreground: oklch(0.985 0 0);
+   --linear2: repeating-linear-gradient(
+      95deg,
+      rgb(47, 47, 47),
+      rgb(22, 22, 22)
+   );
+   --primary: oklch(96.416% 0.00011 271.152);
+   --primary-foreground: oklch(0.205 0 0);
+
+   --secondary: oklch(0.269 0 0);
+   --secondary-foreground: oklch(0.985 0 0);
+
+   --muted: oklch(0.269 0 0);
+   --muted-foreground: oklch(0.708 0 0);
+   --card: oklch(0.205 0 0);
+   --card-foreground: oklch(0.985 0 0);
+
+   --background-cus: oklch(0.145 0 0);
+   --foreground-cus: oklch(0.985 0 0);
+
+   --primary-cus: oklch(96.416% 0.00011 271.152);
+   --primary-foreground-cus: oklch(0.205 0 0);
+
+   --secondary-cus: oklch(0.269 0 0);
+   --secondary-foreground-cus: oklch(0.985 0 0);
+
+   --muted-cus: oklch(0.269 0 0);
+   --muted-foreground-cus: oklch(0.708 0 0);
+   --card-cus: oklch(0.205 0 0);
+   --card-foreground-cus: oklch(0.985 0 0);
+}
+
+/* 🎨 Extra Themes */
+.theme-green {
+   --primary: oklch(94.206% 0.11329 139.717);
+   --background: oklch(78.654% 0.20117 139.89);
+}
+
+.bg-size {
+   background-size: 20px 20px;
+}
+
+@keyframes bgmove {
+   0% {
+      background-position: 0% 50%;
+   }
+   50% {
+      background-position: 100% 50%;
+   }
+   100% {
+      background-position: 0% 50%;
+   }
+}
+
+@media (prefers-color-scheme: light) {
+   :root {
+      color: #213547;
+      background-color: #ffffff;
+   }
+   a:hover {
+      color: #747bff;
+   }
+   button {
+      background-color: #f9f9f9;
+   }
+}
+
 @layer base {
    * {
       @apply border-border outline-ring/50;
@@ -229,4 +219,22 @@ body {
    100% {
       background-position: 0% 50%;
    }
+}
+
+@utility darkLayout {
+   @apply dark:bg-background dark:text-primary;
+}
+@utility gridlayout {
+   @apply dark:bg-linear2;
+}
+@utility darkLayoutBtn {
+   @apply dark:bg-secondary dark:text-secondary-foreground text-black;
+   background-size: 20px 20px;
+}
+@utility flex-center {
+   @apply flex items-center justify-between;
+}
+
+@utility navLayout {
+   @apply w-full fixed z-10 left-0  bg-secondary border-t-[#c1c1c1] bg-linear-to-tr flex-col flex-center top-0 dark:darkLayout;
 }

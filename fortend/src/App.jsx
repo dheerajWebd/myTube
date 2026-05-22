@@ -1,11 +1,18 @@
 import "./index.css";
 import { Link } from "react-router-dom";
 import RegisterForm from "./components/forms/formUi.jsx";
-import HomePage from "./components/HomePage";
+
+import { lazy } from "react";
+import SuspenseLoading from "./components/loader/SuspenseLoading";
+
+const HomePage = lazy(()=>import("@/components/HomePage"))
+
 const App = () => {
    return (
       <>
-         <HomePage />
+        <SuspenseLoading>
+          <HomePage />
+        </SuspenseLoading>
       </>
    );
 };

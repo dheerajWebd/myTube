@@ -2,11 +2,12 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import { register } from "./slice/registerSlice";
-
+import { theme } from "./slice/themSlice";
 
 const store = configureStore({
    reducer: {
-      register
+      register,
+      theme,
    },
 });
-export default store
+export default store;

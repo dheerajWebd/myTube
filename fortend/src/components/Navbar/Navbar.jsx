@@ -1,131 +1,195 @@
 import usenavHideAndShow from "@/Alleffact/bottamBarEffact";
 import { BellIcon, Search } from "lucide-react";
-import React, { useRef } from "react";
+import React, { lazy, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
+import { GiNightSky } from "react-icons/gi";
+import { WiDaySunny } from "react-icons/wi";
+import { useDispatch, useSelector } from "react-redux";
+import { setTheme, theme } from "@/context/slice/themSlice";
 
 const Navbar = () => {
+   const dispatch = useDispatch();
+   const state = useSelector(state => state.theme.theme);
+
+   const heandleTheme = () => {
+      dispatch(setTheme());
+   };
+
    const ref = useRef(null);
    usenavHideAndShow(ref);
    return (
       <nav
          ref={ref}
-         className="slide w-full relative z-10 top-0 left-0  text-white transition-top duration-1000 border-t-[#c1c1c1] dark:bg-linear-to-tr to-[#111821] via-[#080c10] from-[#10161f]  flex flex-col items-center justify-between shadow-black/10 "
+         className="slide w-full fixed z-10 left-0  bg-secondary border-t-[#c1c1c1] bg-linear-to-tr flex-col flex-center top-0 dark:darkLayout"
       >
-         <div className="flex w-full text-white sticky top-0 dark:bg-background justify-center items-center gap-4 bg-tran p-2">
-            <Link to="/" className="grow text-white">
+         <div className="flex w-full sticky inset-0  justify-center items-center gap-4 bg-tran p-2 ">
+            <Link to="/" className="grow font-bold text-2xl">
                MyTube
             </Link>
+            <Button
+               onClick={heandleTheme}
+               className="dark:bg-white dark:text-black"
+            >
+               {state === "dark" ? (
+                  <WiDaySunny className="text-2xl" />
+               ) : (
+                  <GiNightSky className="text-2xl" />
+               )}
+            </Button>
             <Link to="">
-               <BellIcon className="text-white" />
+               <BellIcon className="" />
             </Link>
             <Link to="/forgetPassword">
                <Search />
             </Link>
          </div>
-         <div className="ml-1 w-[98%] h-10 flex bg-scroll no-scrollbar scroll-none scroll-smooth overflow-x-auto">
+
+         <div className="ml-1 w-[98%] h-10 flex bg-scroll  no-scrollbar scroll-none scroll-smooth overflow-x-auto ">
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#212121]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn`}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
             <Link to={""}>
-               <Button className={` cursor-pointer btn bg-[#141414]`}>
+               <Button
+                  className={` cursor-pointer ml-3 text-balance text-black bg-[#dcdcdc] dark:darkLayoutBtn `}
+               >
                   All
                </Button>
             </Link>
