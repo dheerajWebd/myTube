@@ -1,17 +1,24 @@
 // import { base_API, createAsyncThunk } from "@/import.js"
 
-import base_API from "@/AxiosConfig"
-import { createAsyncThunk } from "@reduxjs/toolkit"
+import base_API from "@/AxiosConfig";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-
-export const createUser = createAsyncThunk("register/user", async (payload, thunkApi) => {
-  try {
-    const response = await base_API.post("/user/api/v1/register", payload)
-    console.log(response.status)
-    return response.data
-  } catch (error) {
-    console.log(error);
-    const { response, status, message } = error
-    return thunkApi.rejectWithValue({ data: response.data, status, message })
-  }
-}) 
+export const createUser = createAsyncThunk(
+   "register/user",
+   async (payload, thunkApi) => {
+      try {
+         const response = await base_API.post("/user/api/v1/register", payload);
+         console.log(response.status);
+         sessionStorage.setItem("authenticated", true);
+         return response.data;
+      } catch (error) {
+         console.log(error);
+         const { response, status, message } = error;
+         return thunkApi.rejectWithValue({
+            data: response.data,
+            status,
+            message,
+         });
+      }
+   }
+);
