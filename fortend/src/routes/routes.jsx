@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import SuspenseLoading from "@/components/loader/SuspenseLoading";
 import FrontLayout from "./layout/layout";
 import { useSelector } from "react-redux";
+import ProtetedRoutes from "./ProtetedRoutes";
 // import ForgetPassword from "@/components/forms/forgetPassword";
 // import RegisterForm from "@/components/forms/formUi";
 // import HomePage from "@/components/HomePage";
@@ -18,7 +19,6 @@ const LogIn = lazy(() => import("@/components/forms/LogIn"));
 const Register = lazy(() => import("@/components/forms/register"));
 const RequestSingInPage = lazy(() => import("@/components/RequestSingInPage"));
 const Baseroutes = () => {
-
    const isLogin = useSelector(state => state.theme.theme);
    return (
       <BrowserRouter basename="/myTube">
@@ -39,7 +39,9 @@ const Baseroutes = () => {
                path="/you"
                element={
                   <SuspenseLoading>
-                     <YouPage />
+                     <ProtetedRoutes>
+                        <YouPage />
+                     </ProtetedRoutes>
                   </SuspenseLoading>
                }
             />

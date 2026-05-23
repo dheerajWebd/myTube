@@ -18,7 +18,7 @@ import RegisterSocilMidiea from "./registerSocilMidiea";
 import { ArrowRight } from "lucide-react";
 import { createUser } from "@/context/registerThunk/registerThunk";
 import SuspenseLoading from "../loader/SuspenseLoading";
-// import { Step1, Step2 } from "./formSteps";
+import { useNavigate } from "react-router-dom";
 const Step1 = lazy(() =>
    import("./formSteps").then(module => ({
       default: module.Step1,
@@ -43,7 +43,7 @@ const Register = ({
    setStaps,
 }) => {
    const dispatch = useDispatch();
-
+   const nevigate = useNavigate();
    const onSubmit = async data => {
       try {
          const formData = new FormData();
@@ -58,7 +58,7 @@ const Register = ({
          formData.append("email", email);
          formData.append("fullName", fullName);
          dispatch(createUser(formData));
-         setStaps(0);
+         nevigate("/");
          reset();
       } catch (error) {}
    };
