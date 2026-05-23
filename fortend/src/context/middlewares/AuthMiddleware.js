@@ -1,12 +1,12 @@
-const authMiddleware = store => next => action => {
+const authMiddleware =  store => next => action => {
    console.log(action.type);
    
    if (!sessionStorage.getItem("authenticated")) {
-      if (action === "authenticate/user") {
+      if (action.type === "authenticate/user/fulfilled") {
          sessionStorage.setItem(
-            "authenticated",
-            store.getState().sessionStorage.authenticated
+            "authenticated", true
          );
+         console.log(store.getState().register.authenticated)
       }
    }
    next(action);

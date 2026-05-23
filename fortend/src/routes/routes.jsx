@@ -19,7 +19,7 @@ const LogIn = lazy(() => import("@/components/forms/LogIn"));
 const Register = lazy(() => import("@/components/forms/register"));
 const RequestSingInPage = lazy(() => import("@/components/RequestSingInPage"));
 const Baseroutes = () => {
-   const isLogin = useSelector(state => state.theme.theme);
+  
    return (
       <BrowserRouter basename="/myTube">
          <Routes>
