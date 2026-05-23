@@ -9,5 +9,9 @@ const store = configureStore({
       register,
       theme,
    },
+   middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+         serializableCheck: false,
+      }),
 });
 export default store;

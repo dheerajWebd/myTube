@@ -141,20 +141,6 @@ body {
    --muted-foreground: oklch(0.708 0 0);
    --card: oklch(0.205 0 0);
    --card-foreground: oklch(0.985 0 0);
-
-   --background-cus: oklch(0.145 0 0);
-   --foreground-cus: oklch(0.985 0 0);
-
-   --primary-cus: oklch(96.416% 0.00011 271.152);
-   --primary-foreground-cus: oklch(0.205 0 0);
-
-   --secondary-cus: oklch(0.269 0 0);
-   --secondary-foreground-cus: oklch(0.985 0 0);
-
-   --muted-cus: oklch(0.269 0 0);
-   --muted-foreground-cus: oklch(0.708 0 0);
-   --card-cus: oklch(0.205 0 0);
-   --card-foreground-cus: oklch(0.985 0 0);
 }
 
 /* 🎨 Extra Themes */

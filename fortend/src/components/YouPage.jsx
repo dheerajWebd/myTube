@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { BellIcon, Search, Settings } from "lucide-react";
 import BottomNav from "./Navbar/BottomNav";
+import RequestSingInPage from "./RequestSingInPage";
 
 const YouPage = () => {
    return (
@@ -26,7 +27,8 @@ const YouPage = () => {
                </div>
             </div>
          </nav>
-         <div className="flex-center w-full h-2000 bg-linear2 bg-size dark:gridlayout"></div>
+         <div className="flex-center w-full bg-linear2 bg-size dark:gridlayout"></div>
+         <RequestSingInPage />
 
          <BottomNav />
       </div>
