@@ -13,19 +13,17 @@ const ProtetedRoutes = ({ children }) => {
          try {
             await dispatch(authenticateThunk());
             const authenticated = sessionStorage.getItem("authenticated");
-            console.log(authenticated);
-
-            if (authenticated === "false") {
-               navigator("/requesst-singin", { replace: false });
+            
+            if (authenticated ) {
+               console.log(authenticated);
+               navigator("/requesst-singin", { replace: true });
                setSuspenseLoading(false);
             }
          } catch (error) {
-            navigator("/requesst-singin", { replace: false });
+            navigator("/requesst-singin", { replace: true });
             setSuspenseLoading(false);
             console.log(error);
          } finally {
-            const authenticated = await sessionStorage.getItem("authenticated");
-            console.log(authenticated);
             setSuspenseLoading(false);
          }
       };
