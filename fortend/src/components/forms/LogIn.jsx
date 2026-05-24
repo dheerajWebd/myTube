@@ -10,8 +10,8 @@
 //    LoginThunk,
 // } from "@/import.js";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Label } from "@/components/ui/label.jsx";
 import { Input } from "@/components/ui/input.jsx";
 import { InputPassword } from "./input";
@@ -24,19 +24,38 @@ const LogIn = () => {
    const {
       register,
       handleSubmit,
-      formState: { errors, isValid },
+      formState: { errors, isValid, isSubmitting, isSubmitted, isLoading },
       getValues,
       reset,
    } = useForm({
       mode: "onChange",
    });
 
-   const dispatch = useDispatch();
+   console.log(isSubmitting, isSubmitted, isLoading);
 
-   const onSubmit = data => {
-      dispatch(LoginThunk(data));
-      reset();
+   const dispatch = useDispatch();
+   const isLogin = useSelector(state => state.register.LogInData);
+   const loading = useSelector(state => state.register.LoginLoding);
+   const navigate = useNavigate();
+   const onSubmit = async data => {
+      if (isValid) {
+         await dispatch(LoginThunk(data));
+         console.log(data);
+         if (isLogin.success === true) {
+            console.log("loged in");
+            navigate("/");
+            reset();
+         }
+      }
    };
+
+   if (loading) {
+      return (
+         <div className="bg-black/60 absolute flex-center justify-center size-full -top-1 rounded-2xl text-xl z-40 ">
+            <h1>loading</h1>
+         </div>
+      );
+   }
    return (
       <div className={`absolute w-[90%] top-15 text-xl z-30  ml-5`}>
          <h1 className="text-xl font-bold text-white text-center mt-10 z-30 relative">
@@ -105,7 +124,6 @@ const LogIn = () => {
                getValues={getValues}
             />
             <Link
-
                to="/forgetPassword"
                className="text-sm text-[#F0F1EE] mt-3 underline"
             >
@@ -115,7 +133,7 @@ const LogIn = () => {
                role="alert"
                aria-live="assertive"
                aria-invalid={!!errors.root}
-               disabled={!isValid}
+               disabled={!isValid || loading || isSubmitting}
                type={"sumbit"}
                className={
                   "p-5 cursor-pointer text-white w-11/12 mt-3 bg-[#926247]"

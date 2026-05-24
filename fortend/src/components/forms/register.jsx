@@ -11,7 +11,7 @@ import { lazy, Suspense } from "react";
 //    useDispatch,
 //    useSelector,
 // } from "@/import.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { InputEmail, InputPassword } from "./input";
 import { Button } from "@/components/ui/button.jsx";
 import RegisterSocilMidiea from "./registerSocilMidiea";
@@ -44,21 +44,27 @@ const Register = ({
 }) => {
    const dispatch = useDispatch();
    const nevigate = useNavigate();
+   const registerLoding = useSelector(state => state.register.registerLoding);
+
    const onSubmit = async data => {
       try {
          const formData = new FormData();
-         console.log(data);
          const { email, password, avatar, userName, fullName } = data;
-
-         console.log(avatar[0]);
 
          formData.append("userName", userName);
          formData.append("avatar", avatar[0]);
          formData.append("password", password);
          formData.append("email", email);
          formData.append("fullName", fullName);
-         dispatch(createUser(formData));
-         nevigate("/");
+
+          dispatch(createUser(formData));
+         if (registerLoding) {
+
+            console.log("lkuklojhoi");
+            nevigate("/");
+            return <><h1>.....</h1></>
+         }
+
          reset();
       } catch (error) {}
    };

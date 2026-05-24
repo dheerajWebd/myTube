@@ -8,14 +8,14 @@ import authenticateThunk from "../registerThunk/authenticate";
 const initialState = {
    userData: {},
    LogInData: {},
-   authenticated: false,
+   authenticated: null,
 
    registerError: null,
    LoginError: null,
    authenticatedError: null,
 
-   registerLoding: false,
-   LoginLoding: false,
+   registerLoding: true,
+   LoginLoding: true,
    authenticateThunkLoding: false,
 };
 // userName: "",
@@ -41,7 +41,6 @@ const registerSlice = createSlice({
             state.registerLoding = true;
             state.registerError = null;
             state.userData = null;
-            console.log("action.payload");
          })
          .addCase(createUser.rejected, (state, action) => {
             state.registerLoding = false;
@@ -58,7 +57,6 @@ const registerSlice = createSlice({
             state.LoginLoding = true;
             state.LoginError = null;
             state.LogInData = null;
-            console.log("action.payload");
          })
          .addCase(LoginThunk.rejected, (state, action) => {
             state.LoginLoding = false;
@@ -70,12 +68,12 @@ const registerSlice = createSlice({
             state.authenticateThunkLoding = false;
             state.authenticatedError = null;
             state.authenticated = true;
+         
          })
          .addCase(authenticateThunk.pending, (state, action) => {
             state.authenticateThunkLoding = true;
             state.authenticatedError = null;
             state.authenticated = false;
-            console.log("action.payload");
          })
          .addCase(authenticateThunk.rejected, (state, action) => {
             state.authenticateThunkLoding = false;

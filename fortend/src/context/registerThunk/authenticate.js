@@ -5,8 +5,7 @@ const authenticateThunk = createAsyncThunk(
    "authenticate/user",
    async (payload, thunkApi) => {
       try {
-         const response = await base_API.get("/user/api/v1/me", payload);
-         console.log(response.status);
+         const response = await base_API.get("/user/api/v1/me");
          return response.data;
       } catch (error) {
          console.log(error);

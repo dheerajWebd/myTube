@@ -9,7 +9,7 @@ export const createUser = createAsyncThunk(
       try {
          const response = await base_API.post("/user/api/v1/register", payload);
          console.log(response.status);
-         sessionStorage.setItem("authenticated", true);
+         sessionStorage.setItem("authenticated", "true");
          return response.data;
       } catch (error) {
          console.log(error);

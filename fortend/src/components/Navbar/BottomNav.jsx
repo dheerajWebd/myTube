@@ -11,7 +11,6 @@ const BottomNav = () => {
    usenavHideAndShow(ref2, false);
    const isLogin = useSelector(state => state.register.authenticated);
 
-   console.log(isLogin)
 
    return (
       <div

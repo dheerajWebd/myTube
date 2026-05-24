@@ -6,7 +6,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 const LoginThunk = createAsyncThunk("Login/User", async (payload, thunkAPI) => {
    try {
       const response = await base_API.post("/user/api/v1/login", payload);
-      sessionStorage.setItem("authenticated", true);
+      sessionStorage.setItem("authenticated", "true");
       return response.data;
    } catch (error) {
       const { response, status, message } = error;

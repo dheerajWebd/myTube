@@ -1,16 +1,16 @@
 import React, { lazy } from "react";
 import App from "@/App";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import {
+   BrowserRouter,
+   Navigate,
+   Route,
+   Routes,
+   useNavigate,
+} from "react-router-dom";
 import SuspenseLoading from "@/components/loader/SuspenseLoading";
 import FrontLayout from "./layout/layout";
 import { useSelector } from "react-redux";
 import ProtetedRoutes from "./ProtetedRoutes";
-// import ForgetPassword from "@/components/forms/forgetPassword";
-// import RegisterForm from "@/components/forms/formUi";
-// import HomePage from "@/components/HomePage";
-// import LogIn from "@/components/forms/LogIn";
-// import { LogIn, Register } from "@/import";
-// import Register from "@/components/forms/register";
 const HomePage = lazy(() => import("@/components/HomePage"));
 const YouPage = lazy(() => import("@/components/YouPage"));
 const RegisterForm = lazy(() => import("@/components/forms/formUi"));
@@ -19,12 +19,11 @@ const LogIn = lazy(() => import("@/components/forms/LogIn"));
 const Register = lazy(() => import("@/components/forms/register"));
 const RequestSingInPage = lazy(() => import("@/components/RequestSingInPage"));
 const Baseroutes = () => {
-  
+   const isLogin = useSelector(state => state.register.authenticated);
    return (
       <BrowserRouter basename="/myTube">
          <Routes>
             <Route path="/" element={<FrontLayout />}>
-               <Route path="/" element={<App />} />
                <Route
                   index
                   element={
@@ -38,11 +37,11 @@ const Baseroutes = () => {
             <Route
                path="/you"
                element={
-                  <SuspenseLoading>
-                     <ProtetedRoutes>
+                  <ProtetedRoutes>
+                     <SuspenseLoading>
                         <YouPage />
-                     </ProtetedRoutes>
-                  </SuspenseLoading>
+                     </SuspenseLoading>
+                  </ProtetedRoutes>
                }
             />
             <Route

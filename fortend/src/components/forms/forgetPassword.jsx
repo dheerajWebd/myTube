@@ -5,11 +5,6 @@ import { lazy, Suspense, useState } from "react";
 // } from "@/import.js";
 
 import { Controller, useForm } from "react-hook-form";
-// import {
-//    StapsForForgetPassword_1,
-//    StapsForNewPassword,
-//    StepForgetPassword_2,
-// } from "./formSteps";
 
 const StapsForNewPassword = lazy(() =>
    import("./formSteps").then(module => ({

@@ -1,15 +1,19 @@
-const authMiddleware =  store => next => action => {
-   console.log(action.type);
-   
-   if (!sessionStorage.getItem("authenticated")) {
-      if (action.type === "authenticate/user/fulfilled") {
-         sessionStorage.setItem(
-            "authenticated", true
-         );
-         console.log(store.getState().register.authenticated)
-      }
+const authMiddleware = store => next => action => {
+   if (action.type === "authenticate/user/fulfilled") {
+      sessionStorage.setItem(
+         "authenticated",
+         JSON.stringify(true)
+      );
    }
-   next(action);
+
+   if (action.type === "authenticate/user/rejected") {
+      sessionStorage.setItem(
+         "authenticated",
+         JSON.stringify(false)
+      );
+   }
+
+   return next(action);
 };
 
 export default authMiddleware;
