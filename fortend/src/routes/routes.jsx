@@ -21,7 +21,7 @@ const RequestSingInPage = lazy(() => import("@/components/RequestSingInPage"));
 const Baseroutes = () => {
    const isLogin = useSelector(state => state.register.authenticated);
    return (
-      <BrowserRouter basename="/myTube">
+      <BrowserRouter basename="/">
          <Routes>
             <Route path="/" element={<FrontLayout />}>
                <Route
