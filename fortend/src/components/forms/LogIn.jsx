@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button.jsx";
 import RegisterSocilMidiea from "./registerSocilMidiea";
 import LoginThunk from "@/context/registerThunk/LoginThunk";
 import { ArrowRight } from "lucide-react";
+import { AlertPopup } from "../alartPopup/Alart";
 
 const LogIn = () => {
    const {
@@ -38,7 +39,11 @@ const LogIn = () => {
 
    if (isLogin?.success === true) {
       navigate("/");
-      return  window.location.reload();
+      return (
+         <>
+            {window.location.reload()}
+         </>
+      );
    }
    if (loading) {
       return (
