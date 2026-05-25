@@ -12,7 +12,7 @@ import FrontLayout from "./layout/layout";
 import { useSelector } from "react-redux";
 import ProtetedRoutes from "./ProtetedRoutes";
 const HomePage = lazy(() => import("@/components/HomePage"));
-const YouPage = lazy(() => import("@/components/YouPage"));
+const YouPage = lazy(() => import("@/components/youPageComp/YouPage"));
 const RegisterForm = lazy(() => import("@/components/forms/formUi"));
 const ForgetPassword = lazy(() => import("@/components/forms/forgetPassword"));
 const LogIn = lazy(() => import("@/components/forms/LogIn"));

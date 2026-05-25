@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { json } from "zod";
 
 const initialState = {
    theme: "dark",
@@ -10,13 +9,13 @@ const themeSlice = createSlice({
    initialState,
    reducers: {
       setTheme: (state, action) => {
-         state.theme = state.theme === "dark" ? "" : "dark";
-
          if (state.theme === "dark") {
+            state.theme = "light";
             localStorage.setItem("theme", "light");
             document.querySelector("html").classList.add("light");
             document.querySelector("html").classList.remove("dark");
          } else {
+            state.theme = "dark";
             localStorage.setItem("theme", "dark");
             document.querySelector("html").classList.add("dark");
             document.querySelector("html").classList.remove("light");

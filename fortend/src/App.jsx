@@ -10,13 +10,13 @@ const App = () => {
    useEffect(() => {
       const checkAuth = async () => {
          try {
-            await dispatch(authenticateThunk());
+             dispatch(authenticateThunk());
          } catch (error) {
             console.log(error);
          }
       };
       checkAuth();
-   }, []);
+   }, [dispatch]);
    return (
       <>
          <Baseroutes />

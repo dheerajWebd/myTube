@@ -4,18 +4,22 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createUser } from "../registerThunk/registerThunk";
 import LoginThunk from "../registerThunk/LoginThunk";
 import authenticateThunk from "../registerThunk/authenticate";
+import LogOut from "../registerThunk/logOut";
 
 const initialState = {
    userData: {},
    LogInData: {},
    authenticated: null,
+   authenticatedData: {},
 
    registerError: null,
+   LogOutError: null,
    LoginError: null,
    authenticatedError: null,
 
    registerLoding: true,
    LoginLoding: true,
+   LogOutLoding: false,
    authenticateThunkLoding: false,
 };
 // userName: "",
@@ -68,7 +72,7 @@ const registerSlice = createSlice({
             state.authenticateThunkLoding = false;
             state.authenticatedError = null;
             state.authenticated = true;
-         
+            state.authenticatedData = action.payload;
          })
          .addCase(authenticateThunk.pending, (state, action) => {
             state.authenticateThunkLoding = true;
@@ -79,6 +83,25 @@ const registerSlice = createSlice({
             state.authenticateThunkLoding = false;
             state.authenticatedError = action.payload;
             state.authenticated = false;
+         })
+         .addCase(LogOut.fulfilled, (state, action) => {
+            state.authenticateThunkLoding = false;
+            state.authenticatedError = null;
+            state.authenticated = false;
+            state.authenticatedData = null;
+            state.userData = null;
+            state.LogInData = null;
+            state.LogOutError = null;
+            state.LogOutLoding = false;
+         })
+         .addCase(LogOut.rejected, (state, action) => {
+            state.LogOutError = action.payload;
+            state.LogOutError = null;
+            state.LogOutLoding = false;
+         })
+         .addCase(LogOut.pending, (state, action) => {
+            state.LogOutError = null;
+            state.LogInData = null;
          });
    },
 });
