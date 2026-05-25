@@ -57,12 +57,20 @@ const Register = ({
          formData.append("email", email);
          formData.append("fullName", fullName);
 
-          dispatch(createUser(formData));
+         dispatch(createUser(formData));
          if (registerLoding) {
-
             console.log("lkuklojhoi");
             nevigate("/");
-            return <><h1>.....</h1></>
+            alert(
+               <>
+                  <h1>hii how are you</h1>
+               </>
+            );
+            return (
+               <>
+                  <h1>.....</h1>
+               </>
+            );
          }
 
          reset();

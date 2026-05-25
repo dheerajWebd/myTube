@@ -200,11 +200,8 @@ const StapsForForgetPassword_1 = ({
                            return "invalid user name or  email ";
                         }
                      },
-                     
+
                      // check authentication email username
-                     checkEmailorSendOTP: async value =>{
-                       
-                     }
 
                      check: value =>
                         !/[ ]/.test(value) || "empty space is not allow",

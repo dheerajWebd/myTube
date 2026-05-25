@@ -49,14 +49,17 @@ const LogIn = () => {
       }
    };
 
-   if (loading) {
+   if (!loading && isLogin.success === true) {
+      return <Navigate to="/" />;
+   }
+   if (!loading) {
       return (
          <div className="bg-black/60 absolute flex-center justify-center size-full -top-1 rounded-2xl text-xl z-40 ">
             <h1>loading</h1>
          </div>
       );
-   }
-   return (
+   }else{
+       return (
       <div className={`absolute w-[90%] top-15 text-xl z-30  ml-5`}>
          <h1 className="text-xl font-bold text-white text-center mt-10 z-30 relative">
             Log in to MyTube.com
@@ -133,7 +136,7 @@ const LogIn = () => {
                role="alert"
                aria-live="assertive"
                aria-invalid={!!errors.root}
-               disabled={!isValid || loading || isSubmitting}
+               disabled={!isValid || !loading || isSubmitting}
                type={"sumbit"}
                className={
                   "p-5 cursor-pointer text-white w-11/12 mt-3 bg-[#926247]"
@@ -146,6 +149,8 @@ const LogIn = () => {
          <RegisterSocilMidiea to_link="/register" text={"register"} />
       </div>
    );
+   }
+  
 };
 
 export default LogIn;
