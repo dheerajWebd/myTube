@@ -28,22 +28,19 @@ const LogIn = () => {
    const navigate = useNavigate();
    const onSubmit = async data => {
       if (isValid) {
-         await dispatch(LoginThunk(data));
-         console.log(data);
-         if (isLogin.success === true) {
-            console.log("loged in");
-            navigate("/");
-            alert("loged in");
-            window.location.reload();
-            reset();
+         const isLogin2 = await dispatch(LoginThunk(data));
+         console.log(isLogin2);
+         if (isLogin2?.payload?.success === true) {
+            console.log("dheeraj");
          }
       }
    };
 
-   if (!loading && isLogin.success === true) {
-      return <Navigate to="/" />;
+   if (isLogin?.success === true) {
+      navigate("/");
+      return  window.location.reload();
    }
-   if (!loading) {
+   if (loading) {
       return (
          <div className="bg-black/60 absolute flex-center justify-center size-full -top-1 rounded-2xl text-xl z-40 ">
             <h1>loading</h1>
@@ -127,7 +124,7 @@ const LogIn = () => {
                   role="alert"
                   aria-live="assertive"
                   aria-invalid={!!errors.root}
-                  disabled={!isValid || !loading || isSubmitting}
+                  disabled={!isValid || loading || isSubmitting}
                   type={"sumbit"}
                   className={
                      "p-5 cursor-pointer text-white w-11/12 mt-3 bg-[#926247]"

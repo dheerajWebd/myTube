@@ -18,7 +18,7 @@ const initialState = {
    authenticatedError: null,
 
    registerLoding: true,
-   LoginLoding: true,
+   LoginLoding: false,
    LogOutLoding: false,
    authenticateThunkLoding: false,
 };
