@@ -57,23 +57,14 @@ const Register = ({
          formData.append("email", email);
          formData.append("fullName", fullName);
 
-         dispatch(createUser(formData));
-         if (registerLoding) {
+         const result = await dispatch(createUser(formData));
+
+         if (result.payload.success) {
             console.log("lkuklojhoi");
             nevigate("/");
-            alert(
-               <>
-                  <h1>hii how are you</h1>
-               </>
-            );
-            return (
-               <>
-                  <h1>.....</h1>
-               </>
-            );
+            window.location.reload();
+            reset();
          }
-
-         reset();
       } catch (error) {}
    };
 
