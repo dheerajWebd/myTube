@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { BellIcon, Dot, Search, Settings } from "lucide-react";
 import BottomNav from "../Navbar/BottomNav";
-import RequestSingInPage from "../RequestSingInPage";
-import { BiLeftArrow } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import DpDatial from "./DpDatial";
 

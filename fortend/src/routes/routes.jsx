@@ -11,7 +11,7 @@ import SuspenseLoading from "@/components/loader/SuspenseLoading";
 import FrontLayout from "./layout/layout";
 import { useSelector } from "react-redux";
 import ProtetedRoutes from "./ProtetedRoutes";
-const HomePage = lazy(() => import("@/components/HomePage"));
+const HomePage = lazy(() => import("@/components/pages/HomePage"));
 const YouPage = lazy(() => import("@/components/youPageComp/YouPage"));
 const RegisterForm = lazy(() => import("@/components/forms/formUi"));
 const ForgetPassword = lazy(() => import("@/components/forms/forgetPassword"));

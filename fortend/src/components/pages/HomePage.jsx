@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
-import Navbar from "./Navbar/Navbar";
-import BottomNav from "./Navbar/BottomNav";
+import Navbar from "../Navbar/Navbar";
+import BottomNav from "../Navbar/BottomNav";
 
 import {
    Card,
@@ -12,9 +12,8 @@ import {
 import { PiVideo } from "react-icons/pi";
 import { Menu } from "lucide-react";
 import ShprtVideo, { CardImageSort } from "./shprtVideo";
-import { AlertPopup } from "./alartPopup/Alart";
-import ShowAlertpopup from "./alartPopup/ShowAlertpopup";
-
+import { AlertPopup } from "../alartPopup/Alart";
+import ShowAlertpopup from "../alartPopup/ShowAlertpopup";
 
 export function CardImage() {
    return (
@@ -53,7 +52,7 @@ export function CardImage() {
 const HomePage = () => {
    return (
       <>
-        <ShowAlertpopup />
+         <ShowAlertpopup />
          <div className="min-h-screen m-auto  transform-[translateY(5rem)] mb-25  dark:gridlayout bg-linear2 bg-size">
             <div className="w-11/12 m-auto mt-5 flex-center">
                <div className="flex-center w-25 font-medium">
@@ -73,7 +72,6 @@ const HomePage = () => {
                <CardImage />
             </div>
          </div>
-
       </>
    );
 };

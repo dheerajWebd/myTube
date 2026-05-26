@@ -7,7 +7,7 @@ import { GiNightSky } from "react-icons/gi";
 import { WiDaySunny } from "react-icons/wi";
 import { useDispatch, useSelector } from "react-redux";
 import { setTheme, theme } from "@/context/slice/themSlice";
-import SortCutSerch from "../SortCutSerch";
+import SortCutSerch from "./SortCutSerch";
 
 const Navbar = () => {
    const dispatch = useDispatch();
@@ -46,7 +46,6 @@ const Navbar = () => {
             </Link>
          </div>
          <SortCutSerch />
-
       </nav>
    );
 };
