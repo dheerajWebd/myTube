@@ -43,7 +43,7 @@ const BottomNav = () => {
          )}
 
          <Link
-            to={"/you"}
+            to={"/bo/you"}
             className="flex font-medium  font-serif cursor-pointer text-6xl  flex-col justify-center items-center "
          >
             <Sun />

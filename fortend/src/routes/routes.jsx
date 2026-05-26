@@ -11,13 +11,19 @@ import SuspenseLoading from "@/components/loader/SuspenseLoading";
 import FrontLayout from "./layout/layout";
 import { useSelector } from "react-redux";
 import ProtetedRoutes from "./ProtetedRoutes";
+import BottomLayout from "./layout/bottomLayout";
 const HomePage = lazy(() => import("@/components/pages/HomePage"));
 const YouPage = lazy(() => import("@/components/youPageComp/YouPage"));
 const RegisterForm = lazy(() => import("@/components/forms/formUi"));
 const ForgetPassword = lazy(() => import("@/components/forms/forgetPassword"));
 const LogIn = lazy(() => import("@/components/forms/LogIn"));
 const Register = lazy(() => import("@/components/forms/register"));
-const RequestSingInPage = lazy(() => import("@/components/RequestSingInPage"));
+const RequestSingInPage = lazy(
+   () => import("@/components/pages/RequestSingInPage")
+);
+const CreateChannelPage = lazy(
+   () => import("@/components/pages/CreateChannelPage")
+);
 const Baseroutes = () => {
    const isLogin = useSelector(state => state.register.authenticated);
    return (
@@ -34,24 +40,38 @@ const Baseroutes = () => {
                />
             </Route>
 
-            <Route
-               path="/you"
-               element={
-                  <ProtetedRoutes>
+            <Route path={"/bo"} element={<BottomLayout />}>
+               <Route
+                  path="/bo/you"
+                  element={
+                     <ProtetedRoutes>
+                        <SuspenseLoading>
+                           <YouPage />
+                        </SuspenseLoading>
+                     </ProtetedRoutes>
+                  }
+               />
+               <Route
+                  path="/bo/create-channel"
+                  element={
+                     <ProtetedRoutes>
+                        <SuspenseLoading>
+                           <CreateChannelPage />
+                        </SuspenseLoading>
+                     </ProtetedRoutes>
+                  }
+               />
+
+               <Route
+                  path="/bo/requesst-singin"
+                  element={
                      <SuspenseLoading>
-                        <YouPage />
+                        <RequestSingInPage />
                      </SuspenseLoading>
-                  </ProtetedRoutes>
-               }
-            />
-            <Route
-               path="/requesst-singin"
-               element={
-                  <SuspenseLoading>
-                     <RequestSingInPage />
-                  </SuspenseLoading>
-               }
-            />
+                  }
+               />
+            </Route>
+
             <Route
                path="/register"
                element={

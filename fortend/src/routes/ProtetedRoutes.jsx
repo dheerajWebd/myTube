@@ -15,7 +15,7 @@ const ProtetedRoutes = ({ children }) => {
    }
 
   if (authenticate === false ) {
-   return <Navigate to="/requesst-singin" replace />
+   return <Navigate to="/bo/requesst-singin" replace />
    
   }
 

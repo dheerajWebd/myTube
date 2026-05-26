@@ -37,7 +37,6 @@ const YouPage = () => {
             <DpDatial />
          </div>
 
-         <BottomNav />
       </div>
    );
 };

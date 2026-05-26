@@ -33,7 +33,7 @@ const DpDatial = () => {
                   </div>
                   <Dot />
                   <Link
-                     to="/logIn"
+                     to="/bo/create-channel"
                      className="font-semibold flex items-center gap-0.5 -mt-0.5 text-xs"
                   >
                      view channel <BiLeftArrow className="mt-0.5" />

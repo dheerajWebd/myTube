@@ -1,8 +1,7 @@
 import React from "react";
 import { BsPeople } from "react-icons/bs";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import BottomNav from "./Navbar/BottomNav";
 
 const RequestSingInPage = () => {
    return (
@@ -37,9 +36,8 @@ const RequestSingInPage = () => {
             </Link>
          </div>
          <div className="w-[90%] h-70 flex m-auto mt-2 text-center justify-center text-xs font-semibold"></div>
-         <BottomNav />
       </div>
    );
 };
 
-export default RequestSingInPage;FF
+export default RequestSingInPage;
